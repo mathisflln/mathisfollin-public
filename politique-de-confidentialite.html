@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>FAH Marie-Curie</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+    
+    <!-- CSS - UN SEUL FICHIER QUI IMPORTE TOUT -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="topbar-wrapper">
+        <div class="navbar-pill">
+            <div class="navbar-inner">
+                <!-- Logo -->
+                <a href="./index.html" class="logo-container">
+                    <img src="assets/logos/fah.png" alt="Logo" class="logo-svg">
+                </a>
+
+                <!-- Navigation Desktop -->
+                <div class="nav-links-desktop">
+                    <a href="./about.html" class="nav-link">L'association</a>
+                    <a href="./actions.html" class="nav-link">Nos actions</a>
+                    <a href="./comprendre.html" class="nav-link">Comprendre</a>
+                    <a href="./agir.html" class="nav-link">Agir</a>
+                    
+                    <div class="nav-spacer">
+                        <a href="./login.html" class="nav-link">Se connecter</a>
+                        <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link nav-link-cta">Faire un don</a>
+                    </div>
+                </div>
+
+                <!-- Burger Menu Button -->
+                <button class="burger-btn" onclick="toggleMobileMenu()">
+                    <div class="burger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div>
+            <a href="./about.html" class="nav-link">L'association</a>
+            <a href="./actions.html" class="nav-link">Nos actions</a>
+            <a href="./comprendre.html" class="nav-link">Comprendre</a>
+            <a href="./agir.html" class="nav-link">Agir</a>
+        </div>
+        
+        <div class="mobile-menu-bottom">
+            <a href="./login.html" class="nav-link-login">Se connecter</a>
+            <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link-cta-mobile">Faire un don</a>
+        </div>
+    </div>
+
+    <section class="section-grey-bg">
+        <div class="container">
+            <h1>Politique de confidentialité</h1>
+        </div>
+    </section>
+
+
+    <div class="legal">
+        <p>
+            Association Anti Harcèlement de la cité scolaire Marie-Curie (FAH Marie-Curie)
+            <br>Association loi 1901 à but non lucratif
+            <br>92260 Fontenay-aux-Roses, France
+            <br>Dernière mise à jour : 15/11/2025
+        </p>
+
+        <h2>Introduction</h2>
+
+        <p>
+            La protection de votre vie privée est une priorité pour l'Association Anti Harcèlement Marie-Curie (ci-après « l'Association » ou « FAH Marie-Curie »).
+            <br><br>Cette Politique de Confidentialité a pour objectif de vous informer sur la manière dont nous collectons, utilisons, stockons et protégeons vos données personnelles lors de votre utilisation de notre site internet.
+            <br><br>Cette politique est conforme au Règlement Général sur la Protection des Données (RGPD - UE 2016/679) et à la loi Informatique et Libertés.
+        </p>
+
+        <h2>Responsable du traitement</h2>
+
+        <p>
+            Responsable du traitement des données :
+            <br>Association Anti Harcèlement de la cité scolaire Marie-Curie
+            <br>92260 Fontenay-aux-Roses, France
+            <br>Email : fahmariecurie.pro@gmail.com
+            <br>SIREN : 923 754 980
+        </p>
+
+        <h2>Données collectées</h2>
+        <h3>Pour les membres de l'association</h3>
+
+        <p>
+            Lorsqu'un compte membre est créé par les administrateurs, nous collectons et traitons les données suivantes :
+            <ul>
+                <li>Adresse e-mail : utilisée comme identifiant de connexion</li>
+                <li>Mot de passe : stocké de manière cryptée pour garantir la sécurité</li>
+                <li>Données de connexion : date et heure de connexion, adresse IP (pour des raisons de sécurité)</li>
+            </ul>
+        </p>
+
+        <h3>Pour les participants aux quiz</h3>
+
+        <p>
+            Lors des séances de prévention, les participants peuvent participer à des quiz interactifs. Les données collectées sont :
+            <ul>
+                <li>Pseudo : choisi librement par le participant (aucune donnée d'identification réelle n'est demandée)</li>
+                <li>Adresse IP : collectée automatiquement par notre hébergeur (Supabase) pour des raisons techniques et de sécurité</li>
+            </ul>
+        </p>
+
+        <h3>Données de navigation</h3>
+
+        <p>
+            Le site n'utilise pas de cookies de suivi ou d'analyse. Cependant, des données techniques minimales (adresse IP, type de navigateur) peuvent être collectées automatiquement par nos hébergeurs (Vercel et Supabase) dans leurs journaux de connexion (logs) pour des raisons de sécurité et de fonctionnement technique.
+        </p>
+
+        <h2>Finalités du traitement</h2>
+
+        <p>
+            Vos données personnelles sont collectées et traitées pour les finalités suivantes :
+        </p>
+
+        <h3>Comptes membres </h3>
+
+        <ul>
+            <li>Gérer l'accès à l'espace membre réservé</li>
+            <li>Permettre l'authentification sécurisée des membres</li>
+            <li>Assurer la sécurité du site et prévenir les accès frauduleux</li>
+        </ul>
+
+        <h3>Quiz de prévention</h3>
+
+        <ul>
+            <li>Permettre la participation aux quiz lors des séances de prévention</li>
+            <li>Suivre les résultats des participants pendant la séance, et après la séance à des fins statistiques</li>
+            <li>Améliorer le contenu pédagogique de nos actions de prévention</li>
+        </ul>
+
+        <h3>Sécurité</h3>
+
+        <ul>
+            <li>Prévenir les abus et les tentatives de piratage</li>
+            <li>Garantir le bon fonctionnement technique du site</li>
+        </ul>
+
+        <h2>Base légale du traitement</h2>
+
+        <p>
+            Les traitements de données personnelles reposent sur les bases légales suivantes :
+            <ul>
+                <li>Intérêt légitime : pour la sécurité du site et la prévention des abus</li>
+                <li>Exécution d'un contrat : pour la gestion des comptes membres (adhésion à l'association)</li>
+                <li>Consentement : pour la participation aux quiz (participation volontaire)</li>
+            </ul>
+        </p>
+
+        <h2>Durée de conservation des données</h2>
+
+        <p>
+            Nous conservons vos données personnelles uniquement pour la durée nécessaire aux finalités pour lesquelles elles ont été collectées :
+            <ul>
+                <li>Comptes membres : Pendant la durée d'adhésion à l'association + 1 an maximum après la fin de l'adhésion</li>
+                <li>Pseudos des quiz : 30 jours maximum puis suppression manuelle</li>
+                <li>Logs de connexion (IP) : 12 mois maximum (obligation légale de sécurité)</li>
+            </ul>
+            <br><p>Au-delà de ces durées, les données sont supprimées définitivement ou anonymisées.</p>
+        </p>
+
+        <h2>Destinataires des données</h2>
+
+        <p>
+            Vos données personnelles sont destinées exclusivement à :
+            <ul>
+                <li>L'Association : les administrateurs du site pour la gestion technique</li>
+                <li>
+                    Nos prestataires techniques :
+                    <ul>
+                        <li>Supabase : hébergement de la base de données (États-Unis et Singapour - soumis aux clauses contractuelles types de la Commission Européenne)</li>
+                        <li>Vercel : hébergement du site web (États-Unis - soumis aux clauses contractuelles types)</li>
+                    </ul>
+                </li>
+            </ul>
+            <br><p>Ces prestataires agissent en qualité de sous-traitants et s'engagent à garantir la sécurité et la confidentialité de vos données conformément au RGPD.</p>
+            <br><br><p>Aucune donnée n'est vendue, louée ou cédée à des tiers à des fins commerciales.</p>
+        </p>
+
+        <h2>Transfert de données hors UE</h2>
+
+        <p>
+            Certains de nos prestataires (Supabase, Vercel) sont situés en dehors de l'Union Européenne. Ces transferts sont encadrés par :
+            <ul>
+                <li>Les clauses contractuelles types approuvées par la Commission Européenne</li>
+                <li>Des mesures de sécurité appropriées garantissant un niveau de protection équivalent au RGPD</li>
+            </ul>
+            <br>Pour plus d'informations sur les garanties mises en place :
+            <ul>
+                <li>Supabase : <a href="https://supabase.com/security">https://supabase.com/security</a></li>
+                <li>Vercel : <a href="https://vercel.com/legal/privacy-policy">https://vercel.com/legal/privacy-policy</a></li>
+            </ul>
+        </p>
+
+        <h2>Sécurité des données</h2>
+
+        <p>
+            Nous mettons en œuvre toutes les mesures techniques et organisationnelles appropriées pour protéger vos données contre :
+            <ul>
+                <li>L'accès non autorisé</li>
+                <li>La perte, la destruction ou l'altération accidentelle</li>
+                <li>La divulgation ou l'utilisation illicite</li>
+            </ul>
+            <br>Ces mesures incluent notamment :
+            <ul>
+                <li>Chiffrement des mots de passe (hachage sécurisé)</li>
+                <li>Connexion HTTPS (chiffrement des communications)</li>
+                <li>Authentification sécurisée pour l'accès à l'espace membre</li>
+                <li>Limitation d'accès : seuls les administrateurs autorisés peuvent accéder aux données</li>
+                <li>Suppression automatique des pseudos de quiz après 30 jours</li>
+                <li>Sauvegardes régulières pour prévenir la perte de données</li>
+            </ul>
+        </p>
+
+        <h2>Vos droits</h2>
+        <h3>Droit d'accès</h3>
+
+        <p>
+            Vous pouvez demander à consulter les données personnelles que nous détenons à votre sujet.
+        </p>
+
+        <h3>Droit de rectification</h3>
+
+        <p>
+            Vous pouvez demander la correction de vos données si elles sont inexactes ou incomplètes.
+        </p>
+
+        <h3>Droit à l'effacement ("droit à l'oubli")</h3>
+
+        <p>
+            Vous pouvez demander la suppression de vos données personnelles dans certains cas.
+        </p>
+
+        <h3>Droit à la limitation du traitement</h3>
+
+        <p>
+            Vous pouvez demander de limiter temporairement l'utilisation de vos données.
+        </p>
+
+        <h3>Droit d'opposition</h3>
+
+        <p>
+            Vous pouvez vous opposer à certains traitements de vos données, notamment pour des raisons tenant à votre situation particulière.
+        </p>
+
+        <h3>Droit à la portabilité</h3>
+
+        <p>
+            Vous pouvez demander à récupérer vos données dans un format structuré et couramment utilisé, ou demander leur transfert à un autre responsable.
+        </p>
+
+        <h3>Droit de retirer votre consentement</h3>
+
+        <p>
+            Lorsque le traitement est fondé sur votre consentement (ex : participation aux quiz), vous pouvez le retirer à tout moment.
+        </p>
+
+        <h3>Directives post-mortem</h3>
+
+        <p>
+            Vous pouvez définir des directives relatives au sort de vos données après votre décès.
+        </p>
+
+        <h2>Exercer vos droits</h2>
+
+        <p>
+            Pour exercer l'un de vos droits, vous pouvez nous contacter :
+            <br>Par email : <a href="mailto:fahmariecurie.pro@gmail.com"></a>
+            <br><br>Nous nous engageons à répondre à votre demande dans un délai d'un mois maximum à compter de sa réception.
+            <br><br>En cas de doute sur votre identité, nous pourrons vous demander une preuve d'identité pour garantir la sécurité de vos données.
+        </p>
+
+        <h2>Cookie</h2>
+
+        <p>
+            Le site n'utilise aucun cookie de suivi, d'analyse ou de publicité.
+            Les seuls cookies éventuellement déposés sont des cookies strictement nécessaires au fonctionnement du site (cookies de session pour l'authentification des membres), qui ne nécessitent pas de consentement préalable conformément à la réglementation.
+        </p>
+
+        <h2>Liens vers des sites tiers</h2>
+
+        <p>
+            Notre site peut contenir des liens vers des sites web tiers. Nous ne sommes pas responsables des pratiques de confidentialité de ces sites. Nous vous encourageons à lire les politiques de confidentialité de chaque site que vous visitez.
+        </p>
+
+        <h2>Modifications de la politique</h2>
+
+        <p>
+            Nous nous réservons le droit de modifier cette Politique de Confidentialité à tout moment pour refléter les évolutions légales, techniques ou organisationnelles.
+            <br><br>Toute modification sera publiée sur cette page avec une nouvelle date de mise à jour. Nous vous invitons à consulter régulièrement cette page.
+            <br><br>En cas de modification substantielle, nous nous efforcerons de vous en informer par un message visible sur le site.
+        </p>
+
+        <h2>Contact</h2>
+
+        <p>
+            Pour toute question concernant cette Politique de Confidentialité ou le traitement de vos données personnelles :
+            <br>Email : <a href="mailto:fahmariecurie.pro@gmail.com">fahmariecurie.pro@gmail.com</a>.
+        </p>
+
+        <br><br><br><p><i>En utilisant notre site, vous reconnaissez avoir lu et compris cette Politique de Confidentialité et acceptez le traitement de vos données personnelles tel que décrit ci-dessus.</i></p>
+
+
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <!-- Partie 1 : Section avec image de fond -->
+        <section class="footer-cta">
+            <div class="container">
+                <h2>Devenez acteur de la lutte contre le harcèlement</h2>
+                <p>Contribuez à financer nos actions de prévention et de soutien dans la cité scolaire et partout ailleurs !</p>
+                <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" target="_blank" class="cta-button">
+                    <span>Faire un don</span>
+                    <div class="arrow-circle">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Partie 2 : Section principale avec colonnes -->
+        <section class="footer-main">
+            <div class="container">
+                <div class="footer-columns">
+                    <!-- Colonne 1 : Logo et réseaux sociaux -->
+                    <div class="footer-col">
+                        <img src="assets/logos/fah-full-white.svg" alt="Logo FAH Marie-Curie" class="footer-logo">
+                        <div class="social-links">
+                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Colonne 2 : Compagnie -->
+                    <div class="footer-col">
+                        <h3>Compagnie</h3>
+                        <label class="footer-col-header" for="toggle-compagnie">
+                            <h3>Compagnie</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-compagnie" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./about.html">L'association</a></li>
+                            <li><a href="./actions.html">Nos actions</a></li>
+                            <li><a href="./espace-presse.html">Espace presse</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Colonne 3 : Liens utiles -->
+                    <div class="footer-col">
+                        <h3>Liens utiles</h3>
+                        <label class="footer-col-header" for="toggle-liens">
+                            <h3>Liens utiles</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-liens" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./comprendre.html">Comprendre</a></li>
+                            <li><a href="./agir.html">Agir</a></li>
+                            <li><a href="./player.html">Rejoindre un quiz</a></li>
+                            <li><a href="https://e-enfance.org/" target="_blank">e-Enfance</a></li>
+                            <li><a href="https://www.education.gouv.fr/non-au-harcelement" target="_blank">Non au harcèlement</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Colonne 4 : Besoin d'infos -->
+                    <div class="footer-col">
+                        <h3>Besoin d'infos</h3>
+                        <label class="footer-col-header" for="toggle-infos">
+                            <h3>Besoin d'infos</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-infos" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./index.html">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partie 3 : Section copyright et mentions légales -->
+        <section class="footer-bottom">
+            <div class="container">
+                <hr class="separator">
+                <div class="footer-bottom-content">
+                    <div class="legal-links">
+                        <a href="./cgu.html">Conditions générales d'utilisation</a>
+                        <a href="./politique-de-confidentialite.html">Politique de confidentialité</a>
+                        <a href="./mentions-legales.html">Mentions légales</a>
+                        <a href="./sitemap.html">Plan du site</a>
+                    </div>
+                    <div class="copyright">
+                        <p>© 2026 FAH Marie-Curie</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+    
+    <!-- JAVASCRIPT - Charger les composants dans l'ordre puis main.js -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/scroll-animations.js"></script>
+    <script src="js/components/cards.js"></script>
+    <script src="js/components/faq.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

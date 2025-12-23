@@ -1,0 +1,17 @@
+/* ============================================
+   HOME PAGE SPECIFIC STYLES
+   ============================================ */
+
+/* Styles spécifiques à la page d'accueil */
+/* La plupart des styles sont dans les sections individuelles */
+
+/* Page container */
+.page-container {
+  min-height: 100vh;
+  width: auto;
+}
+
+.nav-root {
+  height: 100vh;
+  width: auto;
+}

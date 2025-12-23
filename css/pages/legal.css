@@ -1,0 +1,64 @@
+/* ============================================
+   LEGAL PAGES STYLES (legal, Mentions légales, etc.)
+   ============================================ */
+
+.legal {
+  max-width: 770px;
+  padding: 0 var(--spacing-xl);
+  margin: var(--spacing-4xl) auto 200px;
+}
+
+.legal h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--color-black);
+  margin-top: 5rem;
+  margin-bottom: var(--spacing-xl);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+}
+
+.legal h2 {
+  font-size: var(--font-size-xl);
+  margin-top: 35px;
+  margin-bottom: var(--spacing-lg);
+  letter-spacing: -0.03em;
+}
+
+.legal h3 {
+  font-weight: var(--font-weight-medium);
+  font-size: 1.4rem;
+  margin: var(--spacing-md) 0;
+  letter-spacing: -0.03em;
+}
+
+.legal p, 
+.legal ul, 
+.legal a {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-light);
+  color: var(--color-grey-light);
+}
+
+.legal ul {
+  margin-left: var(--spacing-xl);
+  list-style: disc;
+}
+
+.legal a {
+  text-decoration: underline;
+  transition: color var(--transition-fast);
+}
+
+.legal a:hover {
+  color: var(--color-black);
+}
+
+@media (max-width: 576px) {
+  .legal p,
+  .legal ul, 
+  .legal a {
+    font-size: var(--font-size-base);
+  }
+}

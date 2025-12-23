@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>FAH Marie-Curie</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Over+the+Rainbow&display=swap" rel="stylesheet">
+    
+    <!-- CSS - UN SEUL FICHIER QUI IMPORTE TOUT -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="topbar-wrapper">
+        <div class="navbar-pill">
+            <div class="navbar-inner">
+                <!-- Logo -->
+                <a href="./index.html" class="logo-container">
+                    <img src="assets/logos/fah.png" alt="Logo" class="logo-svg">
+                </a>
+
+                <!-- Navigation Desktop -->
+                <div class="nav-links-desktop">
+                    <a href="./about.html" class="nav-link">L'association</a>
+                    <a href="./actions.html" class="nav-link">Nos actions</a>
+                    <a href="./comprendre.html" class="nav-link">Comprendre</a>
+                    <a href="./agir.html" class="nav-link">Agir</a>
+                    
+                    <div class="nav-spacer">
+                        <a href="./login.html" class="nav-link">Se connecter</a>
+                        <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link nav-link-cta">Faire un don</a>
+                    </div>
+                </div>
+
+                <!-- Burger Menu Button -->
+                <button class="burger-btn" onclick="toggleMobileMenu()">
+                    <div class="burger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div>
+            <a href="./about.html" class="nav-link">L'association</a>
+            <a href="./actions.html" class="nav-link">Nos actions</a>
+            <a href="./comprendre.html" class="nav-link">Comprendre</a>
+            <a href="./agir.html" class="nav-link">Agir</a>
+        </div>
+        
+        <div class="mobile-menu-bottom">
+            <a href="./login.html" class="nav-link-login">Se connecter</a>
+            <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link-cta-mobile">Faire un don</a>
+        </div>
+    </div>
+
+
+    <section class="section-grey-bg">
+        <div class="container">
+            <h1>Conditions générales d'utilisation</h1>
+        </div>
+    </section>
+
+
+    <div class="legal">
+        <p>
+            Association Anti Harcèlement de la cité scolaire Marie-Curie (FAH Marie-Curie)
+            <br>Association loi 1901 à but non lucratif
+            <br>Siège social : 92260 Fontenay-aux-Roses, France
+            <br>Dernière mise à jour : 15/11/2025
+        </p>
+
+        <h2>Objet</h2>
+
+        <p>
+            Les présentes Conditions Générales d'Utilisation (CGU) régissent l'accès et l'utilisation du site internet de l'Association Anti Harcèlement de la cité scolaire Marie-Curie (ci-après « l'Association » ou « FAH Marie-Curie »).
+            <br><br>L'Association a pour mission la lutte contre le harcèlement scolaire par la prévention et la sensibilisation.
+            <br><br>Le site a pour objet de présenter l'Association, ses actions et de fournir un espace membre réservé aux adhérents.
+        </p>
+
+        <h2>Acceptation des CGU</h2>
+
+        <p>
+            L'accès et l'utilisation du site impliquent l'acceptation sans réserve des présentes CGU. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le site.
+            <br><br>L'Association se réserve le droit de modifier les présentes CGU à tout moment. Les modifications prennent effet dès leur mise en ligne. Il est conseillé de consulter régulièrement cette page.
+        </p>
+
+        <h2>Accès au site</h2>
+        <h3>Accès public</h3>
+
+        <p>
+            Le site est accessible gratuitement à tout utilisateur disposant d'un accès Internet. Les coûts liés à l'accès (matériel, logiciels, connexion Internet) sont à la charge de l'utilisateur.
+        </p>
+
+        <h3>Espace membre</h3>
+
+        <p>
+            Certaines sections du site sont réservées aux membres de l'Association. L'accès à cet espace requiert une authentification par identifiant et mot de passe.
+            <br><br>Les comptes membres sont créés uniquement par les administrateurs de l'Association. Il n'est pas possible de créer un compte soi-même.
+            <br><br>Chaque membre est responsable de la confidentialité de ses identifiants de connexion et de toutes les activités effectuées sous son compte.
+        </p>
+
+        <h3>Disponibilité</h3>
+
+        <p>
+            L'Association s'efforce d'assurer l'accessibilité du site 24h/24 et 7j/7, mais ne peut garantir une disponibilité continue. Le site peut être temporairement indisponible pour des raisons de maintenance, de mise à jour ou pour des raisons techniques indépendantes de la volonté de l'Association.
+        </p>
+
+        <h2>Utilisation du site</h2>
+        <h3>Usage autorisé</h3>
+
+        <p>
+            Le site est destiné à un usage strictement personnel et informatif. Les utilisateurs s'engagent à :
+            <ul>
+                <li>Utiliser le site conformément aux lois en vigueur</li>
+                <li>Ne pas perturber le fonctionnement du site</li>
+                <li>Ne pas tenter d'accéder à des zones réservées sans autorisation</li>
+                <li>Ne pas extraire ou réutiliser de manière systématique des contenus du site</li>
+            </ul>
+        </p>
+
+        <h3>Quiz et séances de prévention</h3>
+
+        <p>
+            Lors des séances de prévention, les participants peuvent accéder à des quiz interactifs. La participation nécessite uniquement la saisie d'un pseudo choisi librement par le participant.
+            <br><br>Les pseudos collectés sont conservés pour une durée maximale de 30 jours puis automatiquement supprimés.
+        </p>
+
+        <h3>Comportement prohibé</h3>
+
+        <p>
+            Il est strictement interdit de :
+            <ul>
+                <li>Diffuser des contenus illicites, diffamatoires, injurieux ou contraires aux bonnes mœurs</li>
+                <li>Usurper l'identité d'un tiers</li>
+                <li>Violer les droits de propriété intellectuelle de l'Association ou de tiers</li>
+                <li>Tenter de nuire au fonctionnement du site ou d'y introduire des virus ou programmes malveillants</li>
+            </ul>
+        </p>
+
+        <h2>Contenu du site</h2>
+        <h3>Contenu général</h3>
+
+        <p>
+            Les contenus publiés sur le site (textes, images, vidéos, documents) sont fournis à titre informatif. L'Association s'efforce d'assurer l'exactitude des informations mais ne peut garantir l'absence d'erreurs ou d'omissions.
+        </p>
+
+        <h3>Publications</h3>
+
+        <p>
+            Seuls les administrateurs de l'Association sont autorisés à publier du contenu sur le site. Les utilisateurs, y compris les membres, ne peuvent pas publier de contenu.
+        </p>
+
+        <h2>Propriété intellectuelle</h2>
+        <h3>Droits de l'Association</h3>
+
+        <p>
+            L'ensemble du site (structure, design, code, contenus) est la propriété exclusive de l'Association Anti Harcèlement Marie-Curie, sauf mention contraire.
+            <br><br>Tous les éléments du site sont protégés par le droit d'auteur, le droit des marques et le droit des bases de données.
+        </p>
+
+        <h3>Utilisaton autorisée</h3>
+
+        <p>
+            Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie du site, par quelque procédé que ce soit, est interdite sans l'autorisation écrite préalable de l'Association, sauf pour un usage strictement personnel et privé.
+        </p>
+
+        <h2>Protection des données personnelles</h2>
+
+        <p>
+            L'Association collecte et traite certaines données personnelles dans le cadre de l'utilisation du site.
+            <br><br>Pour des informations complètes et détaillées sur la collecte, le traitement, la conservation et vos droits concernant vos données personnelles, veuillez consulter notre Politique de Confidentialité.
+            <br><br>En résumé :
+            <ul>
+                <li>Les données des membres (email, mot de passe crypté) sont conservées pendant la durée d'adhésion</li>
+                <li>Les pseudos des quiz sont conservés 30 jours maximum puis automatiquement supprimés</li>
+                <li>Vous disposez de droits d'accès, de rectification, d'effacement et d'opposition</li>
+                <li>Le site n'utilise pas de cookies</li>
+            </ul>
+            <p>Pour toute question ou exercice de vos droits : <a href="mailto:fahmariecurie.pro@gmail.com">fahmariecurie.pro@gmail.com</a>.</p>
+        </p>
+
+        <h2>Liens hypertextes</h2>
+
+        <p>
+            Le site peut contenir des liens vers des sites tiers. L'Association n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu, leur disponibilité ou leur politique de confidentialité.
+        </p>
+
+        <h2>Responsabilité</h2>
+        <h3>Limitation de responsabilité</h3>
+
+        <p>
+            L'Association met tout en œuvre pour assurer le bon fonctionnement du site mais ne peut être tenue responsable :
+            <ul>
+                <li>Des interruptions ou dysfonctionnements du site</li>
+                <li>Des dommages directs ou indirects résultant de l'utilisation du site</li>
+                <li>Des virus ou programmes malveillants qui pourraient infecter l'équipement de l'utilisateur</li>
+                <li>De l'utilisation frauduleuse des identifiants par un tiers</li>
+            </ul>
+        </p>
+
+        <h3>Utilisation du contenu</h3>
+
+        <p>
+            Les informations fournies sur le site, notamment en matière de prévention du harcèlement, sont données à titre informatif. Elles ne se substituent pas à un accompagnement personnalisé ou à l'intervention de professionnels compétents en cas de situation de harcèlement avérée.
+        </p>
+
+        <h2>Droit applicable et juridiction</h2>
+
+        <p>
+            Les présentes CGU sont régies par le droit français.
+            <br><br>En cas de litige relatif à l'interprétation ou l'exécution des présentes CGU, et à défaut de résolution amiable, les tribunaux français seront seuls compétents.
+        </p>
+
+        <h2>Contact</h2>
+
+        <p>
+            Pour toute question concernant les présentes CGU ou l'utilisation du site, vous pouvez contacter l'Association :
+            <a href="mailto:fahmariecurie.pro@gmail.com">fahmariecurie.pro@gmail.com</a>
+        </p>
+
+        <br><br><br><p><i>En utilisant ce site, vous reconnaissez avoir lu, compris et accepté les présentes Conditions Générales d'Utilisation.</i></p>
+
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <!-- Partie 1 : Section avec image de fond -->
+        <section class="footer-cta">
+            <div class="container">
+                <h2>Devenez acteur de la lutte contre le harcèlement</h2>
+                <p>Contribuez à financer nos actions de prévention et de soutien dans la cité scolaire et partout ailleurs !</p>
+                <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" target="_blank" class="cta-button">
+                    <span>Faire un don</span>
+                    <div class="arrow-circle">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Partie 2 : Section principale avec colonnes -->
+        <section class="footer-main">
+            <div class="container">
+                <div class="footer-columns">
+                    <!-- Colonne 1 : Logo et réseaux sociaux -->
+                    <div class="footer-col">
+                        <img src="assets/logos/fah-full-white.svg" alt="Logo FAH Marie-Curie" class="footer-logo">
+                        <div class="social-links">
+                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Colonne 2 : Compagnie -->
+                    <div class="footer-col">
+                        <h3>Compagnie</h3>
+                        <label class="footer-col-header" for="toggle-compagnie">
+                            <h3>Compagnie</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-compagnie" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./about.html">L'association</a></li>
+                            <li><a href="./actions.html">Nos actions</a></li>
+                            <li><a href="./espace-presse.html">Espace presse</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Colonne 3 : Liens utiles -->
+                    <div class="footer-col">
+                        <h3>Liens utiles</h3>
+                        <label class="footer-col-header" for="toggle-liens">
+                            <h3>Liens utiles</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-liens" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./comprendre.html">Comprendre</a></li>
+                            <li><a href="./agir.html">Agir</a></li>
+                            <li><a href="./player.html">Rejoindre un quiz</a></li>
+                            <li><a href="https://e-enfance.org/" target="_blank">e-Enfance</a></li>
+                            <li><a href="https://www.education.gouv.fr/non-au-harcelement" target="_blank">Non au harcèlement</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Colonne 4 : Besoin d'infos -->
+                    <div class="footer-col">
+                        <h3>Besoin d'infos</h3>
+                        <label class="footer-col-header" for="toggle-infos">
+                            <h3>Besoin d'infos</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-infos" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./index.html">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partie 3 : Section copyright et mentions légales -->
+        <section class="footer-bottom">
+            <div class="container">
+                <hr class="separator">
+                <div class="footer-bottom-content">
+                    <div class="legal-links">
+                        <a href="./cgu.html">Conditions générales d'utilisation</a>
+                        <a href="./politique-de-confidentialite.html">Politique de confidentialité</a>
+                        <a href="./mentions-legales.html">Mentions légales</a>
+                        <a href="./sitemap.html">Plan du site</a>
+                    </div>
+                    <div class="copyright">
+                        <p>© 2026 FAH Marie-Curie</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+    
+    <!-- JAVASCRIPT - Charger les composants dans l'ordre puis main.js -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/scroll-animations.js"></script>
+    <script src="js/components/cards.js"></script>
+    <script src="js/components/faq.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

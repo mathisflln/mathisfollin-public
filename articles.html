@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Articles – FAH Marie-Curie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    body { font-family: "Stack Sans Headline", sans-serif; background: #fff; margin:0; padding:40px; }
+    h1 { text-align:center; margin-bottom:40px; }
+    .articles { display:grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap:24px; }
+    .article { background:#f9f9f9; padding:24px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.05); transition: transform 0.2s ease; }
+    .article:hover { transform: translateY(-4px); }
+    .article h2 { margin-top:0; font-size:1.3rem; }
+    .article p { color:#555; font-size:0.95rem; }
+    .read-more { display:inline-block; margin-top:12px; color:#111; font-weight:600; text-decoration:none; }
+  </style>
+</head>
+
+<body>
+
+  <h1>Nos Articles</h1>
+  <div class="articles" id="articles-container">
+    <p>Chargement...</p>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://ckfdysasgawyixbxjyfz.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrZmR5c2FzZ2F3eWl4YnhqeWZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5ODg1NjcsImV4cCI6MjA3NzU2NDU2N30.t0ubaRk5sz7kewyEsOg4CpFvj47S9U1J1SP_3DQBmE8";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function loadArticles() {
+      const container = document.getElementById("articles-container");
+
+      const { data: articles, error } = await supabaseClient
+        .from("articles")
+        .select("*")
+        .eq("published", true)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        container.innerHTML = "<p>Erreur de chargement.</p>";
+        return;
+      }
+
+      if (!articles.length) {
+        container.innerHTML = "<p>Aucun article publié pour le moment.</p>";
+        return;
+      }
+
+      container.innerHTML = "";
+
+        articles.forEach(article => {
+        const excerptText = article.content.length > 120 ? article.content.substr(0, 120) + "..." : article.content;
+        const excerptHTML = marked.parse(excerptText); // <-- Markdown en HTML
+        const div = document.createElement("div");
+        div.className = "article";
+        div.innerHTML = `
+            <h2>${article.title}</h2>
+            <div>${excerptHTML}</div>
+            <a class="read-more" href="article.html?slug=${article.slug}">Lire plus →</a>
+        `;
+        container.appendChild(div);
+        });
+    }
+
+    loadArticles();
+    
+  </script>
+
+</body>
+</html>

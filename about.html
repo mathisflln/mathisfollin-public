@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>FAH Marie-Curie</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Over+the+Rainbow&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+    
+    <!-- CSS - UN SEUL FICHIER QUI IMPORTE TOUT -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="topbar-wrapper">
+        <div class="navbar-pill">
+            <div class="navbar-inner">
+                <!-- Logo -->
+                <a href="./index.html" class="logo-container">
+                    <img src="assets/logos/fah.png" alt="Logo" class="logo-svg">
+                </a>
+
+                <!-- Navigation Desktop -->
+                <div class="nav-links-desktop">
+                    <a href="./about.html" class="nav-link">L'association</a>
+                    <a href="./actions.html" class="nav-link">Nos actions</a>
+                    <a href="./comprendre.html" class="nav-link">Comprendre</a>
+                    <a href="./agir.html" class="nav-link">Agir</a>
+                    
+                    <div class="nav-spacer">
+                        <a href="./login.html" class="nav-link">Se connecter</a>
+                        <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link nav-link-cta">Faire un don</a>
+                    </div>
+                </div>
+
+                <!-- Burger Menu Button -->
+                <button class="burger-btn" onclick="toggleMobileMenu()">
+                    <div class="burger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div>
+            <a href="./about.html" class="nav-link">L'association</a>
+            <a href="./actions.html" class="nav-link">Nos actions</a>
+            <a href="./comprendre.html" class="nav-link">Comprendre</a>
+            <a href="./agir.html" class="nav-link">Agir</a>
+        </div>
+        
+        <div class="mobile-menu-bottom">
+            <a href="./login.html" class="nav-link-login">Se connecter</a>
+            <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link-cta-mobile">Faire un don</a>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="asso-section-hero">
+        <div class="asso-hero-content">
+            <h1>Une communauté engagée contre le harcèlement</h1>
+            <p>Nous sensibilisons, accompagnons et informons pour faire reculer le harcèlement, au sein et au-delà de l'espace scolaire.</p>
+        </div>
+    </section>
+
+    <section class="ipad-section">
+        <div class="ipad-content">
+            <h2>L’équipe qui donne vie au projet et porte nos actions sur le terrain</h2>
+            <img src="assets/images/ipad.jpg">
+            <p>L'association a été créée en novembre 2022 en réponse à la hausse des cas de harcèlement en France afin garantir à chaque élève un environnement scolaire sain et sécurisé.</p>
+        </div>
+    </section>
+
+
+
+
+
+    <section class="equipe-section">
+        <div class="carousel-container">
+            <!-- Card fixe -->
+            <div class="card-fixed">
+                <h2>La dream team</h2>
+                <p>Ceux qui coordonnent l'association au quotidien</p>
+            </div>
+
+            <!-- Carousel -->
+            <div class="carousel">
+                <div class="member-card">
+                <img src="https://via.placeholder.com/250x150" alt="Eva Jacinto">
+                <h3>Eva Jacinto</h3>
+                <p class="role">Présidente</p>
+                <p class="desc">Elle s’occupe de tout ce qui touche à la communication. Que ce soit les posts, les affiches ou les mails, elle sait toujours comment rendre nos projets visibles et attractifs.</p>
+                </div>
+                <div class="member-card">
+                <img src="assets/images/mathis.JPG" alt="Mathis Follin">
+                <h3>Mathis Follin</h3>
+                <p class="role">Vice-président</p>
+                <p class="desc">C'est celui qui gère le côté technique : site web, plateforme quiz, petites bidouilles pour que tout fonctionne. Bref, il s’assure que l’asso tourne sans accroc.</p>
+                </div>
+                <div class="member-card">
+                <img src="https://via.placeholder.com/250x150" alt="Sandra Tomas">
+                <h3>Sandra Tomas</h3>
+                <p class="role">Trésorière</p>
+                <p class="desc">Elle s’occupe des finances de l’association et veille à ce que tout reste clair et équilibré. On peut compter sur elle pour que le budget ne fasse pas de surprises.</p>
+                </div>
+                <div class="member-card">
+                <img src="https://via.placeholder.com/250x150" alt="Thaiis Doyer">
+                <h3>Thaiis Doyer</h3>
+                <p class="role">Secrétaire</p>
+                <p class="desc">Elle organise les réunions et suit le planning des projets. Elle garde tout sous contrôle et s’assure que rien ne tombe entre les mailles du filet.</p>
+                </div>
+                <div class="member-card">
+                <img src="https://via.placeholder.com/250x150" alt="Thaiis Doyer">
+                <h3>Nathalie Iram</h3>
+                <p class="role">CPE au lycée Marie-Curie</p>
+                <p class="desc">Elle transforme les idées en projets concrets dans la cité scolaire. Elle relie les bonnes personnes, met les ressources en place et fait en sorte que tout prenne vie.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="valeurs-section">
+        <h2>Les valeurs qui <span class="highlight-word1">unissent</span> notre mouvement</h2>
+        <p class="subtitle">Ces quatre piliers sont le socle de tout ce que nous entreprenons : ils définissent notre engagement, notre approche et la façon dont nous accompagnons chacun dans la lutte contre le harcèlement.</p>
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="icon-circle"><i class="fa-solid fa-check"></i></div>
+                <div class="text-block">
+                    <h3>Courage</h3>
+                    <p>On ne reste pas silencieux face à l'injustice. Nous donnons la parole aux victimes, nous encourageons les témoins à agir, et nous bousculons les mentalités pour créer un changement durable.</p>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="icon-circle"><i class="fa-solid fa-check"></i></div>
+                <div class="text-block">
+                    <h3>Bienveillance</h3>
+                    <p>Oui, on sait, ce mot est partout... Mais nos actions parlent d'elles-mêmes. Écoute, empathie, respect : ce sont les piliers de notre approche. Ici, chacun a sa place et mérite d'être entendu.</p>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="icon-circle"><i class="fa-solid fa-check"></i></div>
+                <div class="text-block">
+                    <h3>Résiliance</h3>
+                    <p>Les obstacles sont nombreux, mais nous continuons d'avancer. Face aux défis, nous gardons le cap avec détermination et optimisme. Parce que chaque petit pas compte dans cette lutte.</p>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="icon-circle"><i class="fa-solid fa-check"></i></div>
+                <div class="text-block">
+                    <h3>Proximité</h3>
+                    <p>Nous ne sommes pas une association distante. Nous sommes vos camarades de classe, vos voisins de table, vos pairs. Cette proximité fait notre force et rend notre action authentique.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- FOOTER -->
+    <footer>
+        <!-- Partie 1 : Section avec image de fond -->
+        <section class="footer-cta">
+            <div class="container">
+                <h2>Devenez acteur de la lutte contre le harcèlement</h2>
+                <p>Contribuez à financer nos actions de prévention et de soutien dans la cité scolaire et partout ailleurs !</p>
+                <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" target="_blank" class="cta-button">
+                    <span>Faire un don</span>
+                    <div class="arrow-circle">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Partie 2 : Section principale avec colonnes -->
+        <section class="footer-main">
+            <div class="container">
+                <div class="footer-columns">
+                    <!-- Colonne 1 : Logo et réseaux sociaux -->
+                    <div class="footer-col">
+                        <img src="assets/logos/fah-full-white.svg" alt="Logo FAH Marie-Curie" class="footer-logo">
+                        <div class="social-links">
+                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Colonne 2 : Compagnie -->
+                    <div class="footer-col">
+                        <h3>Compagnie</h3>
+                        <label class="footer-col-header" for="toggle-compagnie">
+                            <h3>Compagnie</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-compagnie" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./about.html">L'association</a></li>
+                            <li><a href="./actions.html">Nos actions</a></li>
+                            <li><a href="./espace-presse.html">Espace presse</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Colonne 3 : Liens utiles -->
+                    <div class="footer-col">
+                        <h3>Liens utiles</h3>
+                        <label class="footer-col-header" for="toggle-liens">
+                            <h3>Liens utiles</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-liens" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./comprendre.html">Comprendre</a></li>
+                            <li><a href="./agir.html">Agir</a></li>
+                            <li><a href="./player.html">Rejoindre un quiz</a></li>
+                            <li><a href="https://e-enfance.org/" target="_blank">e-Enfance</a></li>
+                            <li><a href="https://www.education.gouv.fr/non-au-harcelement" target="_blank">Non au harcèlement</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Colonne 4 : Besoin d'infos -->
+                    <div class="footer-col">
+                        <h3>Besoin d'infos</h3>
+                        <label class="footer-col-header" for="toggle-infos">
+                            <h3>Besoin d'infos</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-infos" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./index.html">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partie 3 : Section copyright et mentions légales -->
+        <section class="footer-bottom">
+            <div class="container">
+                <hr class="separator">
+                <div class="footer-bottom-content">
+                    <div class="legal-links">
+                        <a href="./cgu.html">Conditions générales d'utilisation</a>
+                        <a href="./politique-de-confidentialite.html">Politique de confidentialité</a>
+                        <a href="./mentions-legales.html">Mentions légales</a>
+                        <a href="./sitemap.html">Plan du site</a>
+                    </div>
+                    <div class="copyright">
+                        <p>© 2026 FAH Marie-Curie</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+    <!-- JAVASCRIPT - Charger les composants dans l'ordre puis main.js -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/scroll-animations.js"></script>
+    <script src="js/components/cards.js"></script>
+    <script src="js/components/faq.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+

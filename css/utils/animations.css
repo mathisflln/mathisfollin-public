@@ -1,0 +1,264 @@
+/* ============================================
+   ANIMATIONS & TRANSITIONS
+   ============================================ */
+
+/* === SCROLL ANIMATIONS === */
+
+.slide-left {
+  transform: translateX(-200px);
+  transition: transform var(--transition-slower);
+}
+
+.slide-right {
+  transform: translateX(200px);
+  transition: transform var(--transition-slower);
+}
+
+.slide-up {
+  transform: translateY(100px);
+  transition: transform var(--transition-slower);
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity var(--transition-slower);
+}
+
+.zoom-in {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity var(--transition-slower), transform var(--transition-slower);
+}
+
+/* État visible (activé par JavaScript) */
+.slide-left.visible,
+.slide-right.visible,
+.slide-up.visible,
+.fade-in.visible,
+.zoom-in.visible {
+  transform: translateX(0) translateY(0) scale(1);
+  opacity: 1;
+  filter: drop-shadow(rgb(57, 57, 57, .25) 1px 1px 1px);
+}
+
+/* Délais optionnels */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }
+
+/* === HIGHLIGHT ANIMATIONS === */
+
+.highlight-word1,
+.highlight-word2,
+.highlight-word3,
+.highlight-word4 {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.highlight-word1::after,
+.highlight-word2::after,
+.highlight-word3::after, 
+.highlight-word4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: contain;
+  pointer-events: none;
+  z-index: -1;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path var(--transition-slower);
+}
+
+.highlight-word1::after {
+  rotate: 3deg;
+  height: 0.52em;
+  bottom: .3em;
+  background-image: url('../../assets/images/highlight1.png');
+}
+
+.highlight-word2::after {
+  rotate: -4deg;
+  height: 35px;
+  bottom: .2em;
+  background-image: url('../../assets/images/highlight2.png');
+}
+
+.highlight-word3::after {
+  height: 3em;
+  bottom: 0.3em;
+  background-image: url('../../assets/images/highlight3.png');
+}
+
+.highlight-word4::after {
+  rotate: -3deg;
+  height: 0.91em;
+  bottom: .2em;
+  background-image: url('../../assets/images/highlight4.png');
+}
+
+.highlight-word1.visible::after,
+.highlight-word2.visible::after,
+.highlight-word3.visible::after,
+.highlight-word4.visible::after {
+  clip-path: inset(0 0 0 0);
+}
+
+/* === STICKER ANIMATIONS === */
+
+@keyframes slideOutFromCenter {
+  0% {
+    transform: translate(var(--center-x), var(--center-y)) rotate(0deg) scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: translate(0, 0) rotate(var(--rotate)) scale(1);
+    opacity: 1;
+  }
+  85% {
+    transform: translate(0, 0) rotate(var(--rotate)) scale(1.1);
+  }
+  100% {
+    transform: translate(0, 0) rotate(var(--rotate)) scale(1);
+    opacity: 1;
+  }
+}
+
+.floating-sticker {
+  position: absolute;
+  z-index: -1;
+  height: auto;
+  filter: drop-shadow(rgb(57, 57, 57, .25) 1px 1px 1px);
+  opacity: 0;
+}
+
+.floating-sticker.animate {
+  animation: slideOutFromCenter 0.7s ease-out forwards;
+}
+
+/* Positions finales + point de départ (centre de la feuille) */
+.sticker1 {
+  --rotate: 0deg;
+  --center-x: 200px;
+  --center-y: -150px;
+  bottom: 7.5%;
+  right: 270px;
+  width: 150px;
+}
+
+.sticker2 {
+  --rotate: 5deg;
+  --center-x: 200px;
+  --center-y: 50px;
+  top: 35%;
+  left: 40px;
+  width: 100px;
+}
+
+.sticker3 {
+  --rotate: 0deg;
+  --center-x: -50px;
+  --center-y: 200px;
+  top: 4.5%;
+  left: 345px;
+  width: 120px;
+}
+
+.sticker4 {
+  --rotate: -14deg;
+  --center-x: -200px;
+  --center-y: 100px;
+  top: 20%;
+  right: -20px;
+  width: 170px;
+}
+
+.sticker5 {
+  z-index: -2;
+  --rotate: 22deg;
+  --center-x: -80px;
+  --center-y: 150px;
+  top: 8%;
+  left: 260px;
+  width: 130px;
+}
+
+.sticker6 {
+  --rotate: 180deg;
+  --center-x: 150px;
+  --center-y: -100px;
+  bottom: 11%;
+  left: 48px;
+  width: 85px;
+}
+
+.sticker7 {
+  --rotate: 0deg;
+  --center-x: -150px;
+  --center-y: -50px;
+  bottom: 20%;
+  right: 17px;
+  width: 120px;
+}
+
+.sticker8 {
+  z-index: -2;
+  --rotate: 0deg;
+  --center-x: 180px;
+  --center-y: 0px;
+  bottom: 44%;
+  left: 37px;
+  width: 130px;
+}
+
+@media (max-width: 600px) {
+  .sticker1 {
+    right: 40px;
+    width: 110px;
+    bottom: 10%;
+  }
+
+  .sticker2 {
+    top: 35%;
+    left: 10px;
+    width: 60px;
+  }
+
+  .sticker3 {
+    top: 8%;
+    left: 250px;
+    width: 90px;
+  }
+
+  .sticker4 {
+    top: 30%;
+    right: -10px;
+    width: 100px;
+  }
+
+  .sticker5 {
+    top: 9%;
+    left: 90px;
+    width: 100px;
+  }
+
+  .sticker6 {
+    bottom: 9%;
+    left: 20px;
+    width: 65px;
+  }
+
+  .sticker7 {
+    right: 5px;
+    width: 90px;
+  }
+
+  .sticker8 {
+    visibility: hidden;
+  }
+}

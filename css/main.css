@@ -1,0 +1,54 @@
+/* ============================================
+   MAIN CSS - FAH Marie-Curie
+   Fichier principal qui importe tous les modules
+   ============================================ */
+
+/* === BASE === */
+@import url('base/variables.css');
+@import url('base/reset.css');
+
+/* === COMPONENTS === */
+@import url('components/navbar.css');
+@import url('components/footer.css');
+@import url('components/buttons.css');
+@import url('components/forms.css');
+
+/* === SECTIONS === */
+@import url('sections/hero.css');
+@import url('sections/yellow-section.css');
+@import url('sections/quiz.css');
+@import url('sections/stacked-cards.css');
+@import url('sections/faq.css');
+
+/* === PAGES === */
+@import url('pages/home.css');
+@import url('pages/about.css');
+@import url('pages/actions.css');
+@import url('pages/comprendre.css');
+@import url('pages/agir.css');
+@import url('pages/legal.css');
+
+/* === UTILITIES === */
+@import url('utils/animations.css');
+@import url('utils/helpers.css');
+
+/* === SECTIONS COMMUNES === */
+
+.section-grey-bg {
+  background-image: url('../assets/images/grey-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: var(--spacing-4xl) var(--spacing-lg) var(--spacing-4xl);
+  text-align: center;
+}
+
+.section-grey-bg h1 {
+  text-align: center;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--color-black);
+  margin-top: 5rem;
+  margin-bottom: var(--spacing-xl);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: var(--font-weight-medium);
+}

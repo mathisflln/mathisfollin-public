@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agir - FAH Marie-Curie</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #FFFF10;
+            --color-black: #0d0d0d;
+            --color-grey: #5E5E5E;
+            --color-text-secondary: #666666;
+            --color-white: #FAFAFA;
+            --color-pure-white: #ffffff;
+            --font-primary: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-size-base: 1rem;
+            --font-size-md: 1.1rem;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-4xl: 100px;
+            --border-radius-lg: 15px;
+            --transition-base: 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--color-white);
+            color: var(--color-black);
+            line-height: 1.6;
+        }
+
+        .hero-agir {
+            text-align: center;
+            margin: 100px auto 80px;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero-agir h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 25px;
+            font-weight: 500;
+            line-height: 1.1;
+        }
+
+        .hero-agir p {
+            font-size: var(--font-size-md);
+            font-weight: 300;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .section-main {
+            max-width: 1100px;
+            margin: 100px auto;
+            padding: 0 20px;
+        }
+
+        .section-main h2 {
+            font-size: clamp(2rem, 3vw, 3rem);
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .section-main > p {
+            font-size: var(--font-size-md);
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--color-text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .conseils-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .conseil-bloc {
+            background: var(--color-pure-white);
+            padding: 30px;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid #e8e8e8;
+        }
+
+        .conseil-bloc h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .conseil-bloc h3 i {
+            color: var(--color-primary);
+        }
+
+        .conseil-bloc p {
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--color-text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .conseil-bloc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .conseil-bloc li {
+            padding: 8px 0 8px 30px;
+            position: relative;
+            font-size: 0.98rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .conseil-bloc li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--color-black);
+            font-weight: 600;
+        }
+
+        .important-box {
+            background: rgba(255, 255, 16, 0.15);
+            padding: 35px 40px;
+            border-radius: var(--border-radius-lg);
+            border-left: 4px solid var(--color-primary);
+            margin: 50px 0;
+        }
+
+        .important-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .important-box p {
+            font-size: 1.05rem;
+            font-weight: 300;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .actions-liste {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .action-item {
+            display: flex;
+            gap: 20px;
+            background: var(--color-pure-white);
+            padding: 25px;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid #e8e8e8;
+        }
+
+        .action-numero {
+            background: var(--color-primary);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .action-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .action-content p {
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--color-text-secondary);
+        }
+
+        .section-dark {
+            background: var(--color-black);
+            color: var(--color-pure-white);
+            padding: 80px 20px;
+            margin: 100px 0;
+        }
+
+        .section-dark-content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-dark h2 {
+            font-size: clamp(2rem, 3vw, 3rem);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .section-dark > p {
+            font-size: var(--font-size-md);
+            font-weight: 300;
+            line-height: 1.7;
+            margin-bottom: 50px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: var(--border-radius-lg);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .card p {
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .numeros-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .numero-card {
+            background: var(--color-pure-white);
+            padding: 40px 35px;
+            border-radius: var(--border-radius-lg);
+            border: 2px solid #e8e8e8;
+        }
+
+        .numero-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--color-primary);
+        }
+
+        .numero-display {
+            background: var(--color-primary);
+            padding: 12px 25px;
+            border-radius: 8px;
+        }
+
+        .numero-display span {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--color-black);
+        }
+
+        .numero-titre h3 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 16, 0.2);
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .numero-card p {
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--color-text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .numero-card ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        .numero-card li {
+            padding: 6px 0 6px 25px;
+            position: relative;
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .numero-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        .ressources-liste {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .ressource-item {
+            background: var(--color-pure-white);
+            padding: 25px;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid #e8e8e8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .ressource-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .ressource-info p {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--color-text-secondary);
+        }
+
+        .ressource-btn {
+            background: var(--color-black);
+            color: var(--color-pure-white);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 400;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: var(--transition-base);
+        }
+
+        .ressource-btn:hover {
+            background: var(--color-primary);
+            color: var(--color-black);
+        }
+
+        .intervention-details {
+            background: var(--color-pure-white);
+            padding: 40px;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid #e8e8e8;
+        }
+
+        .intervention-details h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .intervention-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .intervention-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: rgba(255, 255, 16, 0.08);
+            border-radius: 8px;
+        }
+
+        .intervention-item i {
+            color: var(--color-black);
+        }
+
+        .intervention-item span {
+            font-size: 0.98rem;
+            font-weight: 300;
+        }
+
+        .intervention-note {
+            background: rgba(255, 255, 16, 0.15);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+        }
+
+        .intervention-note strong {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .intervention-note p {
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 35px;
+            background: var(--color-black);
+            color: var(--color-pure-white);
+            border-radius: 50px;
+            font-weight: 400;
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+
+        .contact-btn:hover {
+            background: var(--color-primary);
+            color: var(--color-black);
+        }
+
+        .final-cta {
+            text-align: center;
+            margin: 100px auto;
+            max-width: 700px;
+            padding: 0 20px;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .final-cta p {
+            font-size: var(--font-size-md);
+            font-weight: 300;
+            color: var(--color-text-secondary);
+            margin-bottom: 35px;
+        }
+
+        .final-btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: var(--color-black);
+            color: var(--color-pure-white);
+            border-radius: 50px;
+            font-weight: 400;
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+
+        .final-btn:hover {
+            background: var(--color-primary);
+            color: var(--color-black);
+        }
+
+        @media (max-width: 900px) {
+            .conseils-grid, .numeros-grid, .cards-grid, .intervention-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero-agir">
+        <h1>Agir contre le harcèlement</h1>
+        <p>Que tu sois victime, témoin ou que tu veuilles t'engager, il existe des actions concrètes. Cette page te guide selon ta situation.</p>
+    </section>
+
+    <section class="section-main">
+        <h2>Si tu es victime</h2>
+        <p>Le harcèlement n'est jamais de ta faute. Quelle que soit sa forme (insultes, humiliations, exclusion, violences, messages...), tu as le droit de demander de l'aide.</p>
+
+        <div class="conseils-grid">
+            <div class="conseil-bloc">
+                <h3><i class="fas fa-user-shield"></i> Parler à un adulte</h3>
+                <p>C'est l'étape essentielle. Choisis quelqu'un en qui tu as confiance :</p>
+                <ul>
+                    <li>Parent ou membre de ta famille</li>
+                    <li>Enseignant, CPE ou vie scolaire</li>
+                    <li>Infirmier·ère ou psychologue scolaire</li>
+                    <li>Éducateur ou animateur</li>
+                </ul>
+                <p>Si la première personne ne t'aide pas, parles-en à quelqu'un d'autre.</p>
+            </div>
+
+            <div class="conseil-bloc">
+                <h3><i class="fas fa-save"></i> Conserver des preuves</h3>
+                <p>Important pour faire reconnaître ce que tu subis :</p>
+                <ul>
+                    <li>Captures d'écran de messages/commentaires</li>
+                    <li>Note dates, lieux et circonstances</li>
+                    <li>Garde messages écrits (SMS, mails, DM)</li>
+                    <li>Demande confirmation écrite aux témoins</li>
+                </ul>
+            </div>
+
+            <div class="conseil-bloc">
+                <h3><i class="fas fa-users"></i> Ne pas s'isoler</h3>
+                <p>Le harcèlement cherche à te couper des autres. Résiste :</p>
+                <ul>
+                    <li>Continue à voir amis et famille</li>
+                    <li>Rejoins des activités qui te font du bien</li>
+                    <li>Accepte le soutien proposé</li>
+                    <li>N'aie pas honte : ce n'est pas toi le problème</li>
+                </ul>
+            </div>
+
+            <div class="conseil-bloc">
+                <h3><i class="fas fa-ban"></i> Ne pas répondre</h3>
+                <p>Aussi difficile que ce soit :</p>
+                <ul>
+                    <li>Ne réponds pas aux provocations</li>
+                    <li>Bloque les comptes qui te harcèlent</li>
+                    <li>Signale les contenus aux plateformes</li>
+                    <li>Évite les confrontations seul·e</li>
+                </ul>
+                <p>Répondre peut aggraver et donner des arguments à l'harceleur.</p>
+            </div>
+        </div>
+
+        <div class="important-box">
+            <h3>⚠️ Dans l'urgence</h3>
+            <p>Si tu es en danger, si tu as des pensées noires ou si c'est grave :</p>
+            <p><strong>Appelle le 119</strong> (24h/24) ou <strong>le 3018</strong> (cyberharcèlement). Gratuits, anonymes, professionnels formés.</p>
+            <p>Ne reste jamais seul·e avec des pensées de te faire du mal. Il existe toujours des solutions.</p>
+        </div>
+    </section>
+
+    <section class="section-main">
+        <h2>Si tu es témoin</h2>
+        <p>Être témoin ne veut pas dire être impuissant. Les témoins jouent un rôle crucial. Voici comment aider sans te mettre en danger.</p>
+
+        <div class="actions-liste">
+            <div class="action-item">
+                <div class="action-numero">1</div>
+                <div class="action-content">
+                    <h3>Ne jamais participer, même passivement</h3>
+                    <p>Rire, liker, partager ou regarder sans rien dire, c'est déjà participer. Le silence encourage les harceleurs. Refuse de cautionner : ne ris pas, ne relaye pas.</p>
+                </div>
+            </div>
+
+            <div class="action-item">
+                <div class="action-numero">2</div>
+                <div class="action-content">
+                    <h3>Soutenir la victime en privé</h3>
+                    <p>Envoie un message pour dire qu'elle n'est pas seule, que ce n'est pas normal et que tu es là. Ce simple geste aide énormément. Ne minimise jamais ("c'est pas si grave").</p>
+                </div>
+            </div>
+
+            <div class="action-item">
+                <div class="action-numero">3</div>
+                <div class="action-content">
+                    <h3>Alerter un adulte</h3>
+                    <p>Signale à un enseignant, CPE, infirmier·ère ou à tes parents. Signaler n'est pas balancer : c'est protéger. Tu peux le faire anonymement si tu as peur.</p>
+                </div>
+            </div>
+
+            <div class="action-item">
+                <div class="action-numero">4</div>
+                <div class="action-content">
+                    <h3>Encourager la victime à parler</h3>
+                    <p>Encourage-la (sans forcer) à en parler. Propose de l'accompagner. Demander de l'aide n'est pas de la faiblesse, c'est du courage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-dark">
+        <div class="section-dark-content">
+            <h2>S'engager en prévention</h2>
+            <p>Agir en amont, c'est empêcher le harcèlement avant qu'il ne commence. Voici comment contribuer.</p>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Participer à la sensibilisation</h3>
+                    <p>Utilise nos quiz interactifs, partage des ressources, organise des débats. Plus on en parle, moins le harcèlement trouve de terrain.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Créer un climat bienveillant</h3>
+                    <p>Inclus les isolés, défends les différents, refuse les moqueries. Ton comportement influence les autres et ne laisse pas de place au harcèlement.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Rejoindre des initiatives</h3>
+                    <p>Deviens ambassadeur anti-harcèlement, rejoins la FAH ou d'autres associations, propose des actions au CVL. L'engagement collectif est puissant.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-main">
+        <h2>Numéros d'aide</h2>
+        <p>Gratuits, confidentiels, tenus par des professionnels formés. N'hésite jamais.</p>
+
+        <div class="numeros-grid">
+            <div class="numero-card">
+                <div class="numero-header">
+                    <div class="numero-display">
+                        <span>3018</span>
+                    </div>
+                    <div class="numero-titre">
+                        <h3>Cyberharcèlement</h3>
+                        <span class="badge">Gratuit & Anonyme</span>
+                    </div>
+                </div>
+                <p>Numéro national dédié aux victimes de cyberharcèlement. Écoute, conseils et intervention pour retirer des contenus.</p>
+                <ul>
+                    <li>Téléphone, tchat et Messenger</li>
+                    <li>Lundi au samedi 9h-23h</li>
+                    <li>Peut contacter les plateformes</li>
+                    <li>Accompagnement psy et juridique</li>
+                </ul>
+            </div>
+
+            <div class="numero-card">
+                <div class="numero-header">
+                    <div class="numero-display">
+                        <span>119</span>
+                    </div>
+                    <div class="numero-titre">
+                        <h3>Enfance en danger</h3>
+                        <span class="badge">24h/24 - 7j/7</span>
+                    </div>
+                </div>
+                <p>Service national pour toute situation grave ou urgente, violence, maltraitance ou danger.</p>
+                <ul>
+                    <li>Gratuit depuis tous téléphones</li>
+                    <li>Ne figure pas sur factures</li>
+                    <li>Interventions d'urgence possibles</li>
+                    <li>Écoute et orientation vers services</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-main">
+        <h2>Ressources officielles</h2>
+        <p>Organismes spécialisés proposant informations complètes et accompagnement professionnel.</p>
+
+        <div class="ressources-liste">
+            <div class="ressource-item">
+                <div class="ressource-info">
+                    <h3>e-Enfance</h3>
+                    <p>Conseils sur le cyberharcèlement, ligne d'écoute et tchat anonyme</p>
+                </div>
+                <a href="https://e-enfance.org/" target="_blank" class="ressource-btn">Visiter</a>
+            </div>
+
+            <div class="ressource-item">
+                <div class="ressource-info">
+                    <h3>Non au harcèlement</h3>
+                    <p>Site du Ministère : infos, témoignages, guides pour victimes et parents</p>
+                </div>
+                <a href="https://www.education.gouv.fr/non-au-harcelement" target="_blank" class="ressource-btn">Visiter</a>
+            </div>
+
+            <div class="ressource-item">
+                <div class="ressource-info">
+                    <h3>Comprendre le harcèlement</h3>
+                    <p>Notre guide pour identifier les situations et bons réflexes</p>
+                </div>
+                <a href="./comprendre.html" class="ressource-btn">Consulter</a>
+            </div>
+
+            <div class="ressource-item">
+                <div class="ressource-info">
+                    <h3>Nos quiz interactifs</h3>
+                    <p>Sensibilisation ludique et pédagogique</p>
+                </div>
+                <a href="./player.html" class="ressource-btn">Participer</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-main">
+        <h2>Interventions en établissement</h2>
+        <p>Nous proposons des séances de prévention dans les collèges et lycées. Interventions interactives et pédagogiques.</p>
+
+        <div class="intervention-details">
+            <h3>Ce que nous proposons</h3>
+            <div class="intervention-grid">
+                <div class="intervention-item">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Séances avec quiz interactifs</span>
+                </div>
+                <div class="intervention-item">
+                    <i class="fas fa-comments"></i>
+                    <span>Ateliers de discussion</span>
+                </div>
+                <div class="intervention-item">
+                    <i class="fas fa-school"></i>
+                    <span>Adaptées collèges et lycées</span>
+                </div>
+                <div class="intervention-item">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Sessions sur mesure</span>
+                </div>
+            </div>
+
+            <div class="intervention-note">
+                <strong>À savoir</strong>
+                <p>Interventions sous réserve de validation des chefs d'établissement et modalités de déplacement. Membres FAH majoritairement étudiants, nous privilégions aussi appels et visio.</p>
+            </div>
+
+            <a href="./contact.html" class="contact-btn">Nous contacter</a>
+        </div>
+    </section>
+
+    <section class="final-cta">
+        <h2>Besoin d'aide ?</h2>
+        <p>Notre équipe est disponible pour répondre à tes questions, t'écouter ou simplement échanger.</p>
+        <a href="./contact.html" class="final-btn">Nous contacter</a>
+    </section>
+</body>
+</html>

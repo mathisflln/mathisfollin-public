@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agir - FAH Marie-Curie</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1a1a1a;
+            background: #fafafa;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Hero massif style MPP */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, #fff8f0 0%, #fef5e7 30%, #fff 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 8rem 5% 6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Stickers décoratifs style scrapbook */
+        .sticker {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .sticker-1 {
+            top: 12%;
+            right: 10%;
+            width: 140px;
+            height: 140px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect x="20" y="20" width="160" height="160" rx="15" fill="%23FFE5CC" transform="rotate(12 100 100)"/><text x="100" y="105" text-anchor="middle" font-size="55" fill="%23333">✊</text><text x="100" y="145" text-anchor="middle" font-size="18" font-weight="700" fill="%23e74c3c">AGIS</text></svg>') center/contain no-repeat;
+            transform: rotate(-8deg);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .sticker-2 {
+            bottom: 18%;
+            left: 8%;
+            width: 120px;
+            height: 120px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="70" fill="%23FFD6E0" opacity="0.8"/><text x="100" y="115" text-anchor="middle" font-size="50" fill="%23333">💬</text></svg>') center/contain no-repeat;
+            transform: rotate(15deg);
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .sticker-3 {
+            top: 45%;
+            right: 5%;
+            width: 100px;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect x="30" y="40" width="140" height="120" rx="8" fill="%23E8F4FF" transform="rotate(-5 100 100)"/><text x="100" y="115" text-anchor="middle" font-size="45" fill="%23333">📋</text></svg>') center/contain no-repeat;
+            transform: rotate(-12deg);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-8deg); }
+            50% { transform: translateY(-15px) rotate(-8deg); }
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+            color: #555;
+            max-width: 750px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .hero-scroll {
+            font-size: 0.9rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* Section trois cas avec cartes scrapbook */
+        .cases-section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 6rem 5% 5rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -0.01em;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+            font-weight: 400;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .case-card {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            position: relative;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #f0f0f0;
+        }
+
+        /* Scotch style scrapbook */
+        .case-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: 30px;
+            width: 70px;
+            height: 28px;
+            background: linear-gradient(135deg, rgba(255,220,180,0.7), rgba(255,200,150,0.5));
+            border-radius: 2px;
+            transform: rotate(-3deg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+
+        .case-card:nth-child(2)::before {
+            background: linear-gradient(135deg, rgba(200,220,255,0.7), rgba(180,200,255,0.5));
+            right: auto;
+            left: 35px;
+            transform: rotate(2deg);
+        }
+
+        .case-card:nth-child(3)::before {
+            background: linear-gradient(135deg, rgba(255,200,200,0.7), rgba(255,180,180,0.5));
+            transform: rotate(-2deg);
+        }
+
+        .case-card:hover {
+            transform: translateY(-8px) rotate(-1deg);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        .case-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .case-card h3 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .case-card p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .case-steps {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .case-steps li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: #555;
+            font-size: 0.98rem;
+            line-height: 1.5;
+        }
+
+        .case-steps li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #e74c3c;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Section numéros urgence en full width */
+        .urgence-section {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 4rem 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin: 4rem 0;
+        }
+
+        .urgence-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .urgence-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .urgence-content h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            margin-bottom: 2.5rem;
+            font-weight: 800;
+        }
+
+        .urgence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .urgence-item {
+            text-align: center;
+        }
+
+        .urgence-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .urgence-label {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        .urgence-note {
+            margin-top: 2.5rem;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Section ressources en prose */
+        .resources-prose {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 6rem 5%;
+        }
+
+        .resources-prose h2 {
+            font-size: clamp(2.2rem, 5vw, 3rem);
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            font-weight: 800;
+        }
+
+        .resources-prose p {
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .resources-prose a {
+            color: #e74c3c;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .resources-prose a:hover {
+            border-bottom-color: #e74c3c;
+        }
+
+        .resources-highlight {
+            background: #fff8f0;
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin: 3rem 0;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .resources-highlight p {
+            margin-bottom: 1rem;
+        }
+
+        .resources-highlight strong {
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        /* Section intervention style MPP */
+        .intervention-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 7rem 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intervention-bg {
+            position: absolute;
+            top: -150px;
+            right: -150px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(231,76,60,0.12) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .intervention-content {
+            max-width: 950px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .intervention-content h2 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+        }
+
+        .intervention-content > p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: #ecf0f1;
+            margin-bottom: 3rem;
+        }
+
+        .intervention-box {
+            background: rgba(255,255,255,0.08);
+            padding: 2.5rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .intervention-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .intervention-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .intervention-list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .intervention-list-item::before {
+            content: '✓';
+            color: #e74c3c;
+            font-weight: 800;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .intervention-note {
+            background: rgba(231,76,60,0.15);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            font-size: 0.98rem;
+            line-height: 1.7;
+        }
+
+        .intervention-note strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            margin-top: 2.5rem;
+            padding: 1.2rem 3rem;
+            background: white;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* CTA final massif style MPP */
+        .final-cta {
+            padding: 8rem 5%;
+            background: white;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .final-cta p {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .final-btn {
+            display: inline-block;
+            padding: 1.3rem 3.5rem;
+            background: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.15rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .final-btn:hover {
+            background: #c0392b;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 5rem 5% 4rem;
+                min-height: 85vh;
+            }
+
+            .sticker {
+                opacity: 0.4;
+            }
+
+            .cases-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .urgence-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .intervention-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero massif -->
+    <section class="hero">
+        <div class="sticker sticker-1"></div>
+        <div class="sticker sticker-2"></div>
+        <div class="sticker sticker-3"></div>
+        
+        <div class="hero-content">
+            <h1>Chaque action compte</h1>
+            <p class="hero-subtitle">
+                Tu es victime, témoin ou tu veux comprendre comment réagir ? Voici ce que tu peux faire, maintenant, pour agir contre le harcèlement.
+            </p>
+            <div class="hero-scroll">↓ Découvre comment agir</div>
+        </div>
+    </section>
+
+    <!-- Trois cas principaux -->
+    <section class="cases-section">
+        <h2 class="section-title">Où te situes-tu ?</h2>
+        <p class="section-subtitle">Chaque situation demande une approche différente</p>
+
+        <div class="cases-grid">
+            <div class="case-card">
+                <span class="case-icon">🛡️</span>
+                <h3>Tu subis du harcèlement</h3>
+                <p>Ce n'est pas de ta faute. Le harcèlement n'est jamais justifié, et tu as le droit de demander de l'aide.</p>
+                <ul class="case-steps">
+                    <li>Parle-en à un adulte de confiance (parent, prof, CPE, infirmier·ère)</li>
+                    <li>Garde des preuves si possible (captures d'écran, messages)</li>
+                    <li>Ne reste pas isolé·e : rapproche-toi de personnes bienveillantes</li>
+                    <li>Appelle le 3018 (cyberharcèlement) ou le 3020 (harcèlement scolaire)</li>
+                </ul>
+            </div>
+
+            <div class="case-card">
+                <span class="case-icon">👁️</span>
+                <h3>Tu es témoin</h3>
+                <p>Ton rôle est crucial pour stopper le harcèlement et soutenir la victime. Être témoin, c'est être acteur.</p>
+                <ul class="case-steps">
+                    <li>Ne participe jamais, même passivement (liker, partager, rire)</li>
+                    <li>Soutiens la victime en privé : montre-lui qu'elle n'est pas seule</li>
+                    <li>Signale à un adulte responsable de ton établissement</li>
+                    <li>Encourage la victime à parler sans la forcer</li>
+                </ul>
+            </div>
+
+            <div class="case-card">
+                <span class="case-icon">💪</span>
+                <h3>Tu veux t'engager</h3>
+                <p>Agir en amont, c'est empêcher le harcèlement avant qu'il ne commence. Voici comment contribuer.</p>
+                <ul class="case-steps">
+                    <li>Participe à nos quiz interactifs de sensibilisation</li>
+                    <li>Diffuse les bons réflexes dans ton établissement</li>
+                    <li>Crée un climat bienveillant : inclus, écoute, respecte</li>
+                    <li>Rejoins ou soutiens des initiatives locales comme la FAH</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Numéros urgence en full -->
+    <section class="urgence-section">
+        <div class="urgence-content">
+            <h2>Besoin d'aide maintenant ?</h2>
+            <div class="urgence-grid">
+                <div class="urgence-item">
+                    <span class="urgence-number">3018</span>
+                    <p class="urgence-label">Cyberharcèlement<br>(gratuit, anonyme)</p>
+                </div>
+                <div class="urgence-item">
+                    <span class="urgence-number">3020</span>
+                    <p class="urgence-label">Harcèlement scolaire<br>(gratuit)</p>
+                </div>
+                <div class="urgence-item">
+                    <span class="urgence-number">119</span>
+                    <p class="urgence-label">Enfance en danger<br>(24h/24)</p>
+                </div>
+            </div>
+            <p class="urgence-note">Ces numéros sont gratuits, confidentiels et tenus par des professionnels formés. Tu peux appeler à tout moment.</p>
+        </div>
+    </section>
+
+    <!-- Ressources en prose -->
+    <section class="resources-prose">
+        <h2>Aller plus loin avec des ressources fiables</h2>
+        <p>
+            Il existe des sites et des outils créés spécialement pour t'accompagner. <a href="https://e-enfance.org/" target="_blank">e-Enfance</a> propose des conseils pratiques sur le cyberharcèlement, une ligne d'écoute et un tchat pour échanger anonymement. Le site <a href="https://www.education.gouv.fr/non-au-harcelement" target="_blank">Non au harcèlement</a> du Ministère de l'Éducation nationale regroupe des informations complètes, des témoignages et des guides pour les victimes, les témoins et les parents.
+        </p>
+
+        <div class="resources-highlight">
+            <p><strong>Nos propres outils pour comprendre et agir :</strong></p>
+            <p>
+                Teste tes connaissances avec nos <a href="./player.html">quiz interactifs de sensibilisation</a> qui permettent d'aborder le harcèlement de manière ludique et éducative. Tu peux aussi consulter notre section <a href="./comprendre.html">Comprendre le harcèlement</a> pour mieux identifier les situations et savoir comment réagir.
+            </p>
+        </div>
+
+        <p>
+            Ces ressources sont là pour t'informer, te rassurer et te guider. N'hésite pas à les explorer et à les partager autour de toi.
+        </p>
+    </section>
+
+    <!-- Section intervention établissement -->
+    <section class="intervention-section">
+        <div class="intervention-bg"></div>
+        <div class="intervention-content">
+            <h2>Faites venir la FAH dans votre établissement</h2>
+            <p>
+                Nous proposons des séances de prévention directement dans les collèges et lycées. Nos interventions sont interactives, adaptées au public et permettent d'aborder le harcèlement de manière pédagogique et engageante.
+            </p>
+
+            <div class="intervention-box">
+                <h3>Ce que nous proposons</h3>
+                <div class="intervention-list">
+                    <div class="intervention-list-item">Séances de sensibilisation avec nos quiz interactifs</div>
+                    <div class="intervention-list-item">Ateliers de discussion et d'échange</div>
+                    <div class="intervention-list-item">Interventions adaptées aux collèges et lycées</div>
+                    <div class="intervention-list-item">Sessions sur mesure selon vos besoins</div>
+                </div>
+
+                <div class="intervention-note">
+                    <strong>À savoir :</strong>
+                    Les interventions sont organisées sous réserve de validation des chefs d'établissement et des modalités de déplacement. Les membres de la FAH étant majoritairement étudiants, nous privilégions aussi les appels et visio-conférences pour répondre à vos besoins.
+                </div>
+            </div>
+
+            <a href="./contact.html" class="contact-btn">Nous contacter pour organiser une intervention</a>
+        </div>
+    </section>
+
+    <!-- CTA final -->
+    <section class="final-cta">
+        <h2>Prêt·e à passer à l'action ?</h2>
+        <p>Notre équipe est disponible pour répondre à tes questions, t'écouter ou simplement échanger. N'hésite pas.</p>
+        <a href="./contact.html" class="final-btn">Nous contacter</a>
+    </section>
+</body>
+</html>

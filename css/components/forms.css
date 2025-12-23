@@ -1,0 +1,98 @@
+/* ============================================
+   FORMS COMPONENT
+   ============================================ */
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-dark);
+}
+
+.form-control {
+  width: 100%;
+  padding: 14px var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-fast);
+  background: var(--color-pure-white);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-black);
+}
+
+.form-control::placeholder {
+  color: var(--color-grey-light);
+}
+
+/* Autofill styles */
+.form-control:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: var(--color-black) !important;
+}
+
+/* Textarea */
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Select */
+select.form-control {
+  cursor: pointer;
+}
+
+/* États d'erreur et succès */
+.form-control.is-invalid {
+  border-color: var(--color-error);
+}
+
+.form-control.is-valid {
+  border-color: var(--color-success);
+}
+
+.invalid-feedback,
+.valid-feedback {
+  display: none;
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+}
+
+.invalid-feedback {
+  color: var(--color-error);
+}
+
+.valid-feedback {
+  color: var(--color-success);
+}
+
+.form-control.is-invalid ~ .invalid-feedback,
+.form-control.is-valid ~ .valid-feedback {
+  display: block;
+}
+
+/* Checkbox et radio */
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.form-check-input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.form-check-label {
+  cursor: pointer;
+  user-select: none;
+}

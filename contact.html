@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact - FAH Marie-Curie</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <style>
+        html {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+            position: relative;
+        }
+
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+            position: relative;
+            /* AJOUT : */
+            margin: 0;
+            padding: 0;
+        }
+
+            /* Empêcher TOUS les enfants directs de body de déborder */
+        body > * {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .contact-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 80px;
+            background-image: url('assets/images/background.png');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .contact-container {
+            width: 100%;
+            max-width: 600px;
+            padding-top: 3rem;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .contact-header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 600;
+            color: #0d0d0d;
+            margin-bottom: 12px;
+        }
+
+        .contact-header p {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .form-group label .required {
+            color: #dc3545;
+            margin-left: 2px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+            font-family: "Stack Sans Headline", sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            background: #ffffff;
+            font-weight: 300;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #0d0d0d;
+        }
+
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        textarea.form-control {
+            min-height: 140px;
+            resize: vertical;
+            font-family: "Stack Sans Headline", sans-serif;
+        }
+
+        select.form-control {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 40px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px 24px;
+            background: black;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-family: "Stack Sans Headline", sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background: #FFFF10;
+            color: black;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-submit .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .btn-submit.loading .spinner {
+            display: block;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            text-align: center;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+
+        .message.error {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            display: block;
+        }
+
+        .contact-info {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid #e5e5e5;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #0d0d0d;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .contact-method i {
+            color: #FFFF10;
+            background: #0d0d0d;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .contact-method a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-method a:hover {
+            color: #0d0d0d;
+        }
+
+        .floating-img {
+            overflow: hidden;
+        }
+
+        @media (max-width: 1600px) {
+            .floating-img {
+                visibility: hidden;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contact-wrapper {
+                padding: 100px 15px 60px;
+            }
+
+            .contact-container {
+                padding: 30px 20px;
+            }
+
+            .contact-header p {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="topbar-wrapper">
+        <div class="navbar-pill">
+            <div class="navbar-inner">
+                <a href="./index.html" class="logo-container">
+                    <img src="assets/logos/fah.png" alt="Logo" class="logo-svg">
+                </a>
+
+                <div class="nav-links-desktop">
+                    <a href="./about.html" class="nav-link">L'association</a>
+                    <a href="./actions.html" class="nav-link">Nos actions</a>
+                    <a href="./comprendre.html" class="nav-link">Comprendre</a>
+                    <a href="./agir.html" class="nav-link">Agir</a>
+                    
+                    <div class="nav-spacer">
+                        <a href="./login.html" class="nav-link">Se connecter</a>
+                        <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link nav-link-cta">Faire un don</a>
+                    </div>
+                </div>
+
+                <button class="burger-btn" onclick="toggleMobileMenu()">
+                    <div class="burger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div>
+            <a href="./about.html" class="nav-link">L'association</a>
+            <a href="./actions.html" class="nav-link">Nos actions</a>
+            <a href="./comprendre.html" class="nav-link">Comprendre</a>
+            <a href="./agir.html" class="nav-link">Agir</a>
+        </div>
+        
+        <div class="mobile-menu-bottom">
+            <a href="./login.html" class="nav-link-login">Se connecter</a>
+            <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link-cta-mobile">Faire un don</a>
+        </div>
+    </div>
+
+    <!-- CONTACT FORM -->
+    <div class="contact-wrapper">
+        <div class="contact-container">
+            <div class="contact-header">
+                <h1>Contactez-nous</h1>
+                <p>Une question, une suggestion ou besoin d'aide ? N'hésitez pas à nous écrire, nous vous répondrons dans les plus brefs délais.</p>
+            </div>
+
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name">Nom complet <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        class="form-control" 
+                        placeholder="Votre nom et prénom" 
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Adresse email <span class="required">*</span></label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-control" 
+                        placeholder="votre.email@exemple.com" 
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Sujet <span class="required">*</span></label>
+                    <select id="subject" class="form-control" required>
+                        <option value="">Sélectionnez un sujet</option>
+                        <option value="question">Question générale</option>
+                        <option value="intervention">Demande d'intervention</option>
+                        <option value="partenariat">Proposition de partenariat</option>
+                        <option value="temoignage">Témoignage / Signalement</option>
+                        <option value="rejoindre">Rejoindre l'association</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message <span class="required">*</span></label>
+                    <textarea 
+                        id="message" 
+                        class="form-control" 
+                        placeholder="Écrivez votre message ici..." 
+                        required
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submit-btn">
+                    <span id="btn-text">Envoyer le message</span>
+                    <span class="spinner"></span>
+                </button>
+            </form>
+
+            <div id="message-box" class="message"></div>
+
+            <div class="contact-info">
+                <h3>Autres moyens de nous contacter</h3>
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:fahmariecurie.pro@gmail.com">fahmariecurie.pro@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Images flottantes -->
+    <img src="assets/images/sticker-black.png" alt="sticker écouter sans juger" class="floating-img img1" style="top: 10%;">
+    <img src="assets/images/sticker-fah.png" alt="sticker FAH" class="floating-img img2" style="top: 6%;">
+    <img src="assets/images/message1.svg" alt="message" class="floating-img img3" style="top: 6%;">
+    <img src="assets/images/scrapbook.png" alt="scrapbook" class="floating-img img4" style="top: 5%;">
+    <img src="assets/images/message2.svg" alt="message" class="floating-img img5" style="top: 45%;">
+    <img src="assets/images/message3.svg" alt="message" class="floating-img img6" style="top: 39%;">
+    <img src="assets/images/postit1.svg" alt="post-it" class="floating-img img7" style="top: 20%;">
+    <img src="assets/images/paper.png" alt="papier" class="floating-img img8" style="top: 17%;">
+    <img src="assets/images/scotch.png" alt="scotch" class="floating-img img9" style="top: 29%;">
+
+    
+
+    <!-- FOOTER -->
+    <footer>
+        <section class="footer-cta">
+            <div class="container">
+                <h2>Devenez acteur de la lutte contre le harcèlement</h2>
+                <p>Contribuez à financer nos actions de prévention et de soutien dans la cité scolaire et partout ailleurs !</p>
+                <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" target="_blank" class="cta-button">
+                    <span>Faire un don</span>
+                    <div class="arrow-circle">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="footer-main">
+            <div class="container">
+                <div class="footer-columns">
+                    <div class="footer-col">
+                        <img src="assets/logos/fah-full-white.svg" alt="Logo FAH" class="footer-logo">
+                        <div class="social-links">
+                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="footer-col">
+                        <h3>Compagnie</h3>
+                        <label class="footer-col-header" for="toggle-compagnie">
+                            <h3>Compagnie</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-compagnie" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./about.html">L'association</a></li>
+                            <li><a href="./actions.html">Nos actions</a></li>
+                            <li><a href="./espace-presse.html">Espace presse</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h3>Liens utiles</h3>
+                        <label class="footer-col-header" for="toggle-liens">
+                            <h3>Liens utiles</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-liens" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./comprendre.html">Comprendre</a></li>
+                            <li><a href="./agir.html">Agir</a></li>
+                            <li><a href="./player.html">Rejoindre un quiz</a></li>
+                            <li><a href="https://e-enfance.org/" target="_blank">e-Enfance</a></li>
+                            <li><a href="https://www.education.gouv.fr/non-au-harcelement" target="_blank">Non au harcèlement</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h3>Besoin d'infos</h3>
+                        <label class="footer-col-header" for="toggle-infos">
+                            <h3>Besoin d'infos</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-infos" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./index.html">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="footer-bottom">
+            <div class="container">
+                <hr class="separator">
+                <div class="footer-bottom-content">
+                    <div class="legal-links">
+                        <a href="./cgu.html">Conditions générales d'utilisation</a>
+                        <a href="./politique-de-confidentialite.html">Politique de confidentialité</a>
+                        <a href="./mentions-legales.html">Mentions légales</a>
+                        <a href="./sitemap.html">Plan du site</a>
+                    </div>
+                    <div class="copyright">
+                        <p>© 2026 FAH Marie-Curie</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/scroll-animations.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        const SUPABASE_URL = "https://ckfdysasgawyixbxjyfz.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrZmR5c2FzZ2F3eWl4YnhqeWZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5ODg1NjcsImV4cCI6MjA3NzU2NDU2N30.t0ubaRk5sz7kewyEsOg4CpFvj47S9U1J1SP_3DQBmE8";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const form = document.getElementById('contact-form');
+        const messageBox = document.getElementById('message-box');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Récupérer les données du formulaire
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value.trim()
+            };
+
+            // Validation basique
+            if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+                showMessage('Veuillez remplir tous les champs obligatoires.', 'error');
+                return;
+            }
+
+            // Désactiver le bouton
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+            btnText.textContent = 'Envoi en cours...';
+
+            try {
+                // Sauvegarder dans Supabase - méthode simplifiée
+                const { error } = await supabaseClient
+                    .from('contact_messages')
+                    .insert({
+                        name: formData.name,
+                        email: formData.email,
+                        subject: formData.subject,
+                        message: formData.message
+                    });
+
+                if (error) {
+                    console.error('Supabase error details:', error);
+                    throw error;
+                }
+
+                // Succès
+                showMessage('✓ Message envoyé avec succès ! Nous vous répondrons rapidement.', 'success');
+                form.reset();
+
+            } catch (error) {
+                console.error('Erreur complète:', error);
+                showMessage('Une erreur est survenue. Veuillez réessayer ou nous contacter directement par email à fahmariecurie.pro@gmail.com', 'error');
+            } finally {
+                // Réactiver le bouton
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                    btnText.textContent = 'Envoyer le message';
+                }, 2000);
+            }
+        });
+
+        function showMessage(text, type) {
+            messageBox.textContent = text;
+            messageBox.className = `message ${type}`;
+            
+            // Scroll vers le message
+            messageBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            // Cacher après 8 secondes si c'est un message de succès
+            if (type === 'success') {
+                setTimeout(() => {
+                    messageBox.style.display = 'none';
+                }, 8000);
+            }
+        }
+
+        // Cacher le message au focus sur un champ
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', () => {
+                if (messageBox.classList.contains('error')) {
+                    messageBox.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

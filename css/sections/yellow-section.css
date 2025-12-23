@@ -1,0 +1,98 @@
+/* ============================================
+   YELLOW SECTION (Section avec feuille blanche)
+   ============================================ */
+
+.yellow-section {
+  overflow: hidden;
+  border-radius: 0 0 var(--border-radius-xl) var(--border-radius-xl);
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../../assets/images/yellow-background.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  padding: 0;
+}
+
+.yellow-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--color-dark);
+  max-width: 1000px;
+  padding: var(--spacing-3xl) var(--spacing-lg);
+}
+
+/* === PAPER (Feuille blanche) === */
+
+.paper {
+  width: 80%;
+  max-width: 800px;
+  background: var(--color-pure-white);
+  padding: var(--spacing-5xl) var(--spacing-3xl) 80px;
+  margin: var(--spacing-3xl) auto;
+  box-shadow: var(--shadow-lg);
+  transform: rotate(3deg);
+  position: relative;
+  border-radius: var(--border-radius-sm);
+  color: var(--color-dark);
+  font-size: var(--font-size-md);
+  line-height: 1.6;
+  text-align: left;
+}
+
+.paper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: #f6f6f6;
+  z-index: -1;
+}
+
+.paper p {
+  margin: 0 0 1em 0;
+}
+
+.paper .signature {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-lg);
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.paper .role {
+  color: #5e5e5e;
+  font-size: var(--font-size-base);
+}
+
+/* === RESPONSIVE === */
+
+@media (max-width: 900px) {
+  .paper {
+    transform: rotate(1.5deg);
+    padding: 80px var(--border-radius-xl) var(--spacing-3xl);
+    font-size: 0.9rem;
+  }
+  
+  .paper .signature {
+    font-size: 1.3rem;
+  }
+  
+  .paper .role {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .paper {
+    width: 95%;
+    padding: 70px var(--border-radius-xl) var(--border-radius-xl);
+  }
+}

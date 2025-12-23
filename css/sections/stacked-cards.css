@@ -1,0 +1,179 @@
+/* ============================================
+   STACKED CARDS SECTION
+   ============================================ */
+
+.stacked-cards-section {
+  position: relative;
+  background: var(--color-white);
+  padding-top: var(--spacing-3xl);
+  padding-bottom: var(--spacing-5xl);
+}
+
+.stacked-hero-content {
+  position: relative;
+  z-index: 35;
+  max-width: 50em;
+  margin: 0 auto 8rem;
+  text-align: center;
+  padding: 0 var(--spacing-lg);
+}
+
+.stacked-hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  letter-spacing: -0.03em;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+  color: var(--color-dark);
+}
+
+.yellow {
+  color: var(--color-primary);
+}
+
+.stacked-hero-description {
+  font-size: var(--font-size-md);
+  opacity: 0.7;
+  max-width: 560px;
+  font-weight: var(--font-weight-light);
+  margin: 0 auto var(--spacing-xl);
+  color: var(--color-dark);
+}
+
+/* Cards Container */
+.stacked-cards-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1438px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.stacked-card-wrapper {
+  position: sticky;
+  top: 180px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  overflow: visible;
+  padding: 25px 0;
+}
+
+.stacked-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  height: 480px;
+  border-radius: var(--border-radius-xl);
+  transition: transform var(--transition-base);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: var(--spacing-3xl);
+  filter: drop-shadow(0 0 4px rgb(0, 0, 0, 0.3));
+}
+
+/* Card 3 alignée en haut */
+.stacked-card.align-top {
+  justify-content: flex-start;
+}
+
+/* Effet de vignétage sur les bords */
+.stacked-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+/* Card Content */
+.stacked-card-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.stacked-card-icon {
+  height: 50px;
+  width: auto;
+  margin-bottom: var(--spacing-lg);
+  filter: drop-shadow(2px 2px 3px rgb(0, 0, 0, 0.1));
+}
+
+.stacked-card-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -0.03em;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.1;
+  margin-bottom: var(--spacing-md);
+}
+
+.stacked-card-description {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-light);
+  line-height: 1.6;
+  max-width: 553px;
+}
+
+/* === RESPONSIVE === */
+
+@media (max-width: 1279px) {
+  .stacked-card {
+    height: 480px;
+  }
+}
+
+@media (max-width: 900px) {
+  .stacked-card-description {
+    display: none;
+  }
+
+  .stacked-card-title {
+    font-size: 3rem;
+  }
+
+  .stacked-card::after {
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.3) 100%);
+  }
+
+  .stacked-card {
+    background-position: 80% center;
+  }
+}
+
+@media (max-width: 767px) {
+  .stacked-cards-section {
+    padding-top: var(--spacing-3xl);
+    padding-bottom: var(--spacing-3xl);
+  }
+
+  .stacked-hero-content {
+    margin-bottom: 3rem;
+  }
+
+  .stacked-card {
+    height: auto;
+    min-height: 400px;
+    padding: var(--spacing-xl);
+  }
+
+  .stacked-card-icon {
+    height: 40px;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .stacked-card-wrapper {
+    top: 24px;
+  }
+}

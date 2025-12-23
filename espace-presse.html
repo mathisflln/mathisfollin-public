@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>FAH Marie-Curie</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Over+the+Rainbow&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+    
+    <!-- CSS - UN SEUL FICHIER QUI IMPORTE TOUT -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="topbar-wrapper">
+        <div class="navbar-pill">
+            <div class="navbar-inner">
+                <!-- Logo -->
+                <a href="./index.html" class="logo-container">
+                    <img src="assets/logos/fah.png" alt="Logo" class="logo-svg">
+                </a>
+
+                <!-- Navigation Desktop -->
+                <div class="nav-links-desktop">
+                    <a href="./about.html" class="nav-link">L'association</a>
+                    <a href="./actions.html" class="nav-link">Nos actions</a>
+                    <a href="./comprendre.html" class="nav-link">Comprendre</a>
+                    <a href="./agir.html" class="nav-link">Agir</a>
+                    
+                    <div class="nav-spacer">
+                        <a href="./login.html" class="nav-link">Se connecter</a>
+                        <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link nav-link-cta">Faire un don</a>
+                    </div>
+                </div>
+
+                <!-- Burger Menu Button -->
+                <button class="burger-btn" onclick="toggleMobileMenu()">
+                    <div class="burger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div>
+            <a href="./about.html" class="nav-link">L'association</a>
+            <a href="./actions.html" class="nav-link">Nos actions</a>
+            <a href="./comprendre.html" class="nav-link">Comprendre</a>
+            <a href="./agir.html" class="nav-link">Agir</a>
+        </div>
+        
+        <div class="mobile-menu-bottom">
+            <a href="./login.html" class="nav-link-login">Se connecter</a>
+            <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link-cta-mobile">Faire un don</a>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- FOOTER -->
+    <footer>
+        <!-- Partie 1 : Section avec image de fond -->
+        <section class="footer-cta">
+            <div class="container">
+                <h2>Devenez acteur de la lutte contre le harcèlement</h2>
+                <p>Contribuez à financer nos actions de prévention et de soutien dans la cité scolaire et partout ailleurs !</p>
+                <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" target="_blank" class="cta-button">
+                    <span>Faire un don</span>
+                    <div class="arrow-circle">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Partie 2 : Section principale avec colonnes -->
+        <section class="footer-main">
+            <div class="container">
+                <div class="footer-columns">
+                    <!-- Colonne 1 : Logo et réseaux sociaux -->
+                    <div class="footer-col">
+                        <img src="assets/logos/fah-full-white.svg" alt="Logo FAH Marie-Curie" class="footer-logo">
+                        <div class="social-links">
+                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Colonne 2 : Compagnie -->
+                    <div class="footer-col">
+                        <h3>Compagnie</h3>
+                        <label class="footer-col-header" for="toggle-compagnie">
+                            <h3>Compagnie</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-compagnie" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./about.html">L'association</a></li>
+                            <li><a href="./actions.html">Nos actions</a></li>
+                            <li><a href="./espace-presse.html">Espace presse</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Colonne 3 : Liens utiles -->
+                    <div class="footer-col">
+                        <h3>Liens utiles</h3>
+                        <label class="footer-col-header" for="toggle-liens">
+                            <h3>Liens utiles</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-liens" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./comprendre.html">Comprendre</a></li>
+                            <li><a href="./agir.html">Agir</a></li>
+                            <li><a href="./player.html">Rejoindre un quiz</a></li>
+                            <li><a href="https://e-enfance.org/" target="_blank">e-Enfance</a></li>
+                            <li><a href="https://www.education.gouv.fr/non-au-harcelement" target="_blank">Non au harcèlement</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Colonne 4 : Besoin d'infos -->
+                    <div class="footer-col">
+                        <h3>Besoin d'infos</h3>
+                        <label class="footer-col-header" for="toggle-infos">
+                            <h3>Besoin d'infos</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-infos" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./index.html">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partie 3 : Section copyright et mentions légales -->
+        <section class="footer-bottom">
+            <div class="container">
+                <hr class="separator">
+                <div class="footer-bottom-content">
+                    <div class="legal-links">
+                        <a href="./cgu.html">Conditions générales d'utilisation</a>
+                        <a href="./politique-de-confidentialite.html">Politique de confidentialité</a>
+                        <a href="./mentions-legales.html">Mentions légales</a>
+                        <a href="./sitemap.html">Plan du site</a>
+                    </div>
+                    <div class="copyright">
+                        <p>© 2026 FAH Marie-Curie</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+    <!-- JAVASCRIPT - Charger les composants dans l'ordre puis main.js -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/scroll-animations.js"></script>
+    <script src="js/components/cards.js"></script>
+    <script src="js/components/faq.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

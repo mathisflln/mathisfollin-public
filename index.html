@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>FAH Marie-Curie</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Over+the+Rainbow&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+    
+    <!-- CSS - UN SEUL FICHIER QUI IMPORTE TOUT -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="topbar-wrapper">
+        <div class="navbar-pill">
+            <div class="navbar-inner">
+                <!-- Logo -->
+                <a href="./index.html" class="logo-container">
+                    <img src="assets/logos/fah.png" alt="Logo" class="logo-svg">
+                </a>
+
+                <!-- Navigation Desktop -->
+                <div class="nav-links-desktop">
+                    <a href="./about.html" class="nav-link">L'association</a>
+                    <a href="./actions.html" class="nav-link">Nos actions</a>
+                    <a href="./comprendre.html" class="nav-link">Comprendre</a>
+                    <a href="./agir.html" class="nav-link">Agir</a>
+                    
+                    <div class="nav-spacer">
+                        <a href="./login.html" class="nav-link">Se connecter</a>
+                        <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link nav-link-cta">Faire un don</a>
+                    </div>
+                </div>
+
+                <!-- Burger Menu Button -->
+                <button class="burger-btn" onclick="toggleMobileMenu()">
+                    <div class="burger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div>
+            <a href="./about.html" class="nav-link">L'association</a>
+            <a href="./actions.html" class="nav-link">Nos actions</a>
+            <a href="./comprendre.html" class="nav-link">Comprendre</a>
+            <a href="./agir.html" class="nav-link">Agir</a>
+        </div>
+        
+        <div class="mobile-menu-bottom">
+            <a href="./login.html" class="nav-link-login">Se connecter</a>
+            <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link-cta-mobile">Faire un don</a>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1><span class="highlight-word2">Ensemble</span>, mettons fin au harcèlement</h1>
+            <p>Parce qu'écouter, comprendre et agir peut tout changer.</p>
+            <a href="./actions.html" class="nav-link nav-link-cta">Découvrir nos actions</a>
+            
+            <div class="text-partenaires">
+                <p>Nos partenaires vers le chemin de la prévention</p>
+            </div>
+            
+            <div class="logos">
+                <div class="logos-slide">
+                    <img src="assets/logos/1l1s.png" alt="1L1S" />
+                    <img src="assets/logos/alfa.png" alt="Alfa" />
+                    <img src="assets/logos/caaee.png" alt="CAAEE" />
+                    <img src="assets/logos/cesacom.png" alt="Cesacom" />
+                    <img src="assets/logos/emrys.png" alt="Emrys" />
+                    <img src="assets/logos/fleau.png" alt="Fléau" />
+                    <img src="assets/logos/helloasso.png" alt="HelloAsso" />
+                    <img src="assets/logos/lcl.png" alt="LCL" />
+                    <img src="assets/logos/mc.png" alt="MC" />
+                    <img src="assets/logos/rapsodie.png" alt="Rapsodie" />
+                    <img src="assets/logos/stj.png" alt="STJ" />
+                    <img src="assets/logos/yapla.png" alt="Yapla" />
+                </div>
+                <div class="logos-slide">
+                    <img src="assets/logos/1l1s.png" alt="1L1S" />
+                    <img src="assets/logos/alfa.png" alt="Alfa" />
+                    <img src="assets/logos/caaee.png" alt="CAAEE" />
+                    <img src="assets/logos/cesacom.png" alt="Cesacom" />
+                    <img src="assets/logos/emrys.png" alt="Emrys" />
+                    <img src="assets/logos/fleau.png" alt="Fléau" />
+                    <img src="assets/logos/helloasso.png" alt="HelloAsso" />
+                    <img src="assets/logos/lcl.png" alt="LCL" />
+                    <img src="assets/logos/mc.png" alt="MC" />
+                    <img src="assets/logos/rapsodie.png" alt="Rapsodie" />
+                    <img src="assets/logos/stj.png" alt="STJ" />
+                    <img src="assets/logos/yapla.png" alt="Yapla" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Images flottantes -->
+        <img src="assets/images/sticker-black.png" alt="sticker écouter sans juger" class="floating-img img1 float-left">
+        <img src="assets/images/sticker-fah.png" alt="sticker FAH" class="floating-img img2 float-right">
+        <img src="assets/images/message1.svg" alt="message" class="floating-img img3 float-left">
+        <img src="assets/images/scrapbook.png" alt="scrapbook" class="floating-img img4 float-right">
+        <img src="assets/images/message2.svg" alt="message" class="floating-img img5 float-left">
+        <img src="assets/images/message3.svg" alt="message" class="floating-img img6 float-right">
+        <img src="assets/images/postit1.svg" alt="post-it" class="floating-img img7 float-left">
+        <img src="assets/images/paper.png" alt="papier" class="floating-img img8 float-right">
+        <img src="assets/images/scotch.png" alt="scotch" class="floating-img img9 float-right">
+    </section>
+
+    <!-- SECTION JAUNE -->
+    <section class="yellow-section">
+        <div class="yellow-content">
+            <div class="paper">
+                <p>Chères lectrices, chers lecteurs,</p>
+                <p>Aujourd'hui, le harcèlement prend trop d'envergure au sein de nos milieux scolaires. Nous sommes déterminés à créer des écoles sûres et bienveillantes pour tous les élèves.</p>
+                <p>Pour combattre le harcèlement, nous croyons fermement en la force collective. Notre objectif, offrir un espace d'écoute et sécurisant pour nos pairs</p>
+                <p>Alors nous donnerons tout pour cette cause.</p>
+                <p class="signature">Eva Jacinto</p>
+                <p class="role">Présidente de la FAH</p>
+            </div>
+
+            <!-- Stickers animés -->
+            <img src="assets/images/stickers-scrapbook/w-1.webp" alt="sticker1" class="floating-sticker sticker1">
+            <img src="assets/images/stickers-scrapbook/w-2.webp" alt="sticker2" class="floating-sticker sticker2">
+            <img src="assets/images/stickers-scrapbook/w-3.webp" alt="sticker3" class="floating-sticker sticker3">
+            <img src="assets/images/stickers-scrapbook/w-4.webp" alt="sticker4" class="floating-sticker sticker4">
+            <img src="assets/images/stickers-scrapbook/b-1.webp" alt="sticker5" class="floating-sticker sticker5">
+            <img src="assets/images/stickers-scrapbook/b-2.webp" alt="sticker6" class="floating-sticker sticker6">
+            <img src="assets/images/stickers-scrapbook/b-3.webp" alt="sticker7" class="floating-sticker sticker7">
+            <img src="assets/images/stickers-scrapbook/b-4.webp" alt="sticker8" class="floating-sticker sticker8">
+        </div>
+    </section>
+
+    <!-- QUIZ SECTION -->
+    <section class="quiz-section">
+        <div class="quiz-content">
+            <h2>
+                Une nouvelle manière<br>
+                de <span class="highlight-word1">prévenir</span> le harcèlement
+            </h2>
+            <p class="subtitle">
+                Nos quiz interactifs transforment la prévention en jeu collectif.
+            </p>
+            <a href="./actions.html" class="cta-button">
+                <span>Découvrir nos actions</span>
+                <div class="arrow-circle">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+        </div>
+        <div class="interface-image">
+            <img src="assets/images/interface.png" alt="Interface du quiz">
+        </div>
+    </section>
+
+    <!-- STACKED CARDS SECTION -->
+    <section class="stacked-cards-section">
+        <div class="stacked-hero-content">
+            <h2 class="stacked-hero-title">Les <span class="highlight-word3">bons réflexes</span> face au harcèlement</h2>
+            <p class="stacked-hero-description">Trois étapes simples pour mettre fin au harcèlement et aider les personnes concernées.</p>
+            <a href="./agir.html" class="cta-button">
+                <span>Passer à l'action</span>
+                <div class="arrow-circle">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+        </div>
+
+        <div class="stacked-cards-container">
+            <!-- Card 1 -->
+            <div class="stacked-card-wrapper">
+                <div class="stacked-card" style="background-image: url('assets/images/card-bg-1.jpg'); color: white;">
+                    <div class="stacked-card-content">
+                        <img class="stacked-card-icon" src="assets/images/card-icon-1.webp" alt="Icon">
+                        <h3 class="stacked-card-title">Identifier les signaux</h3>
+                        <p class="stacked-card-description">Le harcèlement apparaît souvent par des gestes répétés : moqueries, isolement, pression ou messages blessants. Repérer ces signes montre qu'une situation n'est pas normale et qu'il faut réagir.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="stacked-card-wrapper">
+                <div class="stacked-card" style="background-image: url('assets/images/card-bg-4.jpg'); color: white;">
+                    <div class="stacked-card-content">
+                        <img class="stacked-card-icon" src="assets/images/card-icon-2.webp" alt="Icon">
+                        <h3 class="stacked-card-title">Briser le silence</h3>
+                        <p class="stacked-card-description">Parler est essentiel. En discuter avec un adulte, un professeur ou la FAH permet d'obtenir une aide rapide. Alerter, c'est protéger quelqu'un en difficulté — jamais créer des problèmes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="stacked-card-wrapper">
+                <div class="stacked-card align-top" style="background-image: url('assets/images/card-bg-3.jpg'); color: black;">
+                    <div class="stacked-card-content">
+                        <img class="stacked-card-icon" src="assets/images/card-icon-3.webp" alt="Icon">
+                        <h3 class="stacked-card-title">Soutenir et sécuriser</h3>
+                        <p class="stacked-card-description">Rassurer la personne et lui rappeler qu'elle n'est pas seule peut tout changer. L'aider à demander de l'aide et veiller à sa sécurité sont des étapes clés pour mettre fin à la situation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="faq-section">
+        <div class="faq-decorations">
+            <img src="assets/images/stickers-scrapbook/pop-1.webp" alt="point d'interrogation" class="slide-left faq-deco-1">
+            <img src="assets/images/stickers-scrapbook/pop-2.webp" alt="bulle de message" class="slide-right faq-deco-2">
+            <img src="assets/images/stickers-scrapbook/pop-3.webp" alt="avion en papier" class="slide-left faq-deco-3">
+        </div>
+
+        <div class="faq-content">
+            <h2>Nous sommes là pour répondre à <span class="highlight-word4">vos questions</span></h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                <span>Proposez-vous un espace de dialogue ?</span>
+                <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Nous offrons un espace gratuit et sécurisé ou les personnes le souhaitant peuvent s'exprimer, être écoutées et recevoir une aide adaptée à leur situation. Vous pouvez vous confier dans cet espacé dédié ; si vous souhaitez recevoir de l'aide, laissez vos coordonnées dans le message.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                <span>Puis-je faire venir les membres de la FAH dans mon établissement scolaire ?</span>
+                <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Les membres de la FAH étant en majorité des étudiants, les appels, ressources en ligne, visio-conférences sont favorisés. Néanmoins si une intervention est nécessaire, celle-ci peut être organisée sous réserve des chefs d'établissement respectifs, ainsi que des modalités de déplacement des élèves. Afin de prendre un premier contact, vous pouvez <a href="contact.html">nous contacter</a>.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                <span>Comment structurez-vous des projets ?</span>
+                <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Nous structurons nos projets en nous réunissant lors de réunions. Nous avons accès à tout au lycée grâce à notre partenariat avec celui-ci. Et nous sommes financés par le FSE et le CVL de la cité scolaire ainsi que par nos généreux donateurs.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                <span>Êtes-vous formés ?</span>
+                <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Non. Notre association s’est formée spontanément et nous apprenons au fur et à mesure, grâce aux ressources, aux échanges avec les pilotes et à notre motivation commune. Validés par le CESCE, nous misons surtout sur notre engagement et notre volonté d’agir contre le harcèlement.</p>
+                </div>
+            </div>
+
+            <p class="subtitle">Vous avez d'autres questions ou demandes ?</p>
+            <a href="contact.html" class="nav-link-cta">Contactez-nous</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <!-- Partie 1 : Section avec image de fond -->
+        <section class="footer-cta">
+            <div class="container">
+                <h2>Devenez acteur de la lutte contre le harcèlement</h2>
+                <p>Contribuez à financer nos actions de prévention et de soutien dans la cité scolaire et partout ailleurs !</p>
+                <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" target="_blank" class="cta-button">
+                    <span>Faire un don</span>
+                    <div class="arrow-circle">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Partie 2 : Section principale avec colonnes -->
+        <section class="footer-main">
+            <div class="container">
+                <div class="footer-columns">
+                    <!-- Colonne 1 : Logo et réseaux sociaux -->
+                    <div class="footer-col">
+                        <img src="assets/logos/fah-full-white.svg" alt="Logo FAH Marie-Curie" class="footer-logo">
+                        <div class="social-links">
+                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Colonne 2 : Compagnie -->
+                    <div class="footer-col">
+                        <h3>Compagnie</h3>
+                        <label class="footer-col-header" for="toggle-compagnie">
+                            <h3>Compagnie</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-compagnie" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./about.html">L'association</a></li>
+                            <li><a href="./actions.html">Nos actions</a></li>
+                            <li><a href="./espace-presse.html">Espace presse</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Colonne 3 : Liens utiles -->
+                    <div class="footer-col">
+                        <h3>Liens utiles</h3>
+                        <label class="footer-col-header" for="toggle-liens">
+                            <h3>Liens utiles</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-liens" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./comprendre.html">Comprendre</a></li>
+                            <li><a href="./agir.html">Agir</a></li>
+                            <li><a href="./player.html">Rejoindre un quiz</a></li>
+                            <li><a href="https://e-enfance.org/" target="_blank">e-Enfance</a></li>
+                            <li><a href="https://www.education.gouv.fr/non-au-harcelement" target="_blank">Non au harcèlement</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Colonne 4 : Besoin d'infos -->
+                    <div class="footer-col">
+                        <h3>Besoin d'infos</h3>
+                        <label class="footer-col-header" for="toggle-infos">
+                            <h3>Besoin d'infos</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-infos" class="footer-col-toggle">
+                        <ul>
+                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./index.html">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partie 3 : Section copyright et mentions légales -->
+        <section class="footer-bottom">
+            <div class="container">
+                <hr class="separator">
+                <div class="footer-bottom-content">
+                    <div class="legal-links">
+                        <a href="./cgu.html">Conditions générales d'utilisation</a>
+                        <a href="./politique-de-confidentialite.html">Politique de confidentialité</a>
+                        <a href="./mentions-legales.html">Mentions légales</a>
+                        <a href="./sitemap.html">Plan du site</a>
+                    </div>
+                    <div class="copyright">
+                        <p>© 2026 FAH Marie-Curie</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+    <!-- JAVASCRIPT - Charger les composants dans l'ordre puis main.js -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/scroll-animations.js"></script>
+    <script src="js/components/cards.js"></script>
+    <script src="js/components/faq.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

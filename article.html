@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Article – FAH Marie-Curie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    body { font-family: "Stack Sans Headline", sans-serif; background:#fff; margin:0; padding:40px; max-width:800px; margin-left:auto; margin-right:auto; }
+    h1 { font-size:2rem; margin-bottom:16px; }
+    .date { color:#888; font-size:0.9rem; margin-bottom:24px; }
+    .content { font-size:1rem; line-height:1.6; }
+    a.back { display:inline-block; margin-top:40px; text-decoration:none; color:#111; font-weight:600; }
+
+    .content h1, .content h2, .content h3 {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    }
+
+    .content p {
+    margin-bottom: 16px;
+    }
+
+    .content a {
+    color: #111;
+    text-decoration: underline;
+    }
+
+    .content ul, .content ol {
+    margin-left: 20px;
+    margin-bottom: 16px;
+    }
+
+    .content code {
+    background: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    }
+
+    .content pre {
+    background: #f4f4f4;
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <a class="back" href="articles.html">← Tous les articles</a>
+  <h1 id="title">Chargement...</h1>
+  <div class="date" id="date"></div>
+  <div class="content" id="content"></div>
+
+  <script>
+    const SUPABASE_URL = "https://ckfdysasgawyixbxjyfz.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrZmR5c2FzZ2F3eWl4YnhqeWZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5ODg1NjcsImV4cCI6MjA3NzU2NDU2N30.t0ubaRk5sz7kewyEsOg4CpFvj47S9U1J1SP_3DQBmE8";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const slug = new URLSearchParams(window.location.search).get("slug");
+    if (!slug) {
+      document.getElementById("title").textContent = "Article introuvable";
+    }
+
+    async function loadArticle() {
+      const { data: article, error } = await supabaseClient
+        .from("articles")
+        .select("*")
+        .eq("slug", slug)
+        .eq("published", true)
+        .single();
+
+      if (error || !article) {
+        document.getElementById("title").textContent = "Article introuvable";
+        return;
+      }
+
+      document.getElementById("title").textContent = article.title;
+      document.getElementById("date").textContent = new Date(article.created_at).toLocaleDateString();
+      document.getElementById("content").innerHTML = marked.parse(article.content);
+    }
+
+    loadArticle();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+/* ============================================
+   ACTIONS PAGE STYLES
+   ============================================ */
+
+
+/* Section des actions alternées */
+.actions-alternees {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-4xl) var(--spacing-lg);
+}
+
+/* Conteneur d'une action individuelle */
+.action-item {
+    display: flex;
+    align-items: stretch;
+    gap: var(--spacing-3xl);
+    margin-bottom: 200px;
+}
+
+/* Dernière action sans marge en bas */
+.action-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Image de l'action */
+.action-image {
+    flex: 1;
+    display: flex; /* Ajouté pour centrer l'image */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+}
+
+.action-image img {
+    max-width: 100%; /* L'image ne dépasse pas son conteneur */
+    max-height: 500px; /* Hauteur max pour garder une taille raisonnable */
+    width: auto; /* Garde le ratio */
+    height: auto; /* Garde le ratio */
+    object-fit: contain; /* Garde l'image entière */
+    border-radius: var(--border-radius-lg);
+}
+
+/* Contenu texte de l'action */
+.action-content {
+    flex: 1;
+    padding: var(--spacing-xl);
+}
+
+.action-content h2 {
+    font-size: clamp(2rem, 3vw, 3rem);
+    color: var(--color-black);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.2;
+    font-weight: 450;
+}
+
+.action-content p {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-light);
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.bubble {
+    background-color: #F1F3F6;
+    border-radius: 15px;
+    padding: 15px 20px 1px 50px;
+    position: relative;
+}
+
+.bubble::before {
+    content: "\f061";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 18px;
+    top: 16px;
+    font-size: 20px;
+}
+
+.bubble p {
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+/* Alternance : image à droite pour les actions impaires */
+.action-item:nth-child(odd) {
+    flex-direction: row-reverse;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+    .action-item {
+        flex-direction: column !important;
+        gap: var(--spacing-xl);
+        min-height: auto;
+    }
+
+    .action-image {
+        min-height: 300px;
+        width: 100%;
+    }
+
+    .action-content {
+        padding: 0;
+    }
+
+    .action-content p { 
+        font-size: 1rem;
+    }
+
+    .action-content h2 {
+        font-size: 1.75rem;
+    }
+}
+

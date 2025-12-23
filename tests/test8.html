@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Agir - FAH Marie-Curie</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Over+the+Rainbow&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FFFF10;
+            --black: #0d0d0d;
+            --dark: #1E1E1E;
+            --grey: #5E5E5E;
+            --grey-light: #666666;
+            --grey-bg: #f6f6f6;
+            --white: #FAFAFA;
+            --pure-white: #ffffff;
+        }
+
+        body {
+            font-family: "Stack Sans Headline", sans-serif;
+            background: var(--white);
+            color: var(--black);
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        .topbar-wrapper {
+            background-color: rgba(255, 255, 255, 0);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar-pill {
+            backdrop-filter: blur(6px);
+            background-color: rgba(250, 250, 250, 0.88);
+            border-radius: 100px;
+            box-shadow: rgba(0, 0, 0, 0.06) 0px 0.34px 0.34px, rgba(30, 45, 82, 0.2) 0.34px 0.34px 0.34px 0px;
+            padding: 0.34px;
+            transform: translateX(-50%);
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            max-width: 1030px;
+            width: calc(100% - 40px);
+        }
+
+        .navbar-inner {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            gap: 16px;
+        }
+
+        .logo-container {
+            flex-shrink: 0;
+            padding-right: 10px;
+        }
+
+        .logo-svg {
+            height: 40px;
+            width: auto;
+            display: block;
+        }
+
+        .nav-links-desktop {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .nav-spacer {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-link {
+            color: var(--black);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            background: var(--grey-bg);
+        }
+
+        .nav-link-cta {
+            padding: 9px 18px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            background: var(--black);
+            color: var(--pure-white);
+            text-decoration: none;
+        }
+
+        .nav-link-cta:hover {
+            background: var(--primary);
+            color: var(--black);
+        }
+
+        /* HERO */
+        .hero-section {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0 0 30px 30px;
+            background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=1920');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 24px;
+            text-align: center;
+            padding-top: 220px;
+            padding-bottom: 200px;
+            overflow: hidden;
+        }
+
+        .bulle {
+            margin-bottom: 20px;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 40px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .hero-section h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--black);
+            line-height: 1;
+            letter-spacing: -0.03em;
+            font-weight: 500;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* INTRO */
+        .intro-section {
+            padding: 100px 24px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .intro-section p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--grey);
+            font-weight: 300;
+        }
+
+        .intro-section strong {
+            color: var(--black);
+            font-weight: 500;
+        }
+
+        /* HORIZONTAL SCROLL - 3 ÉTAPES */
+        .steps-horizontal {
+            height: 300vh;
+            position: relative;
+        }
+
+        .steps-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .steps-track {
+            display: flex;
+            width: 300vw;
+            height: 100vh;
+        }
+
+        .step-panel {
+            width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5%;
+            position: relative;
+        }
+
+        .step-panel:nth-child(1) {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .step-panel:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .step-panel:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .step-content {
+            max-width: 700px;
+            color: white;
+            text-align: center;
+        }
+
+        .step-number {
+            font-size: 12rem;
+            font-weight: 900;
+            opacity: 0.1;
+            position: absolute;
+            top: -3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .step-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .step-description {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* CONTACTS */
+        .contacts-section {
+            padding: 120px 24px;
+            background: var(--white);
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 1rem;
+            letter-spacing: -0.03em;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            font-size: 1.2rem;
+            color: var(--grey);
+            font-weight: 300;
+        }
+
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            background: var(--grey-bg);
+            padding: 32px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.3s;
+        }
+
+        .contact-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .contact-card:hover {
+            transform: translateX(8px);
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .contact-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 12px;
+        }
+
+        .contact-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .contact-info {
+            color: var(--grey);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        /* TÉMOIGNAGES */
+        .testimonials-section {
+            padding: 100px 0;
+            background: var(--grey-bg);
+            overflow: hidden;
+        }
+
+        .testimonials-section .section-title {
+            padding: 0 24px;
+            margin-bottom: 60px;
+        }
+
+        .testimonials-track {
+            display: flex;
+            gap: 24px;
+            animation: scroll 40s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .testimonial {
+            min-width: 400px;
+            background: white;
+            padding: 32px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: var(--grey);
+            font-weight: 300;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 120px 24px;
+            text-align: center;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blob-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            filter: blur(60px);
+        }
+
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            right: -150px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(50px, 50px) scale(1.1);
+            }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .cta-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            color: var(--black);
+            padding: 5px 5px 5px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .arrow-circle {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .nav-links-desktop {
+                display: none;
+            }
+
+            .step-description {
+                font-size: 1.1rem;
+            }
+
+            .testimonial {
+                min-width: 320px;
+            }
+
+            .contacts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 1s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="topbar-wrapper">
+        <div class="navbar-pill">
+            <div class="navbar-inner">
+                <a href="index.html" class="logo-container">
+                    <img src="https://via.placeholder.com/120x40/0d0d0d/FFFF10?text=FAH" alt="Logo" class="logo-svg">
+                </a>
+
+                <div class="nav-links-desktop">
+                    <a href="about.html" class="nav-link">L'association</a>
+                    <a href="actions.html" class="nav-link">Nos actions</a>
+                    <a href="comprendre.html" class="nav-link">Comprendre</a>
+                    <a href="agir.html" class="nav-link">Agir</a>
+                    
+                    <div class="nav-spacer">
+                        <a href="login.html" class="nav-link">Se connecter</a>
+                        <a href="#" class="nav-link nav-link-cta">Faire un don</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero-section">
+        <div class="bulle">Agir</div>
+        <h1>Victime, témoin, proche :<br>comment agir face au harcèlement ?</h1>
+    </section>
+
+    <!-- INTRO -->
+    <section class="intro-section fade-in">
+        <p>Il est <strong>primordial d'agir</strong> face au harcèlement. Que vous soyez victime, témoin ou proche, votre rôle est essentiel. N'hésitez pas à consulter des <strong>professionnels qualifiés</strong> pour obtenir le soutien émotionnel nécessaire. <strong>Ne restez pas silencieux</strong> – chaque action compte pour mettre fin au harcèlement.</p>
+    </section>
+
+    <!-- SCROLL HORIZONTAL - 3 ÉTAPES -->
+    <div class="steps-horizontal">
+        <div class="steps-container">
+            <div class="steps-track" id="stepsTrack">
+                <!-- ÉTAPE 1 -->
+                <div class="step-panel">
+                    <div class="step-content">
+                        <div class="step-number">01</div>
+                        <div class="step-icon">🔍</div>
+                        <h2 class="step-title">Repérer</h2>
+                        <p class="step-description">
+                            Si vous êtes témoin d'attaques, ne faites pas de commentaires au risque d'aggraver la situation. Soutenez la personne harcelée uniquement si cela ne constitue aucun risque. Conservez les preuves, notamment en cas de cyberharcèlement.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ÉTAPE 2 -->
+                <div class="step-panel">
+                    <div class="step-content">
+                        <div class="step-number">02</div>
+                        <div class="step-icon">🚨</div>
+                        <h2 class="step-title">Alerter</h2>
+                        <p class="step-description">
+                            En cas de harcèlement scolaire, alertez l'établissement immédiatement. Parlez-en à un adulte de confiance. Porter plainte est possible et dissuade rapidement les harceleurs. Pour le cyberharcèlement, signalez les publications concernées.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ÉTAPE 3 -->
+                <div class="step-panel">
+                    <div class="step-content">
+                        <div class="step-number">03</div>
+                        <div class="step-icon">🛡️</div>
+                        <h2 class="step-title">Protéger</h2>
+                        <p class="step-description">
+                            Le soutien moral et psychologique est crucial. Ne laissez pas seule la personne concernée. Respectez son rythme – elle peut être ouverte ou fermée à la discussion. Ne forcez pas le dialogue, rassurez et mettez en confiance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACTS -->
+    <section class="contacts-section">
+        <h2 class="section-title fade-in">Qui contacter ?</h2>
+        <p class="section-subtitle fade-in">Tous ces numéros sont <strong>gratuits, anonymes et confidentiels</strong>. N'hésitez pas à les contacter.</p>
+        
+        <div class="contacts-grid">
+            <div class="contact-card fade-in">
+                <div class="contact-title">Non au harcèlement</div>
+                <span class="contact-number">30 20</span>
+                <div class="contact-info">Lun-Ven : 9h-20h<br>Sam : 9h-18h</div>
+            </div>
+
+            <div class="contact-card fade-in">
+                <div class="contact-title">Cyberviolences</div>
+                <span class="contact-number">30 18</span>
+                <div class="contact-info">7j/7 : 9h-23h</div>
+            </div>
+
+            <div class="contact-card fade-in">
+                <div class="contact-title">Enfance en danger</div>
+                <span class="contact-number">119</span>
+                <div class="contact-info">7j/7 - 24h/24</div>
+            </div>
+
+            <div class="contact-card fade-in">
+                <div class="contact-title">Urgences</div>
+                <span class="contact-number">15 / 17 / 18</span>
+                <div class="contact-info">7j/7 - 24h/24</div>
+            </div>
+
+            <div class="contact-card fade-in">
+                <div class="contact-title">Aide psychologique</div>
+                <span class="contact-number">01 40 91 50 75</span>
+                <div class="contact-info">Lun-Ven : 13h-17h</div>
+            </div>
+
+            <div class="contact-card fade-in">
+                <div class="contact-title">Votre établissement</div>
+                <span class="contact-number">CPE</span>
+                <div class="contact-info">Parlez à un adulte de confiance</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TÉMOIGNAGES -->
+    <section class="testimonials-section">
+        <h2 class="section-title">Ils ont agi, vous aussi vous pouvez</h2>
+        <div class="testimonials-track">
+            <div class="testimonial">
+                <p class="testimonial-text">"J'ai longtemps hésité à en parler. Appeler le 3020 a changé ma vie. J'ai été écoutée sans jugement et accompagnée dans mes démarches."</p>
+                <p class="testimonial-author">— Marie, 16 ans</p>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">"En tant que témoin, j'avais peur de mal faire. Grâce aux conseils de l'association, j'ai su comment aider mon ami sans aggraver la situation."</p>
+                <p class="testimonial-author">— Lucas, 15 ans</p>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">"Le cyberharcèlement me rongeait. Signaler les comptes et en parler à mes parents a été libérateur. Je ne suis plus seule."</p>
+                <p class="testimonial-author">— Sarah, 17 ans</p>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">"En tant que parent, je ne savais pas comment réagir. L'équipe de l'association m'a guidé pas à pas pour protéger mon enfant."</p>
+                <p class="testimonial-author">— Patrick, parent</p>
+            </div>
+            <!-- Duplication pour scroll infini -->
+            <div class="testimonial">
+                <p class="testimonial-text">"J'ai longtemps hésité à en parler. Appeler le 3020 a changé ma vie. J'ai été écoutée sans jugement et accompagnée dans mes démarches."</p>
+                <p class="testimonial-author">— Marie, 16 ans</p>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">"En tant que témoin, j'avais peur de mal faire. Grâce aux conseils de l'association, j'ai su comment aider mon ami sans aggraver la situation."</p>
+                <p class="testimonial-author">— Lucas, 15 ans</p>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">"Le cyberharcèlement me rongeait. Signaler les comptes et en parler à mes parents a été libérateur. Je ne suis plus seule."</p>
+                <p class="testimonial-author">— Sarah, 17 ans</p>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">"En tant que parent, je ne savais pas comment réagir. L'équipe de l'association m'a guidé pas à pas pour protéger mon enfant."</p>
+                <p class="testimonial-author">— Patrick, parent</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="blob-container">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+        </div>
+        <div class="cta-content">
+            <h2 class="cta-title">Soutenez nos actions préventives</h2>
+            <p class="cta-subtitle">Ensemble, créons un environnement plus sûr pour tous</p>
+            <a href="#" class="cta-button">
+                <span>Faire un don</span>
+                <div class="arrow-circle">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // SCROLL HORIZONTAL AVEC PIN
+        const stepsHorizontal = document.querySelector('.steps-horizontal');
+        const stepsTrack = document.getElementById('stepsTrack');
+
+        gsap.to(stepsTrack, {
+            x: () => -(stepsTrack.scrollWidth - window.innerWidth),
+            ease: 'none',
+            scrollTrigger: {
+                trigger: stepsHorizontal,
+                start: 'top top',
+                end: () => `+=${stepsHorizontal.offsetHeight}`,
+                scrub: 1,
+                pin: '.steps-container',
+                anticipatePin: 1
+            }
+        });
+
+        // FADE IN AU SCROLL
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // PARALLAXE SUR LES CARTES DE CONTACT
+        gsap.utils.toArray('.contact-card').forEach((card, i) => {
+            gsap.from(card, {
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+    </script>
+</body>
+</html>
