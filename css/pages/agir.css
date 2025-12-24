@@ -440,13 +440,14 @@
 
 
 .ressources-section {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 40px 20px;
   box-sizing: border-box;
 }
 
 .ressources-section h2 {
+  max-width: 800px;
   text-align: left;
   margin-bottom: 40px;
   font-size: clamp(2rem, 3vw, 3rem);
@@ -478,6 +479,13 @@
   text-decoration-style: wavy;
 }
 
+.section-title span {
+  text-decoration-line: underline;
+  text-decoration-color: #FFFF10;
+  text-decoration-thickness: 7px;
+  text-decoration-style: wavy;
+}
+
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -488,4 +496,64 @@
   .ressources-column p {
     font-size: 1rem;
   }
+}
+
+
+
+.numeros {
+  padding: 40px 0px;
+}
+
+.numeros ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Puce ronde jaune */
+.bullet {
+  width: 40px;
+  height: 40px;
+  background-color: #FFFF10;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Flèche Font Awesome */
+.bullet::before {
+  content: "\f061";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900; /* OBLIGATOIRE pour les icônes solid */
+  font-size: 16px;
+  color: #000;
+}
+
+/* Contenu */
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.phone {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.description {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #000;
+  font-weight: 300;
 }
