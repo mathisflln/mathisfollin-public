@@ -263,10 +263,10 @@
 /* Images placées précisément dans les blocs */
 .top-left img {
   position: absolute;
-  bottom: -20px;
+  bottom: -100px;
   right: 10px;
   transform: rotate(-5deg);
-  max-width: min(180px, 40%);
+  max-width: 250px;
   filter: drop-shadow(0 0 10px rgb(181, 181, 181));
 }
 
@@ -380,7 +380,7 @@
   /* Ajuster les images */
   .top-left img {
     max-width: min(150px, 35%);
-    bottom: -10px;
+    bottom: -20px;
   }
 
   .bottom-left img {
