@@ -478,6 +478,14 @@
   text-decoration-style: wavy;
 }
 
+.ressources-column span {
+  font-weight: 600;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: black;
+  text-decoration-style: wavy;
+}
+
 .section-title span {
   text-decoration-line: underline;
   text-decoration-color: #FFFF10;

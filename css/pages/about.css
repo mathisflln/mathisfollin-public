@@ -18,6 +18,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  margin-bottom: 7rem;
 }
 
 .asso-hero-content {
@@ -52,288 +53,6 @@
 
   .asso-section-hero p {
     font-size: var(--font-size-base);
-  }
-}
-
-
-
-
-
-.ipad-section {
-  padding: var(--spacing-6xl) var(--spacing-lg) 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.ipad-content {
-  max-width: 800px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.ipad-content h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  color: var(--color-dark);
-  margin-bottom: var(--spacing-md);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  font-weight: var(--font-weight-medium);
-}
-
-.ipad-content p {
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-light);
-  color: #5E5E5E;
-  margin-top: 5rem;
-  max-width: 500px;
-}
-
-.ipad-content img {
-  rotate: -2deg;
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-  filter: drop-shadow(8px 8px 10px #000000a0);
-}
-
-
-
-
-
-.equipe-section {
-  margin-top: 100px;
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  padding-top: 6rem;
-  padding-bottom: 6rem;
-  justify-content: center;
-  background-image: url('../../assets/images/grey-bg.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.carousel-container {
-  padding-left: clamp(20px, 15vw, 250px);
-  display: flex;
-  align-items: flex-start;
-  overflow: hidden; /* cache tout débordement */
-}
-
-/* Card fixe */
-.card-fixed {
-  flex: 0 0 300px;
-  background: #000000;
-  color: rgb(255, 255, 255);
-  padding: 30px;
-  border-radius: 20px;
-  height: 450px;
-  margin-right: 20px;
-  box-sizing: border-box;
-}
-
-.card-fixed h2 {
-  font-size: 3rem;
-  font-weight: 400;
-  line-height: 1em;
-}
-
-.card-fixed p {
-  font-size: 1rem;
-  font-weight: 200;
-  padding-top: 30px;
-}
-
-/* Carousel scrollable */
-.carousel {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  height: 450px;
-  scrollbar-width: none; /* Firefox */
-}
-
-.carousel::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
-}
-
-/* Cards membres */
-.member-card {
-  flex: 0 0 350px;
-  background: #FFFF10;
-  border-radius: 20px;
-  padding: 10px;
-  box-sizing: border-box;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  margin-right: 20px; /* espace entre cards sauf la dernière */
-}
-
-/* Supprimer la marge droite de la dernière card */
-.carousel .member-card:last-child {
-  margin-right: 0;
-}
-
-.member-card img {
-  width: 100%;
-  height: 210px;
-  object-fit: cover;
-  border-radius: 15px;
-}
-
-.member-card h3 {
-  margin: 10px 0 0;
-  font-size: 2rem;
-  padding: 20px 20px 0;
-}
-
-.member-card p.role {
-  font-size: 1.2rem;
-  font-weight: 400;
-  padding: 0 20px;
-}
-
-.member-card p.desc {
-  margin-top: 15px;
-  font-size: 14px;
-  font-weight: 300;
-  padding: 0 20px;
-}
-
-/* RESPONSIVE */
-
-/* Tablettes (< 1024px) */
-@media (max-width: 1024px) {
-  .equipe-section {
-    padding-top: 10rem;
-    padding-bottom: 10rem;
-    margin-top: 100px;
-  }
-
-  .carousel-container {
-    padding-left: 3%;
-    padding-right: 3%;
-  }
-
-  .card-fixed {
-    flex: 0 0 250px;
-    padding: 25px;
-    height: 400px;
-  }
-
-  .card-fixed h2 {
-    font-size: 2.5rem;
-  }
-
-  .carousel {
-    height: 400px;
-  }
-
-  .member-card {
-    flex: 0 0 300px;
-    padding: 25px;
-  }
-
-  .member-card h3 {
-    font-size: 1.8rem;
-  }
-}
-
-/* Mobile (< 768px) */
-@media (max-width: 768px) {
-  .equipe-section {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-    margin-top: 60px;
-  }
-
-  .carousel-container {
-    flex-direction: column;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .card-fixed {
-    flex: 1 1 auto;
-    width: 100%;
-    height: auto;
-    margin-right: 0;
-    margin-bottom: 30px;
-    padding: 25px;
-  }
-
-  .card-fixed h2 {
-    font-size: 2rem;
-  }
-
-  .card-fixed p {
-    font-size: 0.95rem;
-    padding-top: 20px;
-  }
-
-  .carousel {
-    width: 100%;
-    height: auto;
-    min-height: 400px;
-  }
-
-  .member-card {
-    flex: 0 0 280px;
-    padding: 20px;
-    margin-right: 15px;
-  }
-
-  .member-card h3 {
-    font-size: 1.6rem;
-  }
-
-  .member-card p.role {
-    font-size: 1.1rem;
-  }
-
-  .member-card p.desc {
-    font-size: 13px;
-  }
-}
-
-/* Petit mobile (< 480px) */
-@media (max-width: 480px) {
-  .equipe-section {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-
-  .carousel-container {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-  .card-fixed {
-    padding: 20px;
-  }
-
-  .card-fixed h2 {
-    font-size: 1.8rem;
-  }
-
-  .member-card {
-    flex: 0 0 250px;
-    padding: 20px;
-  }
-
-  .member-card img {
-    height: 130px;
-  }
-
-  .member-card h3 {
-    font-size: 1.5rem;
   }
 }
 
@@ -447,7 +166,7 @@
 }
 
 .video-wrapper {
-  max-width: 700px;
+  max-width: 770px;
   width: 100%;
   aspect-ratio: 16 / 9;
 }
@@ -456,4 +175,60 @@
   width: 100%;
   height: 100%;
   border: none;
+  border-radius: 20px;
+}
+
+
+
+
+.partenaires {
+  overflow: hidden;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.partenaires-logos {
+  padding: 30px 0;
+  white-space: nowrap;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%);
+}
+
+.partenaires-logos:before,
+.partenaires-logos:after {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  content: "";
+  z-index: 2;
+  pointer-events: none;
+}
+
+.partenaires-logos:before {
+  left: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), transparent);
+}
+
+.partenaires-logos:after {
+  right: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0), transparent);
+}
+
+.partenaires-logos-slide {
+  display: inline-block;
+  animation: 45s slide infinite linear;
+}
+
+.partenaires-logos-slide img {
+  height: clamp(70px, 5vw, 65px);
+  margin: 0 clamp(12px, 3vw, 30px);
 }
