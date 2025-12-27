@@ -70,7 +70,7 @@
 
 .valeurs-section h2 {
   text-align: center;
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 5vw, 3rem);
   color: var(--color-dark);
   margin-bottom: var(--spacing-md);
   line-height: 1;
