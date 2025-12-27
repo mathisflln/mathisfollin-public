@@ -155,7 +155,7 @@
     width: 100%;
     max-width: 1300px;
     margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg);
+    padding: var(--spacing-4xl) var(--spacing-lg);
 }
 
 /* Conteneur d'une consequence individuelle */
@@ -311,9 +311,6 @@
         max-width: 200px;
     }
 }
-
-
-
 
 /* Tablettes */
 @media (max-width: 768px) {
