@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>FAH Marie-Curie</title>
+    <title>404 - Page introuvable | FAH Marie-Curie</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,25 +10,207 @@
     <link href="https://fonts.googleapis.com/css2?family=Over+the+Rainbow&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
     
-    <!-- CSS - UN SEUL FICHIER QUI IMPORTE TOUT -->
+    <!-- CSS -->
     <link rel="stylesheet" href="css/main.css">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        .error-404-section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('assets/images/background.png');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            padding: 120px 20px 80px;
+        }
+
+        .error-404-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .error-404-number {
+            font-size: clamp(6rem, 15vw, 12rem);
+            font-weight: 600;
+            line-height: 1;
+            margin-bottom: 20px;
+            background: black;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.05em;
+        }
+
+        .error-404-title {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: black;
+            letter-spacing: -0.02em;
+        }
+
+        .error-404-description {
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            font-weight: 300;
+            color: #5E5E5E;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .error-404-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-404-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-family: "Stack Sans Headline", sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .error-404-btn-primary {
+            background: black;
+            color: #ffffff;
+        }
+
+        .error-404-btn-primary:hover {
+            background: #FFFF10;
+            color: black;
+        }
+
+        .error-404-btn-secondary {
+            background: transparent;
+            color: black;
+            border: 1px solid #d0d0d0;
+        }
+
+        .error-404-btn-secondary:hover {
+            border-color: black;
+        }
+
+        /* Stickers flottants */
+        .error-sticker {
+            position: absolute;
+            z-index: 5;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(var(--rotate-start));
+            }
+            50% {
+                transform: translateY(-20px) rotate(var(--rotate-end));
+            }
+        }
+
+        .sticker-1 {
+            --rotate-start: -5deg;
+            --rotate-end: 5deg;
+            top: 15%;
+            left: 10%;
+            width: 120px;
+            animation-delay: 0s;
+        }
+
+        .sticker-2 {
+            --rotate-start: 10deg;
+            --rotate-end: -10deg;
+            top: 20%;
+            right: 8%;
+            width: 100px;
+            animation-delay: 1s;
+        }
+
+        .sticker-3 {
+            --rotate-start: -8deg;
+            --rotate-end: 8deg;
+            bottom: 20%;
+            left: 5%;
+            width: 140px;
+            animation-delay: 2s;
+        }
+
+        .sticker-4 {
+            --rotate-start: 5deg;
+            --rotate-end: -5deg;
+            bottom: 25%;
+            right: 12%;
+            width: 110px;
+            animation-delay: 1.5s;
+        }
+
+        .sticker-5 {
+            --rotate-start: -12deg;
+            --rotate-end: 12deg;
+            top: 50%;
+            left: 15%;
+            width: 90px;
+            animation-delay: 0.5s;
+        }
+
+        @media (max-width: 1200px) {
+            .error-sticker {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .error-404-section {
+                padding: 100px 15px 60px;
+            }
+
+            .error-404-content {
+                padding: 40px 25px;
+            }
+
+            .error-404-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .error-404-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- NAVBAR -->
     <div class="topbar-wrapper">
         <div class="navbar-pill">
             <div class="navbar-inner">
-                <!-- Logo -->
                 <a href="./index.html" class="logo-container">
                     <img src="assets/logos/fah.png" alt="Logo" class="logo-svg">
                 </a>
 
-                <!-- Navigation Desktop -->
                 <div class="nav-links-desktop">
                     <a href="./about.html" class="nav-link">L'association</a>
                     <a href="./actions.html" class="nav-link">Nos actions</a>
@@ -36,12 +218,11 @@
                     <a href="./agir.html" class="nav-link">Agir</a>
                     
                     <div class="nav-spacer">
-                        <a href="./login.html" class="nav-link">Se connecter</a>
+                        <a href="https://app.mathisfollin.fr" class="nav-link">Se connecter</a>
                         <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link nav-link-cta">Faire un don</a>
                     </div>
                 </div>
 
-                <!-- Burger Menu Button -->
                 <button class="burger-btn" onclick="toggleMobileMenu()">
                     <div class="burger-icon">
                         <span></span>
@@ -53,7 +234,7 @@
         </div>
     </div>
 
-    <!-- Mobile Menu Overlay -->
+    <!-- Mobile Menu -->
     <div class="mobile-menu-overlay" id="mobileMenu">
         <div>
             <a href="./about.html" class="nav-link">L'association</a>
@@ -63,66 +244,44 @@
         </div>
         
         <div class="mobile-menu-bottom">
-            <a href="./login.html" class="nav-link-login">Se connecter</a>
+            <a href="https://app.mathisfollin.fr" class="nav-link-login">Se connecter</a>
             <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link-cta-mobile">Faire un don</a>
         </div>
     </div>
 
-    <section class="hero-actions">
-        <div class="bulle"><p>Agir</p></div>
-        <h1>Victime, témoin, proche :<br> comment agir face au harcèlement ?</h1>
-    </section>
+    <!-- 404 ERROR SECTION -->
+    <section class="error-404-section">
+        <!-- Stickers décoratifs -->
+        <img src="assets/images/stickers-scrapbook/w-1.webp" alt="" class="error-sticker sticker-1">
+        <img src="assets/images/stickers-scrapbook/w-2.webp" alt="" class="error-sticker sticker-2">
+        <img src="assets/images/stickers-scrapbook/b-1.webp" alt="" class="error-sticker sticker-3">
+        <img src="assets/images/stickers-scrapbook/b-3.webp" alt="" class="error-sticker sticker-4">
+        <img src="assets/images/stickers-scrapbook/w-4.webp" alt="" class="error-sticker sticker-5">
 
-
-
-
-    <section class="hero11">
-        <div class="copy-container">
-            <h1>Il s'agit du premier titre de la page</h1>
-        </div>
-    </section>
-    <section class="about11 anime-text-container">
-        <div class="copy-container">
-            <div class="anime-text">
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus minus commodi ea nostrum, totam dolores facere dicta incidunt accusamus veritatis? Possimus debitis iure repudiandae dolore asperiores laborum necessitatibus assumenda animi!
-                </p>
-                <p>
-                    Lorem ipsum dolor clarity sit amet consectetur adipisicing elit. Accusantium distinctio esse laboriosam suscipit quas magni iusto optio? Eos molestias tempora fugit laudantium dolore, living cum sint est suscipit corrupti facilis praesentium. Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis quia ducimus necessitatibus, ipsa voluptate reprehenderit error quis incidunt quasi non asperiores, eaque consequuntur tempora voluptatem ad sunt, obcaecati ea magnam.
-                </p>
+        <!-- Contenu de l'erreur -->
+        <div class="error-404-content">
+            <div class="error-404-number">404</div>
+            <h1 class="error-404-title">Oups ! Cette page n'existe pas</h1>
+            <p class="error-404-description">
+                Il semblerait que la page que vous cherchez se soit perdue en chemin. 
+                Pas de panique, nous sommes là pour vous aider à retrouver votre route !
+            </p>
+            
+            <div class="error-404-actions">
+                <a href="./index.html" class="error-404-btn error-404-btn-primary">
+                    <i class="fas fa-home"></i>
+                    Retour à l'accueil
+                </a>
+                <a href="./contact.html" class="error-404-btn error-404-btn-secondary">
+                    <i class="fas fa-envelope"></i>
+                    Nous contacter
+                </a>
             </div>
         </div>
     </section>
-    <section class="cta11">
-        <div class="copy-container">
-            <h1>Il s'agit du troisième titre de la page</h1>
-        </div>
-    </section>
-    <section class="features11 anime-text-container">
-        <div class="copy-container">
-            <div class="anime-text">
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus minus commodi ea nostrum, totam dolores facere dicta incidunt accusamus veritatis? Possimus debitis iure repudiandae dolore asperiores vibrant laborum necessitatibus assumenda animi! Lorem, ipsum dolor sit amet vision consectetur adipisicing elit. Suscipit commodi porro unde ipsam enim odio, nostrum maxime corrupti harum numquam facilis laudantium magnam voluptates a repudiandae amet deserunt ullam perferendis?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium distinctio esse shape laboriosam suscipit quas magni iusto optio? Eos molestias tempora fugit laudantium dolore, cum sint est suscipit corrupti facilis praesentium.
-                </p>
-            </div>
-        </div>
-    </section>
-    <section class="outro11">
-        <div class="copy-container">
-            <h1>Enfin le dernier gros titre</h1>
-        </div>
-    </section>
-
-
-
-
 
     <!-- FOOTER -->
     <footer>
-        <!-- Partie 1 : Section avec image de fond -->
         <section class="footer-cta">
             <div class="container">
                 <h2>Devenez acteur de la lutte contre le harcèlement</h2>
@@ -136,11 +295,9 @@
             </div>
         </section>
 
-        <!-- Partie 2 : Section principale avec colonnes -->
         <section class="footer-main">
             <div class="container">
                 <div class="footer-columns">
-                    <!-- Colonne 1 : Logo et réseaux sociaux -->
                     <div class="footer-col">
                         <img src="assets/logos/fah-full-white.svg" alt="Logo FAH Marie-Curie" class="footer-logo">
                         <div class="social-links">
@@ -151,7 +308,6 @@
                         </div>
                     </div>
 
-                    <!-- Colonne 2 : Compagnie -->
                     <div class="footer-col">
                         <h3>Compagnie</h3>
                         <label class="footer-col-header" for="toggle-compagnie">
@@ -165,7 +321,6 @@
                         </ul>
                     </div>
 
-                    <!-- Colonne 3 : Liens utiles -->
                     <div class="footer-col">
                         <h3>Liens utiles</h3>
                         <label class="footer-col-header" for="toggle-liens">
@@ -181,7 +336,6 @@
                         </ul>
                     </div>
 
-                    <!-- Colonne 4 : Besoin d'infos -->
                     <div class="footer-col">
                         <h3>Besoin d'infos</h3>
                         <label class="footer-col-header" for="toggle-infos">
@@ -197,7 +351,6 @@
             </div>
         </section>
 
-        <!-- Partie 3 : Section copyright et mentions légales -->
         <section class="footer-bottom">
             <div class="container">
                 <hr class="separator">
@@ -216,16 +369,8 @@
         </section>
     </footer>
 
-    <!-- JAVASCRIPT - Charger les composants dans l'ordre puis main.js -->
-    <!-- GSAP et dépendances - AJOUTER AVANT tes autres scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-
+    <!-- JAVASCRIPT -->
     <script src="js/components/navbar.js"></script>
-    <script src="js/components/scroll-animations.js"></script>
-    <script src="js/components/cards.js"></script>
-    <script src="js/components/faq.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
