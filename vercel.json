@@ -1,4 +1,41 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/a-propos",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/nos-actions",
+      "destination": "/actions",
+      "permanent": true
+    },
+    {
+      "source": "/web/login",
+      "destination": "https://app.mathisfollin.fr",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/app/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/admin/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ]
 }
