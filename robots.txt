@@ -1,0 +1,11 @@
+# robots.txt pour mathisfollin.fr
+
+User-agent: *
+Allow: /
+
+Disallow: /.git/
+Disallow: /admin/
+Disallow: /app/
+
+# Sitemap
+Sitemap: https://mathisfollin.fr/sitemap.xml
