@@ -3,6 +3,16 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/contactus",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/shop",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/a-propos",
       "destination": "/about",
       "permanent": true
@@ -15,6 +25,11 @@
     {
       "source": "/web/login",
       "destination": "https://app.mathisfollin.fr",
+      "permanent": true
+    },
+    {
+      "source": "/web/:path*",
+      "destination": "https://app.fahmariecurie.com",
       "permanent": true
     }
   ],

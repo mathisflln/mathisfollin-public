@@ -9,3 +9,8 @@ Disallow: /app/
 
 # Sitemap
 Sitemap: https://mathisfollin.fr/sitemap.xml
+
+# Autoriser les ressources
+Allow: /assets/
+Allow: /css/
+Allow: /js/
