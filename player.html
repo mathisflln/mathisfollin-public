@@ -560,12 +560,6 @@ async function attemptReconnect(savedData) {
         .eq('id', savedData.sessionId)
         .single();
       
-      console.log('📊 Session fraîche récupérée:', {
-        current_question_index: freshSession.current_question_index,
-        question_start_time: freshSession.question_start_time,
-        quiz_id: freshSession.quiz_id
-      });
-      
       await loadQuestion(freshSession);
     } else {
       document.getElementById('join-screen').style.display = 'none';
@@ -687,16 +681,11 @@ function subscribeToSession() {
     }, async (payload) => {
       const session = payload.new;
       
-      console.log('📡 Session update:', session.status, 'Q:', session.current_question_index, 'Time:', session.question_start_time);
-      
       if (session.status === 'active' && session.current_question_index !== null) {
-        // Charger seulement si nouvelle question
         if (!currentQuestion || currentQuestion.index !== session.current_question_index) {
-          console.log('🆕 Nouvelle question');
           await loadQuestion(session);
         }
       } else if (session.status === 'finished') {
-        console.log('🏁 Quiz terminé');
         await showFinalScreen();
       }
     })
@@ -708,7 +697,6 @@ function subscribeToSession() {
 // ============================================
 
 async function loadQuestion(session) {
-  // IMPORTANT: Réinitialiser hasAnswered pour chaque nouvelle question
   hasAnswered = false;
   
   if (currentTimerInterval) {
@@ -716,9 +704,7 @@ async function loadQuestion(session) {
     currentTimerInterval = null;
   }
   
-  console.log('🎯 loadQuestion Q' + session.current_question_index);
-  
-  // CORRECTION: Vérifier si on a déjà répondu à cette question
+  // CORRECTION 2: Vérifier si réponse existe déjà pour bloquer double réponse
   const { data: existingAnswer } = await supabaseClient
     .from('participant_answers')
     .select('id, answer_index, is_correct, points_earned')
@@ -728,10 +714,7 @@ async function loadQuestion(session) {
     .maybeSingle();
 
   if (existingAnswer) {
-    console.log('✅ Réponse déjà enregistrée');
     hasAnswered = true;
-  } else {
-    console.log('🆕 Pas encore répondu');
   }
   
   const { data: quiz } = await supabaseClient
@@ -748,8 +731,6 @@ async function loadQuestion(session) {
   const questions = typeof quiz.questions === 'string' ? JSON.parse(quiz.questions) : quiz.questions;
   currentQuestion = questions[session.current_question_index];
   currentQuestion.index = session.current_question_index;
-  
-  console.log('📝 Question:', currentQuestion.question);
 
   document.getElementById('waiting-screen').style.display = 'none';
   document.getElementById('game-screen').style.display = 'block';
@@ -777,14 +758,12 @@ async function loadQuestion(session) {
     btn.className = `option-btn ${colors[i]}`;
     btn.textContent = opt;
     
-    // Si déjà répondu, désactiver et marquer la réponse
     if (hasAnswered && existingAnswer && existingAnswer.answer_index === i) {
       btn.classList.add('selected');
       btn.disabled = true;
     } else if (hasAnswered) {
       btn.disabled = true;
     } else {
-      // CORRECTION: S'assurer que les boutons sont activés
       btn.disabled = false;
       btn.classList.remove('selected');
       btn.addEventListener('click', () => selectAnswer(i));
@@ -793,15 +772,10 @@ async function loadQuestion(session) {
     optionsGrid.appendChild(btn);
   });
 
-  // Si déjà répondu, afficher message d'attente
   if (hasAnswered) {
     const resultEl = document.getElementById('result-message');
     resultEl.innerHTML = '<div class="result-icon">⏳</div><div style="color: #0d0d0d;">Réponse déjà enregistrée ! En attente des résultats...</div>';
     resultEl.style.display = 'block';
-    
-    const timerEl = document.getElementById('timer');
-    timerEl.textContent = '⏱️ 0s';
-    timerEl.classList.add('warning');
     
     waitForQuestionResults(existingAnswer);
     return;
@@ -810,20 +784,17 @@ async function loadQuestion(session) {
   const timeLimit = currentQuestion.timeLimit || 30;
   
   if (!session.question_start_time) {
-    console.error('❌ Pas de question_start_time !');
     startTimer(timeLimit);
     return;
   }
   
+  // CORRECTION 3: Calcul du temps restant pour affichage correct lors du rechargement
   const questionStartTime = new Date(session.question_start_time).getTime();
   const nowTime = Date.now();
   const elapsedSeconds = (nowTime - questionStartTime) / 1000;
   const remainingSeconds = Math.max(0, timeLimit - elapsedSeconds);
 
-  console.log('⏱️', remainingSeconds.toFixed(1), 's restantes');
-
-  if (remainingSeconds <= 0.5) {
-    console.log('⏱️ Temps écoulé');
+  if (remainingSeconds <= 0) {
     const timerEl = document.getElementById('timer');
     timerEl.textContent = '⏱️ 0s';
     disableOptions();
@@ -842,27 +813,21 @@ let currentTimerInterval = null;
 function startTimer(seconds) {
   let timeLeft = Math.floor(seconds);
   
-  console.log('🚀 startTimer appelée avec:', seconds, '-> arrondi à:', timeLeft);
-  
   const timerEl = document.getElementById('timer');
   timerEl.textContent = `⏱️ ${timeLeft}s`;
   timerEl.classList.remove('warning');
 
   if (currentTimerInterval) {
-    console.log('🧹 Nettoyage ancien timer');
     clearInterval(currentTimerInterval);
     currentTimerInterval = null;
   }
 
   if (timeLeft <= 0) {
-    console.log('⏱️ Temps à 0, fin immédiate');
     disableOptions();
     displayQuestionResult();
     return;
   }
 
-  console.log('⏱️ Création interval pour', timeLeft, 'secondes');
-  
   currentTimerInterval = setInterval(() => {
     timeLeft--;
     timerEl.textContent = `⏱️ ${timeLeft}s`;
@@ -872,7 +837,6 @@ function startTimer(seconds) {
     }
 
     if (timeLeft <= 0) {
-      console.log('⏱️ Timer terminé');
       clearInterval(currentTimerInterval);
       currentTimerInterval = null;
       disableOptions();
@@ -882,15 +846,11 @@ function startTimer(seconds) {
 }
 
 // ============================================
-// SÉLECTION DE RÉPONSE - CORRIGÉ
+// SÉLECTION DE RÉPONSE
 // ============================================
 
 async function selectAnswer(answerIndex) {
-  if (hasAnswered) {
-    console.log('⚠️ Réponse déjà donnée, ignorer');
-    return;
-  }
-  
+  if (hasAnswered) return;
   hasAnswered = true;
 
   const buttons = document.querySelectorAll('.option-btn');
@@ -906,8 +866,8 @@ async function selectAnswer(answerIndex) {
   resultEl.style.display = 'block';
 
   try {
-    // CORRECTION: Vérifier une dernière fois qu'on n'a pas déjà répondu
-    const { data: existingAnswer } = await supabaseClient
+    // CORRECTION 2: Double vérification avant insertion
+    const { data: doubleCheck } = await supabaseClient
       .from('participant_answers')
       .select('id')
       .eq('session_id', sessionId)
@@ -915,8 +875,8 @@ async function selectAnswer(answerIndex) {
       .eq('question_index', currentQuestion.index || 0)
       .maybeSingle();
 
-    if (existingAnswer) {
-      console.log('⚠️ Réponse déjà enregistrée (double-check), annulation');
+    if (doubleCheck) {
+      console.log('⚠️ Réponse déjà enregistrée');
       return;
     }
 
@@ -929,8 +889,6 @@ async function selectAnswer(answerIndex) {
         answer_index: answerIndex
       }]);
 
-    console.log('✅ Réponse enregistrée avec succès');
-
   } catch (err) {
     console.error('Error submitting answer:', err);
     hasAnswered = false;
@@ -938,7 +896,7 @@ async function selectAnswer(answerIndex) {
 }
 
 // ============================================
-// AFFICHAGE DES RÉSULTATS - CORRIGÉ
+// AFFICHAGE DES RÉSULTATS
 // ============================================
 
 async function displayQuestionResult() {
@@ -964,7 +922,7 @@ async function displayQuestionResult() {
       break;
     }
 
-    // CORRECTION: Vérifier si la question a changé (host a passé à la suivante)
+    // CORRECTION 3: Arrêter le polling si la question change
     const { data: session } = await supabaseClient
       .from('live_sessions')
       .select('current_question_index')
@@ -972,7 +930,6 @@ async function displayQuestionResult() {
       .single();
 
     if (session && session.current_question_index !== currentQuestion.index) {
-      console.log('🔄 Question changée par l\'host, arrêt du polling');
       break;
     }
 
@@ -1006,7 +963,6 @@ async function displayQuestionResult() {
   }
 }
 
-// CORRECTION: Fonction pour attendre les résultats après reconnexion
 async function waitForQuestionResults(existingAnswer) {
   let attempts = 0;
   const maxAttempts = 50;
@@ -1051,7 +1007,6 @@ async function waitForQuestionResults(existingAnswer) {
       .single();
 
     if (session && session.current_question_index !== currentQuestion.index) {
-      console.log('🔄 Question changée, arrêt du polling');
       break;
     }
 
