@@ -430,7 +430,7 @@
   </div>
 
   <script>
-    const SUPABASE_URL = "https://ckfdysasgawyixbxjyfz.supabase.co";
+const SUPABASE_URL = "https://ckfdysasgawyixbxjyfz.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrZmR5c2FzZ2F3eWl4YnhqeWZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5ODg1NjcsImV4cCI6MjA3NzU2NDU2N30.t0ubaRk5sz7kewyEsOg4CpFvj47S9U1J1SP_3DQBmE8";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -687,23 +687,13 @@ function subscribeToSession() {
     }, async (payload) => {
       const session = payload.new;
       
-      console.log('📡 Session update received:', {
-        status: session.status,
-        currentQuestionIndex: session.current_question_index,
-        questionStartTime: session.question_start_time
-      });
+      console.log('📡 Session update:', session.status, 'Q:', session.current_question_index, 'Time:', session.question_start_time);
       
-      // CORRECTION: Ignorer les mises à jour sans question_start_time
       if (session.status === 'active' && session.current_question_index !== null) {
-        // Vérifier si c'est vraiment une nouvelle question
-        const isNewQuestion = !currentQuestion || currentQuestion.index !== session.current_question_index;
-        
-        // IMPORTANT: Ne charger que si question_start_time existe ET c'est une nouvelle question
-        if (isNewQuestion && session.question_start_time) {
-          console.log('🆕 Nouvelle question détectée avec timestamp, chargement...');
+        // Charger seulement si nouvelle question
+        if (!currentQuestion || currentQuestion.index !== session.current_question_index) {
+          console.log('🆕 Nouvelle question');
           await loadQuestion(session);
-        } else if (!session.question_start_time) {
-          console.log('⏭️ Update sans timestamp ignorée');
         }
       } else if (session.status === 'finished') {
         console.log('🏁 Quiz terminé');
@@ -829,39 +819,27 @@ async function loadQuestion(session) {
   const timeLimit = currentQuestion.timeLimit || 30;
   
   if (!session.question_start_time) {
-    console.warn('⚠️ Pas de question_start_time dans la session, attente...');
-    // Ne pas démarrer le timer, attendre la prochaine mise à jour
+    console.error('❌ Pas de question_start_time !');
+    // Démarrer avec le temps complet en attendant
+    startTimer(timeLimit);
     return;
   }
   
-  // Parser le timestamp correctement
+  // Parser le timestamp
   const questionStartTime = new Date(session.question_start_time).getTime();
   const nowTime = Date.now();
-  const elapsedMs = nowTime - questionStartTime;
-  const elapsedSeconds = elapsedMs / 1000; // Garder les décimales
-  
-  // IMPORTANT: Ajouter une marge de 1 seconde pour compenser la latence réseau
-  const remainingSeconds = Math.max(0, timeLimit - elapsedSeconds + 1);
+  const elapsedSeconds = (nowTime - questionStartTime) / 1000;
+  const remainingSeconds = Math.max(0, timeLimit - elapsedSeconds);
 
-  console.log('⏱️ Timer sync:', {
-    questionIndex: session.current_question_index,
-    questionStartTime: session.question_start_time,
-    questionStartMs: questionStartTime,
-    nowMs: nowTime,
-    elapsedMs: elapsedMs,
-    elapsedSeconds: elapsedSeconds.toFixed(2),
-    timeLimit: timeLimit,
-    remainingSeconds: remainingSeconds.toFixed(2)
-  });
+  console.log('⏱️ Timer:', elapsedSeconds.toFixed(1), 's écoulées,', remainingSeconds.toFixed(1), 's restantes');
 
   if (remainingSeconds <= 0) {
-    console.log('⏱️ Temps écoulé, affichage des résultats');
+    console.log('⏱️ Temps écoulé');
     const timerEl = document.getElementById('timer');
     timerEl.textContent = '⏱️ 0s';
     disableOptions();
     displayQuestionResult();
   } else {
-    console.log('⏱️ Démarrage du timer avec', remainingSeconds, 'secondes restantes');
     startTimer(remainingSeconds);
   }
 }
