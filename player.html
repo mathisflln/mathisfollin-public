@@ -809,6 +809,11 @@
         resultEl.innerHTML = '<div class="result-icon">⏳</div><div style="color: #0d0d0d;">Réponse déjà enregistrée ! En attente des résultats...</div>';
         resultEl.style.display = 'block';
         
+        // Afficher le timer à 0 si déjà répondu
+        const timerEl = document.getElementById('timer');
+        timerEl.textContent = '⏱️ 0s';
+        timerEl.classList.add('warning');
+        
         // Attendre les résultats en arrière-plan
         waitForQuestionResults(existingAnswer);
         return;
@@ -822,13 +827,14 @@
         return;
       }
       
+      // Parser le timestamp correctement
       const questionStartTime = new Date(session.question_start_time).getTime();
       const nowTime = Date.now();
       const elapsedMs = nowTime - questionStartTime;
-      const elapsedSeconds = Math.floor(elapsedMs / 1000);
+      const elapsedSeconds = elapsedMs / 1000; // Garder les décimales
       
-      // Pas de compensation latence pour être précis
-      const remainingSeconds = Math.max(0, timeLimit - elapsedSeconds);
+      // IMPORTANT: Ajouter une marge de 1 seconde pour compenser la latence réseau
+      const remainingSeconds = Math.max(0, timeLimit - elapsedSeconds + 1);
 
       console.log('⏱️ Timer sync:', {
         questionIndex: session.current_question_index,
@@ -836,9 +842,9 @@
         questionStartMs: questionStartTime,
         nowMs: nowTime,
         elapsedMs: elapsedMs,
-        elapsedSeconds: elapsedSeconds,
+        elapsedSeconds: elapsedSeconds.toFixed(2),
         timeLimit: timeLimit,
-        remainingSeconds: remainingSeconds
+        remainingSeconds: remainingSeconds.toFixed(2)
       });
 
       if (remainingSeconds <= 0) {
