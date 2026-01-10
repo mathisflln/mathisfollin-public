@@ -813,21 +813,29 @@
         return;
       }
       
-      // CORRECTION: Parser la date en UTC explicitement
-      const questionStartUTC = new Date(session.question_start_time + 'Z').getTime();
+      // Parser la date en UTC - Vérifier si elle a déjà un Z
+      const timestampStr = session.question_start_time.endsWith('Z') 
+        ? session.question_start_time 
+        : session.question_start_time + 'Z';
+      
+      const questionStartUTC = new Date(timestampStr).getTime();
       const nowUTC = Date.now();
       const elapsedMs = nowUTC - questionStartUTC;
       const elapsedSeconds = Math.floor(elapsedMs / 1000);
-      const remainingSeconds = Math.max(0, timeLimit - elapsedSeconds);
+      
+      // COMPENSATION LATENCE: Ajouter une marge de 2 secondes pour la latence réseau
+      const compensatedElapsed = Math.max(0, elapsedSeconds - 2);
+      const remainingSeconds = Math.max(0, timeLimit - compensatedElapsed);
 
       console.log('⏱️ Timer sync:', {
         questionIndex: session.current_question_index,
         questionStartTime_ISO: session.question_start_time,
-        questionStartTime_withZ: session.question_start_time + 'Z',
+        questionStartTime_withZ: timestampStr,
         questionStartUTC: questionStartUTC,
         nowUTC: nowUTC,
         elapsedMs: elapsedMs,
         elapsedSeconds: elapsedSeconds,
+        compensatedElapsed: compensatedElapsed,
         timeLimit: timeLimit,
         remainingSeconds: remainingSeconds
       });
