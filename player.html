@@ -738,6 +738,14 @@
         currentTimerInterval = null;
       }
       
+      console.log('🎯 loadQuestion appelée avec:', {
+        session_id: session.id,
+        status: session.status,
+        current_question_index: session.current_question_index,
+        question_start_time: session.question_start_time,
+        quiz_id: session.quiz_id
+      });
+      
       // Get quiz data
       const { data: quiz } = await supabaseClient
         .from('quizzes')
@@ -745,9 +753,20 @@
         .eq('id', session.quiz_id)
         .single();
 
+      if (!quiz) {
+        console.error('❌ Quiz non trouvé');
+        return;
+      }
+
       const questions = typeof quiz.questions === 'string' ? JSON.parse(quiz.questions) : quiz.questions;
       currentQuestion = questions[session.current_question_index];
       currentQuestion.index = session.current_question_index;
+      
+      console.log('📝 Question chargée:', {
+        index: currentQuestion.index,
+        question: currentQuestion.question,
+        timeLimit: currentQuestion.timeLimit
+      });
 
       // Switch to game screen
       document.getElementById('waiting-screen').style.display = 'none';
@@ -778,8 +797,8 @@
         const btn = document.createElement('button');
         btn.className = `option-btn ${colors[i]}`;
         btn.textContent = opt;
-        btn.disabled = false; // Réactiver les boutons
-        btn.classList.remove('selected'); // Enlever la sélection
+        btn.disabled = false;
+        btn.classList.remove('selected');
         btn.addEventListener('click', () => selectAnswer(i));
         optionsGrid.appendChild(btn);
       });
@@ -788,24 +807,27 @@
       const timeLimit = currentQuestion.timeLimit || 30;
       
       if (!session.question_start_time) {
-        console.warn('⚠️ Pas de question_start_time, utilisation du temps complet');
+        console.warn('⚠️ Pas de question_start_time dans la session !', session);
+        console.warn('⚠️ Utilisation du temps complet:', timeLimit);
         startTimer(timeLimit);
         return;
       }
       
       const questionStartUTC = new Date(session.question_start_time).getTime();
       const nowUTC = Date.now();
-      const elapsedSeconds = Math.floor((nowUTC - questionStartUTC) / 1000);
+      const elapsedMs = nowUTC - questionStartUTC;
+      const elapsedSeconds = Math.floor(elapsedMs / 1000);
       const remainingSeconds = Math.max(0, timeLimit - elapsedSeconds);
 
       console.log('⏱️ Timer sync:', {
         questionIndex: session.current_question_index,
-        questionStart: session.question_start_time,
-        questionStartUTC,
-        nowUTC,
-        elapsedSeconds,
-        timeLimit,
-        remainingSeconds
+        questionStartTime_ISO: session.question_start_time,
+        questionStartUTC: questionStartUTC,
+        nowUTC: nowUTC,
+        elapsedMs: elapsedMs,
+        elapsedSeconds: elapsedSeconds,
+        timeLimit: timeLimit,
+        remainingSeconds: remainingSeconds
       });
 
       // Si le temps est déjà écoulé, afficher directement les résultats
@@ -815,7 +837,7 @@
         displayQuestionResult();
       } else {
         // Démarrer le timer avec le temps restant
-        console.log('⏱️ Démarrage du timer avec', remainingSeconds, 'secondes');
+        console.log('⏱️ Démarrage du timer avec', remainingSeconds, 'secondes restantes');
         startTimer(remainingSeconds);
       }
     }
@@ -827,39 +849,49 @@
     let currentTimerInterval = null;
 
     function startTimer(seconds) {
-      let timeLeft = Math.floor(seconds); // S'assurer que c'est un entier
+      let timeLeft = Math.floor(seconds);
+      
+      console.log('🚀 startTimer appelée avec:', seconds, '-> arrondi à:', timeLeft);
+      
       const timerEl = document.getElementById('timer');
       timerEl.textContent = `⏱️ ${timeLeft}s`;
       timerEl.classList.remove('warning');
 
       // Nettoyer l'ancien timer
       if (currentTimerInterval) {
+        console.log('🧹 Nettoyage ancien timer');
         clearInterval(currentTimerInterval);
         currentTimerInterval = null;
       }
 
       // Si déjà à 0, terminer immédiatement
       if (timeLeft <= 0) {
+        console.log('⏱️ Temps à 0, fin immédiate');
         disableOptions();
         displayQuestionResult();
         return;
       }
 
+      console.log('⏱️ Création interval pour', timeLeft, 'secondes');
+      
       currentTimerInterval = setInterval(() => {
         timeLeft--;
         timerEl.textContent = `⏱️ ${timeLeft}s`;
 
-        if (timeLeft <= 5) {
+        if (timeLeft <= 5 && timeLeft > 0) {
           timerEl.classList.add('warning');
         }
 
         if (timeLeft <= 0) {
+          console.log('⏱️ Timer terminé');
           clearInterval(currentTimerInterval);
           currentTimerInterval = null;
           disableOptions();
           displayQuestionResult();
         }
       }, 1000);
+      
+      console.log('✅ Timer interval créé:', currentTimerInterval);
     }
 
     // ============================================
