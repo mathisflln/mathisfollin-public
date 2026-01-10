@@ -667,8 +667,15 @@
     // ABONNEMENTS AUX MISES À JOUR
     // ============================================
 
+    let sessionChannel = null;
+
     function subscribeToSession() {
-      supabaseClient
+      // Se désabonner du canal précédent s'il existe
+      if (sessionChannel) {
+        supabaseClient.removeChannel(sessionChannel);
+      }
+      
+      sessionChannel = supabaseClient
         .channel('session-updates')
         .on('postgres_changes', {
           event: 'UPDATE',
@@ -678,9 +685,20 @@
         }, async (payload) => {
           const session = payload.new;
           
-          if (session.status === 'active' && session.current_question_index >= 0) {
-            await loadQuestion(session);
+          console.log('📡 Session update received:', {
+            status: session.status,
+            currentQuestionIndex: session.current_question_index,
+            questionStartTime: session.question_start_time
+          });
+          
+          if (session.status === 'active' && session.current_question_index !== null) {
+            // Vérifier si c'est une nouvelle question
+            if (!currentQuestion || currentQuestion.index !== session.current_question_index) {
+              console.log('🆕 Nouvelle question détectée, chargement...');
+              await loadQuestion(session);
+            }
           } else if (session.status === 'finished') {
+            console.log('🏁 Quiz terminé');
             await showFinalScreen();
           }
         })
@@ -693,6 +711,12 @@
 
     async function loadQuestion(session) {
       hasAnswered = false;
+      
+      // Nettoyer l'ancien timer
+      if (currentTimerInterval) {
+        clearInterval(currentTimerInterval);
+        currentTimerInterval = null;
+      }
       
       // Get quiz data
       const { data: quiz } = await supabaseClient
@@ -734,18 +758,28 @@
         const btn = document.createElement('button');
         btn.className = `option-btn ${colors[i]}`;
         btn.textContent = opt;
+        btn.disabled = false; // Réactiver les boutons
+        btn.classList.remove('selected'); // Enlever la sélection
         btn.addEventListener('click', () => selectAnswer(i));
         optionsGrid.appendChild(btn);
       });
 
       // CALCUL DU TEMPS RESTANT BASÉ SUR LE SERVEUR
       const timeLimit = currentQuestion.timeLimit || 30;
+      
+      if (!session.question_start_time) {
+        console.warn('⚠️ Pas de question_start_time, utilisation du temps complet');
+        startTimer(timeLimit);
+        return;
+      }
+      
       const questionStartUTC = new Date(session.question_start_time).getTime();
-      const nowUTC = Date.now(); // Le navigateur convertit automatiquement en UTC
+      const nowUTC = Date.now();
       const elapsedSeconds = Math.floor((nowUTC - questionStartUTC) / 1000);
       const remainingSeconds = Math.max(0, timeLimit - elapsedSeconds);
 
       console.log('⏱️ Timer sync:', {
+        questionIndex: session.current_question_index,
         questionStart: session.question_start_time,
         questionStartUTC,
         nowUTC,
@@ -756,10 +790,12 @@
 
       // Si le temps est déjà écoulé, afficher directement les résultats
       if (remainingSeconds <= 0) {
+        console.log('⏱️ Temps écoulé, affichage des résultats');
         disableOptions();
         displayQuestionResult();
       } else {
         // Démarrer le timer avec le temps restant
+        console.log('⏱️ Démarrage du timer avec', remainingSeconds, 'secondes');
         startTimer(remainingSeconds);
       }
     }
@@ -771,12 +807,23 @@
     let currentTimerInterval = null;
 
     function startTimer(seconds) {
-      let timeLeft = seconds;
+      let timeLeft = Math.floor(seconds); // S'assurer que c'est un entier
       const timerEl = document.getElementById('timer');
       timerEl.textContent = `⏱️ ${timeLeft}s`;
       timerEl.classList.remove('warning');
 
-      if (currentTimerInterval) clearInterval(currentTimerInterval);
+      // Nettoyer l'ancien timer
+      if (currentTimerInterval) {
+        clearInterval(currentTimerInterval);
+        currentTimerInterval = null;
+      }
+
+      // Si déjà à 0, terminer immédiatement
+      if (timeLeft <= 0) {
+        disableOptions();
+        displayQuestionResult();
+        return;
+      }
 
       currentTimerInterval = setInterval(() => {
         timeLeft--;
@@ -788,6 +835,7 @@
 
         if (timeLeft <= 0) {
           clearInterval(currentTimerInterval);
+          currentTimerInterval = null;
           disableOptions();
           displayQuestionResult();
         }
