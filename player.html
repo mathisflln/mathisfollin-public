@@ -822,30 +822,29 @@
         return;
       }
       
-      const timestampStr = session.question_start_time.endsWith('Z') 
-        ? session.question_start_time 
-        : session.question_start_time + 'Z';
-      
-      const questionStartUTC = new Date(timestampStr).getTime();
-      const nowUTC = Date.now();
-      const elapsedMs = nowUTC - questionStartUTC;
+      const questionStartTime = new Date(session.question_start_time).getTime();
+      const nowTime = Date.now();
+      const elapsedMs = nowTime - questionStartTime;
       const elapsedSeconds = Math.floor(elapsedMs / 1000);
       
-      const compensatedElapsed = Math.max(0, elapsedSeconds - 2);
-      const remainingSeconds = Math.max(0, timeLimit - compensatedElapsed);
+      // Pas de compensation latence pour être précis
+      const remainingSeconds = Math.max(0, timeLimit - elapsedSeconds);
 
       console.log('⏱️ Timer sync:', {
         questionIndex: session.current_question_index,
-        questionStartTime: timestampStr,
-        nowUTC: nowUTC,
+        questionStartTime: session.question_start_time,
+        questionStartMs: questionStartTime,
+        nowMs: nowTime,
+        elapsedMs: elapsedMs,
         elapsedSeconds: elapsedSeconds,
-        compensatedElapsed: compensatedElapsed,
         timeLimit: timeLimit,
         remainingSeconds: remainingSeconds
       });
 
       if (remainingSeconds <= 0) {
         console.log('⏱️ Temps écoulé, affichage des résultats');
+        const timerEl = document.getElementById('timer');
+        timerEl.textContent = '⏱️ 0s';
         disableOptions();
         displayQuestionResult();
       } else {
