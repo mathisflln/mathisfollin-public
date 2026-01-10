@@ -813,7 +813,8 @@
         return;
       }
       
-      const questionStartUTC = new Date(session.question_start_time).getTime();
+      // CORRECTION: Parser la date en UTC explicitement
+      const questionStartUTC = new Date(session.question_start_time + 'Z').getTime();
       const nowUTC = Date.now();
       const elapsedMs = nowUTC - questionStartUTC;
       const elapsedSeconds = Math.floor(elapsedMs / 1000);
@@ -822,6 +823,7 @@
       console.log('⏱️ Timer sync:', {
         questionIndex: session.current_question_index,
         questionStartTime_ISO: session.question_start_time,
+        questionStartTime_withZ: session.question_start_time + 'Z',
         questionStartUTC: questionStartUTC,
         nowUTC: nowUTC,
         elapsedMs: elapsedMs,
