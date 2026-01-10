@@ -441,7 +441,6 @@
     let questionStartTime = null;
     let hasAnswered = false;
 
-    // Clés pour le stockage local
     const STORAGE_KEYS = {
       SESSION_ID: 'quiz_session_id',
       PARTICIPANT_ID: 'quiz_participant_id',
@@ -496,14 +495,12 @@
     // ============================================
 
     async function initializePlayer() {
-      // Pré-remplir le code depuis l'URL si présent
       const urlParams = new URLSearchParams(window.location.search);
       const codeParam = urlParams.get('code');
       if (codeParam) {
         document.getElementById('code').value = codeParam;
       }
 
-      // Tenter de restaurer une session existante
       const savedData = loadSessionData();
       
       if (savedData.sessionId && savedData.participantId) {
@@ -514,7 +511,6 @@
 
     async function attemptReconnect(savedData) {
       try {
-        // Vérifier que la session existe toujours
         const { data: session, error: sessionError } = await supabaseClient
           .from('live_sessions')
           .select('*')
@@ -527,7 +523,6 @@
           return;
         }
 
-        // Vérifier que le participant existe toujours
         const { data: participant, error: participantError } = await supabaseClient
           .from('session_participants')
           .select('*')
@@ -541,7 +536,6 @@
           return;
         }
 
-        // Restaurer les variables
         sessionId = savedData.sessionId;
         participantId = savedData.participantId;
         currentScore = participant.score;
@@ -554,14 +548,12 @@
           currentQuestionIndex: session.current_question_index
         });
 
-        // Afficher l'écran approprié selon le statut
         if (session.status === 'finished') {
           await showFinalScreen();
         } else if (session.status === 'active' && session.current_question_index !== null && session.current_question_index >= 0) {
           document.getElementById('join-screen').style.display = 'none';
           document.getElementById('player-name').textContent = savedData.nickname;
           
-          // IMPORTANT: Recharger les données complètes de la session avec question_start_time
           const { data: freshSession } = await supabaseClient
             .from('live_sessions')
             .select('*')
@@ -576,13 +568,11 @@
           
           await loadQuestion(freshSession);
         } else {
-          // En attente
           document.getElementById('join-screen').style.display = 'none';
           document.getElementById('waiting-screen').style.display = 'block';
           document.getElementById('player-name').textContent = savedData.nickname;
         }
 
-        // S'abonner aux mises à jour
         subscribeToSession();
 
       } catch (err) {
@@ -606,7 +596,6 @@
       }
 
       try {
-        // Find session by code
         const { data: session, error: sessionError } = await supabaseClient
           .from('live_sessions')
           .select('*')
@@ -625,7 +614,6 @@
 
         sessionId = session.id;
 
-        // Check if nickname is already taken in this session
         const { data: existingParticipants } = await supabaseClient
           .from('session_participants')
           .select('nickname')
@@ -637,7 +625,6 @@
           return;
         }
 
-        // Join session
         const { data: participant, error: joinError } = await supabaseClient
           .from('session_participants')
           .insert([{
@@ -652,7 +639,6 @@
 
         participantId = participant.id;
         
-        // Sauvegarder dans sessionStorage
         saveSessionData({
           [STORAGE_KEYS.SESSION_ID]: sessionId,
           [STORAGE_KEYS.PARTICIPANT_ID]: participantId,
@@ -660,12 +646,9 @@
         });
 
         document.getElementById('player-name').textContent = nickname;
-
-        // Switch to waiting screen
         document.getElementById('join-screen').style.display = 'none';
         document.getElementById('waiting-screen').style.display = 'block';
 
-        // Subscribe to session updates
         subscribeToSession();
 
       } catch (err) {
@@ -690,7 +673,6 @@
     let sessionChannel = null;
 
     function subscribeToSession() {
-      // Se désabonner du canal précédent s'il existe
       if (sessionChannel) {
         supabaseClient.removeChannel(sessionChannel);
       }
@@ -712,7 +694,6 @@
           });
           
           if (session.status === 'active' && session.current_question_index !== null) {
-            // Vérifier si c'est une nouvelle question
             if (!currentQuestion || currentQuestion.index !== session.current_question_index) {
               console.log('🆕 Nouvelle question détectée, chargement...');
               await loadQuestion(session);
@@ -732,7 +713,6 @@
     async function loadQuestion(session) {
       hasAnswered = false;
       
-      // Nettoyer l'ancien timer
       if (currentTimerInterval) {
         clearInterval(currentTimerInterval);
         currentTimerInterval = null;
@@ -746,7 +726,20 @@
         quiz_id: session.quiz_id
       });
       
-      // Get quiz data
+      // CORRECTION: Vérifier si on a déjà répondu à cette question
+      const { data: existingAnswer } = await supabaseClient
+        .from('participant_answers')
+        .select('id, is_correct, points_earned')
+        .eq('session_id', sessionId)
+        .eq('participant_id', participantId)
+        .eq('question_index', session.current_question_index)
+        .maybeSingle();
+
+      if (existingAnswer) {
+        console.log('✅ Réponse déjà donnée pour cette question', existingAnswer);
+        hasAnswered = true;
+      }
+      
       const { data: quiz } = await supabaseClient
         .from('quizzes')
         .select('questions')
@@ -765,15 +758,14 @@
       console.log('📝 Question chargée:', {
         index: currentQuestion.index,
         question: currentQuestion.question,
-        timeLimit: currentQuestion.timeLimit
+        timeLimit: currentQuestion.timeLimit,
+        hasAnswered: hasAnswered
       });
 
-      // Switch to game screen
       document.getElementById('waiting-screen').style.display = 'none';
       document.getElementById('game-screen').style.display = 'block';
       document.getElementById('result-message').style.display = 'none';
 
-      // Rafraîchir le score actuel depuis le serveur
       const { data: participant } = await supabaseClient
         .from('session_participants')
         .select('score')
@@ -785,10 +777,8 @@
         document.getElementById('score').textContent = currentScore;
       }
 
-      // Display question
       document.getElementById('question-text').textContent = currentQuestion.question;
 
-      // Display options
       const optionsGrid = document.getElementById('options-grid');
       optionsGrid.innerHTML = '';
       
@@ -797,23 +787,41 @@
         const btn = document.createElement('button');
         btn.className = `option-btn ${colors[i]}`;
         btn.textContent = opt;
-        btn.disabled = false;
-        btn.classList.remove('selected');
-        btn.addEventListener('click', () => selectAnswer(i));
+        
+        // Si déjà répondu, désactiver et marquer la réponse
+        if (hasAnswered && existingAnswer && existingAnswer.answer_index === i) {
+          btn.classList.add('selected');
+          btn.disabled = true;
+        } else if (hasAnswered) {
+          btn.disabled = true;
+        } else {
+          btn.disabled = false;
+          btn.classList.remove('selected');
+          btn.addEventListener('click', () => selectAnswer(i));
+        }
+        
         optionsGrid.appendChild(btn);
       });
 
-      // CALCUL DU TEMPS RESTANT BASÉ SUR LE SERVEUR
+      // Si déjà répondu, afficher message d'attente et ne pas démarrer le timer
+      if (hasAnswered) {
+        const resultEl = document.getElementById('result-message');
+        resultEl.innerHTML = '<div class="result-icon">⏳</div><div style="color: #0d0d0d;">Réponse déjà enregistrée ! En attente des résultats...</div>';
+        resultEl.style.display = 'block';
+        
+        // Attendre les résultats en arrière-plan
+        waitForQuestionResults(existingAnswer);
+        return;
+      }
+
       const timeLimit = currentQuestion.timeLimit || 30;
       
       if (!session.question_start_time) {
-        console.warn('⚠️ Pas de question_start_time dans la session !', session);
-        console.warn('⚠️ Utilisation du temps complet:', timeLimit);
+        console.warn('⚠️ Pas de question_start_time dans la session !');
         startTimer(timeLimit);
         return;
       }
       
-      // Parser la date en UTC - Vérifier si elle a déjà un Z
       const timestampStr = session.question_start_time.endsWith('Z') 
         ? session.question_start_time 
         : session.question_start_time + 'Z';
@@ -823,30 +831,24 @@
       const elapsedMs = nowUTC - questionStartUTC;
       const elapsedSeconds = Math.floor(elapsedMs / 1000);
       
-      // COMPENSATION LATENCE: Ajouter une marge de 2 secondes pour la latence réseau
       const compensatedElapsed = Math.max(0, elapsedSeconds - 2);
       const remainingSeconds = Math.max(0, timeLimit - compensatedElapsed);
 
       console.log('⏱️ Timer sync:', {
         questionIndex: session.current_question_index,
-        questionStartTime_ISO: session.question_start_time,
-        questionStartTime_withZ: timestampStr,
-        questionStartUTC: questionStartUTC,
+        questionStartTime: timestampStr,
         nowUTC: nowUTC,
-        elapsedMs: elapsedMs,
         elapsedSeconds: elapsedSeconds,
         compensatedElapsed: compensatedElapsed,
         timeLimit: timeLimit,
         remainingSeconds: remainingSeconds
       });
 
-      // Si le temps est déjà écoulé, afficher directement les résultats
       if (remainingSeconds <= 0) {
         console.log('⏱️ Temps écoulé, affichage des résultats');
         disableOptions();
         displayQuestionResult();
       } else {
-        // Démarrer le timer avec le temps restant
         console.log('⏱️ Démarrage du timer avec', remainingSeconds, 'secondes restantes');
         startTimer(remainingSeconds);
       }
@@ -867,14 +869,12 @@
       timerEl.textContent = `⏱️ ${timeLeft}s`;
       timerEl.classList.remove('warning');
 
-      // Nettoyer l'ancien timer
       if (currentTimerInterval) {
         console.log('🧹 Nettoyage ancien timer');
         clearInterval(currentTimerInterval);
         currentTimerInterval = null;
       }
 
-      // Si déjà à 0, terminer immédiatement
       if (timeLeft <= 0) {
         console.log('⏱️ Temps à 0, fin immédiate');
         disableOptions();
@@ -900,19 +900,20 @@
           displayQuestionResult();
         }
       }, 1000);
-      
-      console.log('✅ Timer interval créé:', currentTimerInterval);
     }
 
     // ============================================
-    // SÉLECTION DE RÉPONSE
+    // SÉLECTION DE RÉPONSE - CORRIGÉ
     // ============================================
 
     async function selectAnswer(answerIndex) {
-      if (hasAnswered) return;
+      if (hasAnswered) {
+        console.log('⚠️ Réponse déjà donnée, ignorer');
+        return;
+      }
+      
       hasAnswered = true;
 
-      // Visual feedback
       const buttons = document.querySelectorAll('.option-btn');
       buttons.forEach((btn, i) => {
         if (i === answerIndex) {
@@ -921,13 +922,25 @@
         btn.disabled = true;
       });
 
-      // Afficher message d'attente
       const resultEl = document.getElementById('result-message');
       resultEl.innerHTML = '<div class="result-icon">⏳</div><div style="color: #0d0d0d;">Réponse enregistrée ! En attente des résultats...</div>';
       resultEl.style.display = 'block';
 
-      // Submit answer
       try {
+        // CORRECTION: Vérifier une dernière fois qu'on n'a pas déjà répondu
+        const { data: existingAnswer } = await supabaseClient
+          .from('participant_answers')
+          .select('id')
+          .eq('session_id', sessionId)
+          .eq('participant_id', participantId)
+          .eq('question_index', currentQuestion.index || 0)
+          .maybeSingle();
+
+        if (existingAnswer) {
+          console.log('⚠️ Réponse déjà enregistrée (double-check), annulation');
+          return;
+        }
+
         await supabaseClient
           .from('participant_answers')
           .insert([{
@@ -937,22 +950,23 @@
             answer_index: answerIndex
           }]);
 
+        console.log('✅ Réponse enregistrée avec succès');
+
       } catch (err) {
         console.error('Error submitting answer:', err);
+        hasAnswered = false;
       }
     }
 
     // ============================================
-    // AFFICHAGE DES RÉSULTATS
+    // AFFICHAGE DES RÉSULTATS - CORRIGÉ
     // ============================================
 
     async function displayQuestionResult() {
-      // Afficher message d'attente pendant le calcul
       const resultEl = document.getElementById('result-message');
       resultEl.innerHTML = '<div class="spinner"></div><div style="color: #667eea; margin-top: 15px;">Calcul des scores...</div>';
       resultEl.style.display = 'block';
 
-      // Attendre que le serveur ait calculé les scores (polling)
       let answer = null;
       let attempts = 0;
       const maxAttempts = 50;
@@ -971,12 +985,23 @@
           break;
         }
 
+        // CORRECTION: Vérifier si la question a changé (host a passé à la suivante)
+        const { data: session } = await supabaseClient
+          .from('live_sessions')
+          .select('current_question_index')
+          .eq('id', sessionId)
+          .single();
+
+        if (session && session.current_question_index !== currentQuestion.index) {
+          console.log('🔄 Question changée par l\'host, arrêt du polling');
+          break;
+        }
+
         await new Promise(resolve => setTimeout(resolve, 100));
         attempts++;
       }
 
       if (answer) {
-        // Récupérer le score total mis à jour
         const { data: participant } = await supabaseClient
           .from('session_participants')
           .select('score')
@@ -988,7 +1013,6 @@
           document.getElementById('score').textContent = currentScore;
         }
 
-        // Afficher le résultat
         if (answer.is_correct && answer.points_earned) {
           resultEl.innerHTML = `
             <div class="result-icon">✓</div>
@@ -1000,6 +1024,60 @@
         }
       } else if (!hasAnswered) {
         showResultMessage(false);
+      }
+    }
+
+    // CORRECTION: Fonction pour attendre les résultats après reconnexion
+    async function waitForQuestionResults(existingAnswer) {
+      let attempts = 0;
+      const maxAttempts = 50;
+
+      while (attempts < maxAttempts) {
+        const { data } = await supabaseClient
+          .from('participant_answers')
+          .select('answer_index, is_correct, points_earned')
+          .eq('id', existingAnswer.id)
+          .maybeSingle();
+
+        if (data && data.is_correct !== null) {
+          const { data: participant } = await supabaseClient
+            .from('session_participants')
+            .select('score')
+            .eq('id', participantId)
+            .single();
+
+          if (participant) {
+            currentScore = participant.score;
+            document.getElementById('score').textContent = currentScore;
+          }
+
+          const resultEl = document.getElementById('result-message');
+          if (data.is_correct && data.points_earned) {
+            resultEl.innerHTML = `
+              <div class="result-icon">✓</div>
+              <div class="result-correct">Bonne réponse !</div>
+              <div style="color: #0d0d0d; font-size: 1.1rem; margin-top: 10px; font-weight: 600;">+${data.points_earned} points</div>
+            `;
+          } else {
+            resultEl.innerHTML = '<div class="result-icon">✗</div><div class="result-wrong">Mauvaise réponse</div>';
+          }
+          resultEl.style.display = 'block';
+          break;
+        }
+
+        const { data: session } = await supabaseClient
+          .from('live_sessions')
+          .select('current_question_index')
+          .eq('id', sessionId)
+          .single();
+
+        if (session && session.current_question_index !== currentQuestion.index) {
+          console.log('🔄 Question changée, arrêt du polling');
+          break;
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 100));
+        attempts++;
       }
     }
 
@@ -1024,7 +1102,6 @@
     // ============================================
 
     async function showFinalScreen() {
-      // Get final score and rank
       const { data: participant } = await supabaseClient
         .from('session_participants')
         .select('score')
@@ -1045,7 +1122,6 @@
       document.getElementById('final-rank').innerHTML = `Vous êtes <strong>#${rank}</strong> sur <strong>${allParticipants.length}</strong>`;
       document.getElementById('final-score').textContent = participant.score;
       
-      // Nettoyer les données après 5 minutes sur l'écran final
       setTimeout(() => {
         clearSessionData();
       }, 5 * 60 * 1000);
