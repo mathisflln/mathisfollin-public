@@ -705,8 +705,6 @@
       currentQuestion = questions[session.current_question_index];
       currentQuestion.index = session.current_question_index;
 
-      questionStartTime = new Date(session.question_start_time).getTime();
-
       // Switch to game screen
       document.getElementById('waiting-screen').style.display = 'none';
       document.getElementById('game-screen').style.display = 'block';
@@ -740,8 +738,30 @@
         optionsGrid.appendChild(btn);
       });
 
-      // Start timer
-      startTimer(currentQuestion.timeLimit || 30);
+      // CALCUL DU TEMPS RESTANT BASÉ SUR LE SERVEUR
+      const timeLimit = currentQuestion.timeLimit || 30;
+      const questionStartUTC = new Date(session.question_start_time).getTime();
+      const nowUTC = Date.now(); // Le navigateur convertit automatiquement en UTC
+      const elapsedSeconds = Math.floor((nowUTC - questionStartUTC) / 1000);
+      const remainingSeconds = Math.max(0, timeLimit - elapsedSeconds);
+
+      console.log('⏱️ Timer sync:', {
+        questionStart: session.question_start_time,
+        questionStartUTC,
+        nowUTC,
+        elapsedSeconds,
+        timeLimit,
+        remainingSeconds
+      });
+
+      // Si le temps est déjà écoulé, afficher directement les résultats
+      if (remainingSeconds <= 0) {
+        disableOptions();
+        displayQuestionResult();
+      } else {
+        // Démarrer le timer avec le temps restant
+        startTimer(remainingSeconds);
+      }
     }
 
     // ============================================
