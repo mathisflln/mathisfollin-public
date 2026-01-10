@@ -57,6 +57,13 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
+
+    <url>
+    <loc>https://mathisfollin.com/podcasts</loc>
+    <lastmod>2026-01-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
   
   <url>
     <loc>https://mathisfollin.com/player</loc>
