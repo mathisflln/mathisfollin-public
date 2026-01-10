@@ -708,6 +708,7 @@ function subscribeToSession() {
 // ============================================
 
 async function loadQuestion(session) {
+  // IMPORTANT: Réinitialiser hasAnswered pour chaque nouvelle question
   hasAnswered = false;
   
   if (currentTimerInterval) {
@@ -715,26 +716,22 @@ async function loadQuestion(session) {
     currentTimerInterval = null;
   }
   
-  console.log('🎯 loadQuestion appelée avec:', {
-    session_id: session.id,
-    status: session.status,
-    current_question_index: session.current_question_index,
-    question_start_time: session.question_start_time,
-    quiz_id: session.quiz_id
-  });
+  console.log('🎯 loadQuestion Q' + session.current_question_index);
   
   // CORRECTION: Vérifier si on a déjà répondu à cette question
   const { data: existingAnswer } = await supabaseClient
     .from('participant_answers')
-    .select('id, is_correct, points_earned')
+    .select('id, answer_index, is_correct, points_earned')
     .eq('session_id', sessionId)
     .eq('participant_id', participantId)
     .eq('question_index', session.current_question_index)
     .maybeSingle();
 
   if (existingAnswer) {
-    console.log('✅ Réponse déjà donnée pour cette question', existingAnswer);
+    console.log('✅ Réponse déjà enregistrée');
     hasAnswered = true;
+  } else {
+    console.log('🆕 Pas encore répondu');
   }
   
   const { data: quiz } = await supabaseClient
@@ -752,12 +749,7 @@ async function loadQuestion(session) {
   currentQuestion = questions[session.current_question_index];
   currentQuestion.index = session.current_question_index;
   
-  console.log('📝 Question chargée:', {
-    index: currentQuestion.index,
-    question: currentQuestion.question,
-    timeLimit: currentQuestion.timeLimit,
-    hasAnswered: hasAnswered
-  });
+  console.log('📝 Question:', currentQuestion.question);
 
   document.getElementById('waiting-screen').style.display = 'none';
   document.getElementById('game-screen').style.display = 'block';
@@ -792,6 +784,7 @@ async function loadQuestion(session) {
     } else if (hasAnswered) {
       btn.disabled = true;
     } else {
+      // CORRECTION: S'assurer que les boutons sont activés
       btn.disabled = false;
       btn.classList.remove('selected');
       btn.addEventListener('click', () => selectAnswer(i));
@@ -800,18 +793,16 @@ async function loadQuestion(session) {
     optionsGrid.appendChild(btn);
   });
 
-  // Si déjà répondu, afficher message d'attente et ne pas démarrer le timer
+  // Si déjà répondu, afficher message d'attente
   if (hasAnswered) {
     const resultEl = document.getElementById('result-message');
     resultEl.innerHTML = '<div class="result-icon">⏳</div><div style="color: #0d0d0d;">Réponse déjà enregistrée ! En attente des résultats...</div>';
     resultEl.style.display = 'block';
     
-    // Afficher le timer à 0 si déjà répondu
     const timerEl = document.getElementById('timer');
     timerEl.textContent = '⏱️ 0s';
     timerEl.classList.add('warning');
     
-    // Attendre les résultats en arrière-plan
     waitForQuestionResults(existingAnswer);
     return;
   }
@@ -820,20 +811,18 @@ async function loadQuestion(session) {
   
   if (!session.question_start_time) {
     console.error('❌ Pas de question_start_time !');
-    // Démarrer avec le temps complet en attendant
     startTimer(timeLimit);
     return;
   }
   
-  // Parser le timestamp
   const questionStartTime = new Date(session.question_start_time).getTime();
   const nowTime = Date.now();
   const elapsedSeconds = (nowTime - questionStartTime) / 1000;
   const remainingSeconds = Math.max(0, timeLimit - elapsedSeconds);
 
-  console.log('⏱️ Timer:', elapsedSeconds.toFixed(1), 's écoulées,', remainingSeconds.toFixed(1), 's restantes');
+  console.log('⏱️', remainingSeconds.toFixed(1), 's restantes');
 
-  if (remainingSeconds <= 0) {
+  if (remainingSeconds <= 0.5) {
     console.log('⏱️ Temps écoulé');
     const timerEl = document.getElementById('timer');
     timerEl.textContent = '⏱️ 0s';
