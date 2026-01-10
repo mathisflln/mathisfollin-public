@@ -546,15 +546,35 @@
         participantId = savedData.participantId;
         currentScore = participant.score;
 
-        console.log('Reconnexion réussie !', { sessionId, participantId, score: currentScore });
+        console.log('🔄 Reconnexion réussie !', { 
+          sessionId, 
+          participantId, 
+          score: currentScore,
+          sessionStatus: session.status,
+          currentQuestionIndex: session.current_question_index
+        });
 
         // Afficher l'écran approprié selon le statut
         if (session.status === 'finished') {
           await showFinalScreen();
-        } else if (session.status === 'active' && session.current_question_index >= 0) {
+        } else if (session.status === 'active' && session.current_question_index !== null && session.current_question_index >= 0) {
           document.getElementById('join-screen').style.display = 'none';
           document.getElementById('player-name').textContent = savedData.nickname;
-          await loadQuestion(session);
+          
+          // IMPORTANT: Recharger les données complètes de la session avec question_start_time
+          const { data: freshSession } = await supabaseClient
+            .from('live_sessions')
+            .select('*')
+            .eq('id', savedData.sessionId)
+            .single();
+          
+          console.log('📊 Session fraîche récupérée:', {
+            current_question_index: freshSession.current_question_index,
+            question_start_time: freshSession.question_start_time,
+            quiz_id: freshSession.quiz_id
+          });
+          
+          await loadQuestion(freshSession);
         } else {
           // En attente
           document.getElementById('join-screen').style.display = 'none';
