@@ -129,6 +129,7 @@
     
     .btn:hover:not(:disabled) { 
       background: #FFFF10;
+      color: black;
     }
     
     .btn:disabled { 
@@ -440,17 +441,139 @@
     let questionStartTime = null;
     let hasAnswered = false;
 
-    // Pre-fill code from URL if present
-    const urlParams = new URLSearchParams(window.location.search);
-    const codeParam = urlParams.get('code');
-    if (codeParam) {
-      document.getElementById('code').value = codeParam;
+    // Clés pour le stockage local
+    const STORAGE_KEYS = {
+      SESSION_ID: 'quiz_session_id',
+      PARTICIPANT_ID: 'quiz_participant_id',
+      NICKNAME: 'quiz_nickname'
+    };
+
+    // ============================================
+    // FONCTIONS DE PERSISTANCE
+    // ============================================
+
+    function saveSessionData(data) {
+      try {
+        Object.entries(data).forEach(([key, value]) => {
+          if (value !== null && value !== undefined) {
+            sessionStorage.setItem(key, JSON.stringify(value));
+          }
+        });
+      } catch (err) {
+        console.error('Error saving session data:', err);
+      }
     }
 
-    document.getElementById('join-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      await joinSession();
-    });
+    function loadSessionData() {
+      try {
+        const sessionIdStored = sessionStorage.getItem(STORAGE_KEYS.SESSION_ID);
+        const participantIdStored = sessionStorage.getItem(STORAGE_KEYS.PARTICIPANT_ID);
+        const nicknameStored = sessionStorage.getItem(STORAGE_KEYS.NICKNAME);
+
+        return {
+          sessionId: sessionIdStored ? JSON.parse(sessionIdStored) : null,
+          participantId: participantIdStored ? JSON.parse(participantIdStored) : null,
+          nickname: nicknameStored ? JSON.parse(nicknameStored) : null
+        };
+      } catch (err) {
+        console.error('Error loading session data:', err);
+        return { sessionId: null, participantId: null, nickname: null };
+      }
+    }
+
+    function clearSessionData() {
+      try {
+        Object.values(STORAGE_KEYS).forEach(key => {
+          sessionStorage.removeItem(key);
+        });
+      } catch (err) {
+        console.error('Error clearing session data:', err);
+      }
+    }
+
+    // ============================================
+    // INITIALISATION AVEC RESTAURATION
+    // ============================================
+
+    async function initializePlayer() {
+      // Pré-remplir le code depuis l'URL si présent
+      const urlParams = new URLSearchParams(window.location.search);
+      const codeParam = urlParams.get('code');
+      if (codeParam) {
+        document.getElementById('code').value = codeParam;
+      }
+
+      // Tenter de restaurer une session existante
+      const savedData = loadSessionData();
+      
+      if (savedData.sessionId && savedData.participantId) {
+        console.log('Session trouvée, tentative de reconnexion...');
+        await attemptReconnect(savedData);
+      }
+    }
+
+    async function attemptReconnect(savedData) {
+      try {
+        // Vérifier que la session existe toujours
+        const { data: session, error: sessionError } = await supabaseClient
+          .from('live_sessions')
+          .select('*')
+          .eq('id', savedData.sessionId)
+          .single();
+
+        if (sessionError || !session) {
+          console.log('Session expirée ou introuvable');
+          clearSessionData();
+          return;
+        }
+
+        // Vérifier que le participant existe toujours
+        const { data: participant, error: participantError } = await supabaseClient
+          .from('session_participants')
+          .select('*')
+          .eq('id', savedData.participantId)
+          .eq('session_id', savedData.sessionId)
+          .single();
+
+        if (participantError || !participant) {
+          console.log('Participant introuvable');
+          clearSessionData();
+          return;
+        }
+
+        // Restaurer les variables
+        sessionId = savedData.sessionId;
+        participantId = savedData.participantId;
+        currentScore = participant.score;
+
+        console.log('Reconnexion réussie !', { sessionId, participantId, score: currentScore });
+
+        // Afficher l'écran approprié selon le statut
+        if (session.status === 'finished') {
+          await showFinalScreen();
+        } else if (session.status === 'active' && session.current_question_index >= 0) {
+          document.getElementById('join-screen').style.display = 'none';
+          document.getElementById('player-name').textContent = savedData.nickname;
+          await loadQuestion(session);
+        } else {
+          // En attente
+          document.getElementById('join-screen').style.display = 'none';
+          document.getElementById('waiting-screen').style.display = 'block';
+          document.getElementById('player-name').textContent = savedData.nickname;
+        }
+
+        // S'abonner aux mises à jour
+        subscribeToSession();
+
+      } catch (err) {
+        console.error('Erreur lors de la reconnexion:', err);
+        clearSessionData();
+      }
+    }
+
+    // ============================================
+    // REJOINDRE UNE SESSION
+    // ============================================
 
     async function joinSession() {
       const code = document.getElementById('code').value.trim();
@@ -508,6 +631,14 @@
         if (joinError) throw joinError;
 
         participantId = participant.id;
+        
+        // Sauvegarder dans sessionStorage
+        saveSessionData({
+          [STORAGE_KEYS.SESSION_ID]: sessionId,
+          [STORAGE_KEYS.PARTICIPANT_ID]: participantId,
+          [STORAGE_KEYS.NICKNAME]: nickname
+        });
+
         document.getElementById('player-name').textContent = nickname;
 
         // Switch to waiting screen
@@ -532,6 +663,10 @@
       }, 5000);
     }
 
+    // ============================================
+    // ABONNEMENTS AUX MISES À JOUR
+    // ============================================
+
     function subscribeToSession() {
       supabaseClient
         .channel('session-updates')
@@ -552,6 +687,10 @@
         .subscribe();
     }
 
+    // ============================================
+    // CHARGEMENT ET AFFICHAGE DES QUESTIONS
+    // ============================================
+
     async function loadQuestion(session) {
       hasAnswered = false;
       
@@ -561,13 +700,13 @@
         .select('questions')
         .eq('id', session.quiz_id)
         .single();
-    
+
       const questions = typeof quiz.questions === 'string' ? JSON.parse(quiz.questions) : quiz.questions;
       currentQuestion = questions[session.current_question_index];
       currentQuestion.index = session.current_question_index;
-    
+
       questionStartTime = new Date(session.question_start_time).getTime();
-    
+
       // Switch to game screen
       document.getElementById('waiting-screen').style.display = 'none';
       document.getElementById('game-screen').style.display = 'block';
@@ -584,10 +723,10 @@
         currentScore = participant.score;
         document.getElementById('score').textContent = currentScore;
       }
-    
+
       // Display question
       document.getElementById('question-text').textContent = currentQuestion.question;
-    
+
       // Display options
       const optionsGrid = document.getElementById('options-grid');
       optionsGrid.innerHTML = '';
@@ -600,10 +739,14 @@
         btn.addEventListener('click', () => selectAnswer(i));
         optionsGrid.appendChild(btn);
       });
-    
+
       // Start timer
       startTimer(currentQuestion.timeLimit || 30);
     }
+
+    // ============================================
+    // GESTION DU TIMER
+    // ============================================
 
     let currentTimerInterval = null;
 
@@ -612,17 +755,17 @@
       const timerEl = document.getElementById('timer');
       timerEl.textContent = `⏱️ ${timeLeft}s`;
       timerEl.classList.remove('warning');
-    
+
       if (currentTimerInterval) clearInterval(currentTimerInterval);
-    
+
       currentTimerInterval = setInterval(() => {
         timeLeft--;
         timerEl.textContent = `⏱️ ${timeLeft}s`;
-    
+
         if (timeLeft <= 5) {
           timerEl.classList.add('warning');
         }
-    
+
         if (timeLeft <= 0) {
           clearInterval(currentTimerInterval);
           disableOptions();
@@ -631,17 +774,59 @@
       }, 1000);
     }
 
+    // ============================================
+    // SÉLECTION DE RÉPONSE
+    // ============================================
+
+    async function selectAnswer(answerIndex) {
+      if (hasAnswered) return;
+      hasAnswered = true;
+
+      // Visual feedback
+      const buttons = document.querySelectorAll('.option-btn');
+      buttons.forEach((btn, i) => {
+        if (i === answerIndex) {
+          btn.classList.add('selected');
+        }
+        btn.disabled = true;
+      });
+
+      // Afficher message d'attente
+      const resultEl = document.getElementById('result-message');
+      resultEl.innerHTML = '<div class="result-icon">⏳</div><div style="color: #0d0d0d;">Réponse enregistrée ! En attente des résultats...</div>';
+      resultEl.style.display = 'block';
+
+      // Submit answer
+      try {
+        await supabaseClient
+          .from('participant_answers')
+          .insert([{
+            session_id: sessionId,
+            participant_id: participantId,
+            question_index: currentQuestion.index || 0,
+            answer_index: answerIndex
+          }]);
+
+      } catch (err) {
+        console.error('Error submitting answer:', err);
+      }
+    }
+
+    // ============================================
+    // AFFICHAGE DES RÉSULTATS
+    // ============================================
+
     async function displayQuestionResult() {
       // Afficher message d'attente pendant le calcul
       const resultEl = document.getElementById('result-message');
       resultEl.innerHTML = '<div class="spinner"></div><div style="color: #667eea; margin-top: 15px;">Calcul des scores...</div>';
       resultEl.style.display = 'block';
-    
+
       // Attendre que le serveur ait calculé les scores (polling)
       let answer = null;
       let attempts = 0;
       const maxAttempts = 50;
-    
+
       while (attempts < maxAttempts) {
         const { data } = await supabaseClient
           .from('participant_answers')
@@ -650,16 +835,16 @@
           .eq('participant_id', participantId)
           .eq('question_index', currentQuestion.index || 0)
           .maybeSingle();
-    
+
         if (data && data.is_correct !== null) {
           answer = data;
           break;
         }
-    
+
         await new Promise(resolve => setTimeout(resolve, 100));
         attempts++;
       }
-    
+
       if (answer) {
         // Récupérer le score total mis à jour
         const { data: participant } = await supabaseClient
@@ -667,12 +852,12 @@
           .select('score')
           .eq('id', participantId)
           .single();
-    
+
         if (participant) {
           currentScore = participant.score;
           document.getElementById('score').textContent = currentScore;
         }
-    
+
         // Afficher le résultat
         if (answer.is_correct && answer.points_earned) {
           resultEl.innerHTML = `
@@ -688,40 +873,6 @@
       }
     }
 
-    async function selectAnswer(answerIndex) {
-      if (hasAnswered) return;
-      hasAnswered = true;
-    
-      // Visual feedback
-      const buttons = document.querySelectorAll('.option-btn');
-      buttons.forEach((btn, i) => {
-        if (i === answerIndex) {
-          btn.classList.add('selected');
-        }
-        btn.disabled = true;
-      });
-    
-      // Afficher message d'attente
-      const resultEl = document.getElementById('result-message');
-      resultEl.innerHTML = '<div class="result-icon">⏳</div><div style="color: #0d0d0d;">Réponse enregistrée ! En attente des résultats...</div>';
-      resultEl.style.display = 'block';
-    
-      // Submit answer
-      try {
-        await supabaseClient
-          .from('participant_answers')
-          .insert([{
-            session_id: sessionId,
-            participant_id: participantId,
-            question_index: currentQuestion.index || 0,
-            answer_index: answerIndex
-          }]);
-    
-      } catch (err) {
-        console.error('Error submitting answer:', err);
-      }
-    }
-    
     function disableOptions() {
       document.querySelectorAll('.option-btn').forEach(btn => {
         btn.disabled = true;
@@ -737,6 +888,10 @@
       }
       resultEl.style.display = 'block';
     }
+
+    // ============================================
+    // ÉCRAN FINAL
+    // ============================================
 
     async function showFinalScreen() {
       // Get final score and rank
@@ -755,10 +910,27 @@
       const rank = allParticipants.findIndex(p => p.score === participant.score) + 1;
 
       document.getElementById('game-screen').style.display = 'none';
+      document.getElementById('waiting-screen').style.display = 'none';
       document.getElementById('final-screen').style.display = 'block';
       document.getElementById('final-rank').innerHTML = `Vous êtes <strong>#${rank}</strong> sur <strong>${allParticipants.length}</strong>`;
       document.getElementById('final-score').textContent = participant.score;
+      
+      // Nettoyer les données après 5 minutes sur l'écran final
+      setTimeout(() => {
+        clearSessionData();
+      }, 5 * 60 * 1000);
     }
+
+    // ============================================
+    // INITIALISATION
+    // ============================================
+
+    initializePlayer();
+
+    document.getElementById('join-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await joinSession();
+    });
   </script>
 </body>
 </html>
